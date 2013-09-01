@@ -7,8 +7,8 @@
         private $completado;
         private $fechaHistorial;
         
-        function __construct($idHistorial, $completado, $fechaHistorial) {
-            $this->idHistorial = $idHistorial;
+       
+        function rellenaHistorial($completado, $fechaHistorial) {
             $this->completado = $completado;
             $this->fechaHistorial = $fechaHistorial;
         }

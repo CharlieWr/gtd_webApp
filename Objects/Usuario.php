@@ -8,19 +8,21 @@
         private $apellido;
 
 
+        //No hay constructor porque al leer de la base de datos como una clase
+        //se llama PDO llama automaticamente al constructor sin pasarle datos y falla
+        //se podria usar FETCH_INTO para insertar en una clase ya creada.
+        public function rellenaUsuario($userName, $password, $nombre, $apellido) {
+            $this->userName = $userName;
+            $this->password = $password;
+            $this->nombre = $nombre;
+            $this->apellido = $apellido;
+        }
         
-    function __construct($idUsuario, $userName, $password, $nombre, $apellido) {
-        $this->idUsuario = $idUsuario;
-        $this->userName = $userName;
-        $this->password = $password;
-        $this->nombre = $nombre;
-        $this->apellido = $apellido;
-    }
-
-    public function getIdUsuario() {
+        
+        public function getIdUsuario() {
             return $this->idUsuario;
         }
-
+        
         private function setIdUsuario($idUsuario) {
             $this->idUsuario = $idUsuario;
         }

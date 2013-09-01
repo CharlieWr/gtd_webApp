@@ -9,14 +9,16 @@
         private $idUsuario;
         private $idHistorial;
 
-        function __construct($idStuff, $nombre, $fecha, $idUsuario) {
-            $this->idStuff = $idStuff;
+        function rellenaStuff($nombre, $descripcion, $fecha, $typeStuff, $idUsuario, $idHistorial) {
             $this->nombre = $nombre;
+            $this->descripcion = $descripcion;
             $this->fecha = $fecha;
+            $this->typeStuff = $typeStuff;
             $this->idUsuario = $idUsuario;
+            $this->idHistorial = $idHistorial;
         }
 
-        public function getIdStuff() {
+                public function getIdStuff() {
             return $this->idStuff;
         }
 
