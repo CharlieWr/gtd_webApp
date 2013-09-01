@@ -2,7 +2,11 @@
 
 require_once '../Model/UsuarioModel.php';
 
+
+$modelo = new UsuarioModel();
 function rellenaTablaUsuarios(){
+    
+    global $modelo;
     $user = new Usuario();
     $user->rellenaUsuario("carlosrg", "pswdCarlos", "Carlos", "Ruiz");
     $user2 = new Usuario();
@@ -41,17 +45,17 @@ function rellenaTablaUsuarios(){
     echo '<pre>'.print_r($user5)."</pre>".'<br/>';
 }
 
-$modelo = new UsuarioModel();
 
 
-for($i = 1; $i<=5;$i++){
-    $usuario = $modelo->selectUsuarioById($i);
-    echo "<pre>";
-    print_r($usuario);
-    echo "</pre>";
+function showUsuarios(){
+    for($i = 1; $i<=5;$i++){
+        $usuario = $modelo->selectUsuarioById($i);
+        echo "<pre>";
+        print_r($usuario);
+        echo "</pre>";
+    }
 }
-
-
+rellenaTablaUsuarios();
 
 ?>
 

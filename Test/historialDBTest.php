@@ -89,16 +89,16 @@
                 $historialModel->deleteHistorialById(3);
                 
             }
-            echo "<h3>Delete Historial</h3> <br/>";
+//            echo "<h3>Delete Historial</h3> <br/>";
+//            
+//            
+//            testAllHistorial();
+//            testDeleteHistorial();
+//            
+//            echo '<br/> ================== <br/>';
+//            testAllHistorial();
             
-            
-            testAllHistorial();
-            testDeleteHistorial();
-            
-            echo '<br/> ================== <br/>';
-            testAllHistorial();
-            
-            
+            rellenaTablaHistorial();
         ?>
     </body>
 </html>

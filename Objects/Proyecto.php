@@ -1,5 +1,5 @@
 <?php
-require_once 'stuff.php';
+require_once 'Stuff.php';
 
     class Proyecto extends Stuff{
         private $idProyecto;
@@ -7,12 +7,13 @@ require_once 'stuff.php';
         private $tags;
         private $idStuff;
         
-        function __construct($idProyecto, $idStuff) {
-            $this->idProyecto = $idProyecto;
+        function rellenaProyecto($contexto, $tags, $idStuff) {
+            $this->contexto = $contexto;
+            $this->tags = $tags;
             $this->idStuff = $idStuff;
         }
 
-        public function getIdProyecto() {
+                public function getIdProyecto() {
             return $this->idProyecto;
         }
 
