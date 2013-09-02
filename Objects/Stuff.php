@@ -18,7 +18,20 @@
             $this->idHistorial = $idHistorial;
         }
 
-                public function getIdStuff() {
+        
+        function asignaStuff($stuff){
+            if(is_a($stuff, 'Stuff')){
+            $this->idStuff = $stuff->getIdStuff();
+            $this->nombre = $stuff->getNombre();
+            $this->descripcion = $stuff->getDescripcion();
+            $this->fecha = $stuff->getFecha();
+            $this->typeStuff = $stuff->getTypeStuff();
+            $this->idUsuario = $stuff->getIdUsuario();
+            $this->idHistorial = $stuff->getIdHistorial();
+            }
+            
+        }
+        public function getIdStuff() {
             return $this->idStuff;
         }
 

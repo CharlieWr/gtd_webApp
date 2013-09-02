@@ -11,13 +11,21 @@ require_once 'Stuff.php';
             $this->contexto = $contexto;
             $this->tags = $tags;
             $this->idStuff = $idStuff;
+        
+            
+           
         }
 
-                public function getIdProyecto() {
+        
+        function asignaStuff($stuff){
+            
+            parent::asignaStuff($stuff);
+        }
+        public function getIdProyecto() {
             return $this->idProyecto;
         }
 
-        private function setIdProyecto($idProyecto) {
+        public function setIdProyecto($idProyecto) {
             $this->idProyecto = $idProyecto;
         }
 
@@ -44,6 +52,8 @@ require_once 'Stuff.php';
         public function setIdStuff($idStuff) {
             $this->idStuff = $idStuff;
         }
+
+
 
 
     }

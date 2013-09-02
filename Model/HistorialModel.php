@@ -94,7 +94,7 @@
                
                
                  $sth = $dbh->query("SELECT * FROM Historial");  
-                 $sth->setFetchMode(PDO::FETCH_CLASS, 'Historial');  
+                 $sth->setFetchMode(PDO::FETCH_CLASS , 'Historial');  
 
 //                 $stuff = $sth->fetch();
                  $res = array();

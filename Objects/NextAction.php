@@ -1,5 +1,5 @@
 <?php
-require_once 'stuff.php';
+require_once 'Stuff.php';
 class NextAction extends stuff {
 
     private $idNextAction;
@@ -7,10 +7,14 @@ class NextAction extends stuff {
     private $tags;
     private $idStuff;
     
-    function __construct($idNextAction, $idStuff) {
-        $this->idNextAction = $idNextAction;
+    
+    function rellenaNextAction($contexto, $tags, $idStuff   ) {
+        $this->contexto = $contexto;
+        $this->tags = $tags;
         $this->idStuff = $idStuff;
     }
+
+    
     public function getIdNextAction() {
         return $this->idNextAction;
     }

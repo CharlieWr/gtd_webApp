@@ -1,9 +1,9 @@
 <?php
     require_once 'database_config.php';
-    require_once '../Objects/Proyecto.php';
+    require_once '../Objects/NextAction.php';
     require_once 'StuffModel.php';
 
-    class ProyectoModel {
+    class NextActionModel {
         
         private $dbh;
         
@@ -35,32 +35,32 @@
          }
          
          /**
-            * @param Proyecto $proyecto
+            * @param NextAction $nextA
             */
-         public function insertarProyecto($proyecto){
-             if(!is_a($proyecto, 'Proyecto')){
-                 die("Objeto no es de clase Proyecto");
+         public function insertarNextAction($nextA){
+             if(!is_a($nextA, 'NextAction')){
+                 die("Objeto no es de clase NextAction");
              }
              else{
-                 //Cambiar fecha de Stuff de creacion Proyecto
+                 //Cambiar fecha de Stuff de creacion NextAction
               
                global $dbh;  
                $this->abrirConexion();
-               $sth = $dbh->prepare("INSERT INTO Proyecto (contexto,tags,idStuff) 
+               $sth = $dbh->prepare("INSERT INTO NextAction (contexto,tags,idStuff) 
                    value (:contexto, :tags,:idStuff)"); 
                
-               $data = array('contexto' => $proyecto->getContexto(), 'tags' => $proyecto->getTags()
-                       , 'idStuff' => $proyecto->getIdStuff());
+               $data = array('contexto' => $nextA->getContexto(), 'tags' => $nextA->getTags()
+                       , 'idStuff' => $nextA->getIdStuff());
                
                $sth->execute($data);  
                $id = $dbh->lastInsertID();
                 $this->cerrarConexion();
                 
                 
-               //Actualizamos la base de datos del Stuff y cambiamos su TypeStuff a 'P'
+               //Actualizamos la base de datos del Stuff y cambiamos su TypeStuff a 'N'
                $stuffModel = new StuffModel();
-               $stuff = $stuffModel->selectStuffById($proyecto->getIdStuff());
-               $stuff->setTypeStuff("P");
+               $stuff = $stuffModel->selectStuffById($nextA->getIdStuff());
+               $stuff->setTypeStuff("N");
                $stuffModel->updateStuff($stuff);
                
               
@@ -71,37 +71,37 @@
              
          }
         
-         public function selectProyectoById($id){
+         public function selectNextActionById($id){
              if(!is_numeric($id)){
-                 die("ID Proyecto no es un entero");
+                 die("ID NextAction no es un entero");
              }
              else{
                global $dbh;  
                $this->abrirConexion();
                
                
-                 $sth = $dbh->query("SELECT * FROM Proyecto p WHERE p.idProyecto = {$id} LIMIT 1");  
-                 $sth->setFetchMode(PDO::FETCH_CLASS, 'Proyecto');  
+                 $sth = $dbh->query("SELECT * FROM NextAction na WHERE na.idNextAction = {$id} LIMIT 1");  
+                 $sth->setFetchMode(PDO::FETCH_CLASS, 'NextAction');  
 
                  $proyecto = $sth->fetch();
 //                 while($obj = $STH->fetch()) {  
 //                     echo $obj->addr;  
 //                 }
-         
+             
                $this->cerrarConexion();
                return $proyecto;
              }
              
          }
          
-         public function selectAllProyecto(){
+         public function selectAllNextAction(){
              
              global $dbh;
               $this->abrirConexion();
                
                
-                 $sth = $dbh->query("SELECT * FROM Proyecto");  
-                 $sth->setFetchMode(PDO::FETCH_CLASS, 'Proyecto');  
+                 $sth = $dbh->query("SELECT * FROM NextAction");  
+                 $sth->setFetchMode(PDO::FETCH_CLASS, 'NextAction');  
 
 //                 $stuff = $sth->fetch();
                  $res = array();
@@ -115,27 +115,27 @@
          }
          
           /**
-            * @param Proyecto $newProyecto
+            * @param NextAction $newNextA
             */
-         public function updateProyecto($newProyecto){
-             if(!is_a($newProyecto, 'Proyecto')){
-                 die("Objeto no es de clase Proyecto");
+         public function updateNextAction($newNextA){
+             if(!is_a($newNextA, 'NextAction')){
+                 die("Objeto no es de clase Next Action");
              }
              else{
                  
                   //Actualizamos la fecha de modificacion de Stuff
                $date1 = date('y/m/d H:i:s',time());
-               $newProyecto->setFecha($date1);
+               $newNextA->setFecha($date1);
            
                
                global $dbh;  
                $this->abrirConexion();
               
               
-               $sth = $dbh->prepare("UPDATE Proyecto SET contexto = :contexto,
-                   tags = :tags WHERE idProyecto = :idProyecto"); 
+               $sth = $dbh->prepare("UPDATE NextAction SET contexto = :contexto,
+                   tags = :tags WHERE idNextAction = :idNextAction"); 
                
-               $data = array('contexto' => $newProyecto->getContexto(), 'tags' => $newProyecto->getTags(), 'idProyecto' => $newProyecto->getIdProyecto());
+               $data = array('contexto' => $newNextA->getContexto(), 'tags' => $newNextA->getTags(), 'idNextAction' => $newNextA->getIdNextAction());
                
                $sth->execute($data);  
                       
@@ -143,7 +143,7 @@
                
                 //Actualizamos fecha de modificacion de Stuff
                $stuffModel = new StuffModel();
-               $stuff = $stuffModel->selectStuffById($newProyecto->getIdStuff());
+               $stuff = $stuffModel->selectStuffById($newNextA->getIdStuff());
                $stuff->setFecha($date1);
                $stuffModel->updateStuff($stuff);
                
@@ -151,9 +151,9 @@
              
          }
          
-         public function deleteProyectoById($idProyecto){
-              if(!is_numeric($idProyecto)){
-                 die("ID Proyecto no es un entero");
+         public function deleteNextActionById($idNextA){
+              if(!is_numeric($idNextA)){
+                 die("ID NextAction no es un entero");
              }
              else{
                  
@@ -161,8 +161,8 @@
                 $this->abrirConexion();
               
               
-                $sth = $dbh->prepare("DELETE FROM Proyecto WHERE idProyecto =:idProyecto" );
-                $sth->bindParam(":idProyecto", $idProyecto);
+                $sth = $dbh->prepare("DELETE FROM NextAction WHERE idNextAction =:idNextAction" );
+                $sth->bindParam(":idNextAction", $idNextA);
                 $sth->execute();
                 
                 $this->cerrarConexion();

@@ -96,9 +96,11 @@
 //            testDeleteHistorial();
 //            
 //            echo '<br/> ================== <br/>';
-//            testAllHistorial();
+            testAllHistorial();
             
-            rellenaTablaHistorial();
+//             $date1 = date('y/m/d H:i:s', mktime(19, 10, 11, 10, 2, 2013));
+//             $historial1 = new Historial(true,$date1);
+//             $historialID1 = $historialModel->insertarHistorial($historial1);
         ?>
     </body>
 </html>

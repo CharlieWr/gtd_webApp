@@ -8,9 +8,9 @@
         <title>Test Proyecto</title>
     </head>
     <body>
-         <h1>Stuff Test</h1>
+         <h1>Proyecto Test</h1>
         <?php
-           //Modelo Stuff
+           //Modelo Next Action
             $proyectoModel = new ProyectoModel();
             
             
@@ -59,39 +59,42 @@
             
            
             function testUpdateStuff(){
-                global $stuffModel;
+                global $proyectoModel;
                 /////////////////
                 
-                $stuff = $stuffModel->selectStuffById(1);
+                $proyecto = $proyectoModel->selectProyectoById(1);
                 
                 
                  echo '<pre>';
-                 echo '<h6>Stuff Viejo</h6><br/>';
-                 var_dump($stuff);
+                 echo '<h6>Proyecto Viejo</h6><br/>';
+                 var_dump($proyecto);
                  echo '</pre>'. '<br/>';
                  
-                 
-                $stuff->setNombre("Llamar a Nadie");
-                $stuff->setDescripcion("No debo llamar a nadie");
+               
+                $proyecto->setContexto("Universidad");
+                $proyecto->setTags("PFC; Trabajo; Estudios;");
                 
-                $stuffModel->updateStuff($stuff);
-                $stuffId = $stuffModel->selectStuffById(1);
+                $proyectoModel->updateProyecto($proyecto);
+                $proyectoId = $proyectoModel->selectProyectoById(1);
                  echo '<pre>';
-                  echo '<h6>Stuff Nuevo</h6><br/>';
-                 var_dump($stuffId);
+                  echo '<h6>Proyecto Nuevo</h6><br/>';
+                 var_dump($proyectoId);
                  echo '</pre>'. '<br/>';
             }
             
             
-            function testDeleteStuff(){
-                global $stuffModel;
+            function testDeleteProyecto(){
+                global $proyectoModel;
                 
-                $stuffModel->deleteStuffById(1);
+                $proyectoModel->deleteProyectoById(2);
                 
             }
-            echo "<h3>Select All  Proyecto</h3> <br/>";
-            
-          
+
+            testAllProyecto();
+//             //NULL tags
+//                $proyecto2 = new Proyecto();
+//                $proyecto2->rellenaProyecto("Oficina",NULL,2);
+//                $proyectoID3 = $proyectoModel->insertarProyecto($proyecto2);
 
         ?>
     </body>
