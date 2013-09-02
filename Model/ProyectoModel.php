@@ -42,7 +42,7 @@
                  die("Objeto no es de clase Proyecto");
              }
              else{
-                 
+                 //Cambiar fecha de Stuff de creacion Proyecto
               
                global $dbh;  
                $this->abrirConexion();
@@ -70,38 +70,38 @@
              }
              
          }
-         //TODO HACER
-         public function selectStuffById($id){
+        
+         public function selectProyectoById($id){
              if(!is_numeric($id)){
-                 die("ID Usuario no es un entero");
+                 die("ID Proyecto no es un entero");
              }
              else{
                global $dbh;  
                $this->abrirConexion();
                
                
-                 $sth = $dbh->query("SELECT * FROM Stuff s WHERE s.idStuff = {$id} LIMIT 1");  
-                 $sth->setFetchMode(PDO::FETCH_CLASS, 'Stuff');  
+                 $sth = $dbh->query("SELECT * FROM Proyecto p WHERE p.idProyecto = {$id} LIMIT 1");  
+                 $sth->setFetchMode(PDO::FETCH_CLASS, 'Proyecto');  
 
-                 $stuff = $sth->fetch();
+                 $proyecto = $sth->fetch();
 //                 while($obj = $STH->fetch()) {  
 //                     echo $obj->addr;  
 //                 }
              
                $this->cerrarConexion();
-               return $stuff;
+               return $proyecto;
              }
              
          }
          
-         public function selectAllStuff(){
+         public function selectAllProyecto(){
              
              global $dbh;
               $this->abrirConexion();
                
                
-                 $sth = $dbh->query("SELECT * FROM Stuff s");  
-                 $sth->setFetchMode(PDO::FETCH_CLASS, 'Stuff');  
+                 $sth = $dbh->query("SELECT * FROM Proyecto");  
+                 $sth->setFetchMode(PDO::FETCH_CLASS, 'Proyecto');  
 
 //                 $stuff = $sth->fetch();
                  $res = array();
@@ -114,32 +114,39 @@
                return $res;
          }
          
-         
-         public function updateStuff($newStuff){
-             if(!is_a($newStuff, 'Stuff')){
-                 die("Objeto no es de clase Stuff");
+          /**
+            * @param Proyecto $newProyecto
+            */
+         public function updateProyecto($newProyecto){
+             if(!is_a($newProyecto, 'Proyecto')){
+                 die("Objeto no es de clase Proyecto");
              }
              else{
                  
-                  //Actualizamos la fecha de modificacion
+                  //Actualizamos la fecha de modificacion de Stuff
                $date1 = date('y/m/d H:i:s',time());
-               $newStuff->setFecha($date1);
+               $newProyecto->setFecha($date1);
+           
                
                global $dbh;  
                $this->abrirConexion();
               
               
-               $sth = $dbh->prepare("UPDATE Stuff SET nombre = :nombre,
-                   descripcion = :descripcion, fecha = :fecha, typeStuff = :typeStuff WHERE idStuff = :idStuff"); 
+               $sth = $dbh->prepare("UPDATE Proyecto SET contexto = :contexto,
+                   tags = :tags WHERE idProyecto = :idProyecto"); 
                
-               $data = array('nombre' => $newStuff->getNombre(), 'descripcion' => $newStuff->getDescripcion()
-                       , 'fecha' => $newStuff->getFecha(), 'typeStuff' => $newStuff->getTypeStuff(), 'idStuff' => $newStuff->getIdStuff());
+               $data = array('contexto' => $newProyecto->getContexto(), 'tags' => $newProyecto->getTags());
                
                $sth->execute($data);  
-               
+                      
                $this->cerrarConexion();
                
-                 
+                //Actualizamos fecha de modificacion de Stuff
+               $stuffModel = new StuffModel();
+               $stuff = $stuffModel->selectStuffById($proyecto->getIdStuff());
+               $stuff->setFecha($date1);
+               $stuffModel->updateStuff($stuff);
+               
              }
              
          }

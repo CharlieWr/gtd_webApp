@@ -25,7 +25,7 @@
                 $proyecto2->rellenaProyecto("Oficina",NULL,2);
                  //NULL CONTEXTO
                 $proyecto3 = new Proyecto();
-                $proyecto3->rellenaProyecto(NULL,"proyecto",2);
+                $proyecto3->rellenaProyecto(NULL,"proyecto",5);
                
                 $proyectoID1 = $proyectoModel->insertarProyecto($proyecto1);
                 $proyectoID2 = $proyectoModel->insertarProyecto($proyecto2);
@@ -44,13 +44,13 @@
                 }
             }
             
-            function testAllStuff(){
-                global $stuffModel;
-                $arrayStuff = $stuffModel->selectAllStuff();
-                foreach($arrayStuff as $singleStuff){
+            function testAllProyecto(){
+                global $proyectoModel;
+                $arrayProyecto = $proyectoModel->selectAllProyecto();
+                foreach($arrayProyecto as $singleProyecto){
                     
                     echo '<pre>';
-                    var_dump($singleStuff);
+                    var_dump($singleProyecto);
                     echo '</pre>'. '<br/>';
                 }
                 
@@ -60,7 +60,7 @@
            
             function testUpdateStuff(){
                 global $stuffModel;
-                
+                /////////////////
                 
                 $stuff = $stuffModel->selectStuffById(1);
                 
@@ -89,11 +89,9 @@
                 $stuffModel->deleteStuffById(1);
                 
             }
-            echo "<h3>Rellena Proyecto</h3> <br/>";
+            echo "<h3>Select All  Proyecto</h3> <br/>";
             
-            rellenaTablaProyecto()
-                
-                
+          
 
         ?>
     </body>
