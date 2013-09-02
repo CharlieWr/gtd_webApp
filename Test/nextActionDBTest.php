@@ -95,8 +95,8 @@
                 
             }
             
-//            echo  "<h3>Rellena Next Action</h3> <br/>";
-//            rellenaTablaNextAction();
+            echo  "<h3>Rellena Next Action</h3> <br/>";
+            rellenaTablaNextAction();
             echo "<h3>Next Action id 1</h3><br/>";
             testNextActionById();
             echo "<h3>All Next Action</h3><br/>";

@@ -96,41 +96,41 @@
 //             testAllStuff();
 //            
             
-//                $date1 = date('y/m/d H:i:s', mktime(4, 19, 20, 9, 9, 2013));
-//                $stuff1 = new Stuff();
-//                $stuff1->rellenaStuff("HAcer PFC ","Debo trabajar en el PFC",$date1,NULL,1,NULL);
-//                $stuffID1 = $stuffModel->insertarStuff($stuff1);
-//                
-//                $date1 = date('y/m/d H:i:s', mktime(12, 19, 10, 9, 19, 2013));
-//                $stuff1 = new Stuff();
-//                $stuff1->rellenaStuff("Comprar comida","Carne, pollo",$date1,NULL,1,NULL);
-//                $stuffID1 = $stuffModel->insertarStuff($stuff1);
-//                
-//                
-//                $date1 = date('y/m/d H:i:s', mktime(20, 10, 30, 10, 9, 2013));
-//                $stuff1 = new Stuff();
-//                $stuff1->rellenaStuff("Llamar abuela","Se cayo y hay que llamarla",$date1,NULL,1,NULL);
-//                $stuffID1 = $stuffModel->insertarStuff($stuff1);
-//                
-//                
-//                $date1 = date('y/m/d H:i:s', mktime(17, 21, 22, 9, 5, 2013));
-//                $stuff1 = new Stuff();
-//                $stuff1->rellenaStuff("Pagar Casa","Antes del 10 de septiembre",$date1,NULL,1,NULL);
-//                $stuffID1 = $stuffModel->insertarStuff($stuff1);
-//                
-//                
-//                $date1 = date('y/m/d H:i:s', mktime(2, 9, 10, 8, 9, 2013));
-//                $stuff1 = new Stuff();
-//                $stuff1->rellenaStuff("Mail a profesor","Contactar con tutor",$date1,NULL,1,NULL);
-//                $stuffID1 = $stuffModel->insertarStuff($stuff1);
-//                
-//                
-//                $date1 = date('y/m/d H:i:s', mktime(2, 9, 10, 8, 9, 2013));
-//                $stuff1 = new Stuff();
-//                $stuff1->rellenaStuff("Hacer cena","cena con hermana",$date1,NULL,1,NULL);
-//                $stuffID1 = $stuffModel->insertarStuff($stuff1);
-//                
+                $date1 = date('y/m/d H:i:s', mktime(4, 19, 20, 9, 9, 2013));
+                $stuff1 = new Stuff();
+                $stuff1->rellenaStuff("HAcer PFC ","Debo trabajar en el PFC",$date1,NULL,1,NULL);
+                $stuffID1 = $stuffModel->insertarStuff($stuff1);
                 
+                $date1 = date('y/m/d H:i:s', mktime(12, 19, 10, 9, 19, 2013));
+                $stuff1 = new Stuff();
+                $stuff1->rellenaStuff("Comprar comida","Carne, pollo",$date1,NULL,1,NULL);
+                $stuffID1 = $stuffModel->insertarStuff($stuff1);
+                
+                
+                $date1 = date('y/m/d H:i:s', mktime(20, 10, 30, 10, 9, 2013));
+                $stuff1 = new Stuff();
+                $stuff1->rellenaStuff("Llamar abuela","Se cayo y hay que llamarla",$date1,NULL,1,NULL);
+                $stuffID1 = $stuffModel->insertarStuff($stuff1);
+                
+                
+                $date1 = date('y/m/d H:i:s', mktime(17, 21, 22, 9, 5, 2013));
+                $stuff1 = new Stuff();
+                $stuff1->rellenaStuff("Pagar Casa","Antes del 10 de septiembre",$date1,NULL,1,NULL);
+                $stuffID1 = $stuffModel->insertarStuff($stuff1);
+                
+                
+                $date1 = date('y/m/d H:i:s', mktime(2, 9, 10, 8, 9, 2013));
+                $stuff1 = new Stuff();
+                $stuff1->rellenaStuff("Mail a profesor","Contactar con tutor",$date1,NULL,1,NULL);
+                $stuffID1 = $stuffModel->insertarStuff($stuff1);
+                
+                
+                $date1 = date('y/m/d H:i:s', mktime(2, 9, 10, 8, 9, 2013));
+                $stuff1 = new Stuff();
+                $stuff1->rellenaStuff("Hacer cena","cena con hermana",$date1,NULL,1,NULL);
+                $stuffID1 = $stuffModel->insertarStuff($stuff1);
+//                
+//                rellenaTablaStuff();
                 testAllStuff();
                 
 

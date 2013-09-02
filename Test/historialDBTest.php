@@ -89,6 +89,8 @@
                 $historialModel->deleteHistorialById(3);
                 
             }
+            
+            rellenaTablaHistorial();
 //            echo "<h3>Delete Historial</h3> <br/>";
 //            
 //            
@@ -98,7 +100,7 @@
 //            echo '<br/> ================== <br/>';
             testAllHistorial();
             
-//             $date1 = date('y/m/d H:i:s', mktime(19, 10, 11, 10, 2, 2013));
+//             $date1 = drellenaTablaHistorialate('y/m/d H:i:s', mktime(19, 10, 11, 10, 2, 2013));
 //             $historial1 = new Historial(true,$date1);
 //             $historialID1 = $historialModel->insertarHistorial($historial1);
         ?>

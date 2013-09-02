@@ -1,5 +1,5 @@
 <?php
-    require_once 'stuff.php';
+    require_once 'Stuff.php';
     
     class SomedayMaybe extends Stuff{
         
@@ -9,12 +9,14 @@
         private $plazo;
         private $idStuff;
         
-        function __construct($idSomedayMaybe, $idStuff) {
-            $this->idSomedayMaybe = $idSomedayMaybe;
+        function rellenaSomedayMaybe($contexto, $tags, $plazo, $idStuff) {
+            $this->contexto = $contexto;
+            $this->tags = $tags;
+            $this->plazo = $plazo;
             $this->idStuff = $idStuff;
         }
 
-        public function getIdSomedayMaybe() {
+                public function getIdSomedayMaybe() {
             return $this->idSomedayMaybe;
         }
 

@@ -89,7 +89,7 @@
                 $proyectoModel->deleteProyectoById(2);
                 
             }
-
+rellenaTablaProyecto();
             testAllProyecto();
 //             //NULL tags
 //                $proyecto2 = new Proyecto();
