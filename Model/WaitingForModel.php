@@ -9,16 +9,16 @@
         
         private function abrirConexion(){
            
-            $userName = $GLOBALS['userName'];
-            $hostName = $GLOBALS['hostName'];
-            $password = $GLOBALS['password'];
-//            echo $userName."</br>";
-//            echo $hostName."</br>";
-//            echo $password."</br>";
+            $userNameDB = $GLOBALS['userNameDB'];
+            $hostNameDB = $GLOBALS['hostNameDB'];
+            $passwordDB = $GLOBALS['passwordDB'];
+//            echo $userNameDB."</br>";
+//            echo $hostNameDB."</br>";
+//            echo $passwordDB."</br>";
            
             global $dbh;
               try {
-                $dbh = new PDO("mysql:host={$hostName};dbname=pfc_gtd", $userName, $password);
+                $dbh = new PDO("mysql:host={$hostNameDB};dbname=pfc_gtd", $userNameDB, $passwordDB);
 
                  // Enseñar errores DB
                 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

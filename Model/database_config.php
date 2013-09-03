@@ -1,13 +1,13 @@
 <?php
 
     // MySQL Hostname
-    $hostName = 'localhost';
+    $hostNameDB = 'localhost';
     
     // MySQL Username
-    $userName = 'pfc';
+    $userNameDB = 'pfc';
     
     // MySQL Password
-    $password = 'pfc';
+    $passwordDB = 'pfc';
     
    
 ?>

@@ -7,18 +7,18 @@
         
         private $dbh;
         
-        private function abrirConexion(){
+           private function abrirConexion(){
            
-            $userName = $GLOBALS['userName'];
-            $hostName = $GLOBALS['hostName'];
-            $password = $GLOBALS['password'];
-//            echo $userName."</br>";
-//            echo $hostName."</br>";
-//            echo $password."</br>";
+            $userNameDB = $GLOBALS['userNameDB'];
+            $hostNameDB = $GLOBALS['hostNameDB'];
+            $passwordDB = $GLOBALS['passwordDB'];
+//            echo $userNameDB."</br>";
+//            echo $hostNameDB."</br>";
+//            echo $passwordDB."</br>";
            
             global $dbh;
               try {
-                $dbh = new PDO("mysql:host={$hostName};dbname=pfc_gtd", $userName, $password);
+                $dbh = new PDO("mysql:host={$hostNameDB};dbname=pfc_gtd", $userNameDB, $passwordDB);
 
                  // Enseñar errores DB
                 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -27,7 +27,6 @@
                  echo "ERROR: " . $e->getMessage();
             }
          }
-         
          
          private function cerrarConexion(){
              global $dbh;
@@ -168,6 +167,75 @@
                 $this->cerrarConexion();
              }
              
+         }
+         
+         //Inserta Next Action asociada a un Proyecto
+         public function insertActividadAProyecto($proy, $act){
+             if(!is_a($proy,'Proyecto') || !is_a($act,'NextAction')){
+                 die("proyecto o actividad no son de una clase Proyecto/NextAction valida");
+             }
+             else{
+                global $dbh;  
+                $this->abrirConexion();
+                
+                
+               $sth = $dbh->prepare("INSERT INTO Proyecto_has_Next_Action (idProyecto,idNextAction) 
+                   value (:idProyecto, :idNextAction)"); 
+               
+               $data = array('idProyecto' => $proy->getIdProyecto(), 'idNextAction' => $act->getIdNextAction());
+               
+               $sth->execute($data);  
+               $id = $dbh->lastInsertID();
+               $this->cerrarConexion();
+                
+                return $id;
+                 
+             }
+         }
+         
+         public function eliminarActividadAProyecto($idProy, $idAct){
+             if(!is_numeric($idProy) || !is_numeric($idAct)){
+                 die("Id Proyecto o Id Next Action no es un numero entero");
+             }
+             else{
+                 
+                global $dbh;  
+                $this->abrirConexion();
+                     
+                $sth = $dbh->prepare("DELETE FROM Proyecto_has_Next_Action WHERE idProyecto = :idProyecto AND
+                    idNextAction = :idNextAction" );
+                $sth->bindParam(":idProyecto", $idProy);
+                $sth->bindParam(":idNextAction", $idAct);
+                $sth->execute();
+                
+                
+                $this->cerrarConexion();
+                
+             }
+         }
+         
+         
+         //Dado un id de Proyecto devuelve Array de id Actividades asociadas
+         public function obtenerActividadesDeProyecto($idProy){
+             if(!is_numeric($idProy) ){
+                 die("id proyecto no es de  tipo entero");
+             }
+             else{
+                 global $dbh;  
+                 $this->abrirConexion();
+               
+               
+                 $sth = $dbh->query("SELECT * FROM Proyecto_had_Next_Action pna WHERE pna.idProyecto = {$idProy} LIMIT 1");  
+                 $sth->setFetchMode(PDO::FETCH_ASSOC); 
+
+                $actividades =  array();
+                while($row = $sth->fetch()) {  
+                    $actividades[]=$row['idNextAction']; 
+                }  
+         
+               $this->cerrarConexion();
+               return $actividades;
+             }
          }
          
     }
