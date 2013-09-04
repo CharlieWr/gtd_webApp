@@ -31,6 +31,14 @@
             return $stuff;
         }
         
+        public function getAllStuffByUsuarioId($idUsuario){
+            $stuffModel = new StuffModel();
+            
+            $stuff = $stuffModel->selectStuffByUduarioId($idUsuario);
+            
+            return $stuff;
+        }
+        
         public function updateStuff($stuff){
             if(!is_a($stuff,'Stuff')){
                 die("Objeto Stuff no es de clase Stuff valida");

@@ -68,7 +68,7 @@
          
          public function selectStuffById($id){
              if(!is_numeric($id)){
-                 die("ID Usuario no es un entero");
+                 die("ID Stuff no es un entero");
              }
              else{
                global $dbh;  
@@ -88,6 +88,36 @@
              }
              
          }
+         
+         //Devuelve los Stuff asociados a un usuario determinado
+         public function selectStuffByUduarioId($usuarioId){
+             if(!is_numeric($usuarioId)){
+                 die("ID Usuario no es un entero");
+             }
+             else{
+               global $dbh;  
+               $this->abrirConexion();
+               
+               
+                 $sth = $dbh->query("SELECT * FROM Stuff s WHERE s.idUsuario = {$usuarioId}");  
+                 $sth->setFetchMode(PDO::FETCH_CLASS, 'Stuff');  
+
+              
+                  $res = array();
+                   while($obj = $sth->fetch()) { 
+                     $res[] = $obj;
+//                     echo $obj->addr;  
+                 }
+//                 while($obj = $STH->fetch()) {  
+//                     echo $obj->addr;  
+//                 }
+             
+               $this->cerrarConexion();
+               return $res;
+             }
+             
+         }
+             
          
          
          //Devuelve Array de Stuff

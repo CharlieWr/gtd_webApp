@@ -45,10 +45,10 @@
 
                 <label for='username' >Nombre de Usuario:</label>
                 <!--Se codifica lo que el usuario introduce por caracteres especiales html-->
-                <input type='text' name='username'  maxlength="50" value="<?php echo htmlspecialchars($username); ?>"/><br/>
+                <input type='text' name='username'  maxlength="50" required="required" value="<?php echo htmlspecialchars($username); ?>"/><br/>
 
                 <label for='password' >Password:</label>
-                <input type='password' name='password'  maxlength="50" /><br/>
+                <input type='password' name='password' required="required" maxlength="50" /><br/>
 
                 <input type='submit' name='submit' value='Submit' />
 

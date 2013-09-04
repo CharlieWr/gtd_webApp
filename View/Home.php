@@ -19,7 +19,8 @@
         ?>
         
         
-        <a href="StuffView.php">Stuff</a>
-        
+        <a href="StuffView.php">Stuff</a><br/>
+        <a href="ProcessView.php">Process</a>
+
     </body>
 </html>
