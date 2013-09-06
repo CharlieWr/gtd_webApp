@@ -45,11 +45,10 @@
               
                global $dbh;  
                $this->abrirConexion();
-               $sth = $dbh->prepare("INSERT INTO Proyecto (contexto,tags,idStuff) 
-                   value (:contexto, :tags,:idStuff)"); 
+               $sth = $dbh->prepare("INSERT INTO Proyecto (idStuff) 
+                   value (:idStuff)"); 
                
-               $data = array('contexto' => $proyecto->getContexto(), 'tags' => $proyecto->getTags()
-                       , 'idStuff' => $proyecto->getIdStuff());
+               $data = array('idStuff' => $proyecto->getIdStuff());
                
                $sth->execute($data);  
                $id = $dbh->lastInsertID();
@@ -93,6 +92,29 @@
              
          }
          
+          public function selectProyectoStuffById($id){
+             if(!is_numeric($id)){
+                 die("ID Stuff no es un entero");
+             }
+             else{
+               global $dbh;  
+               $this->abrirConexion();
+               
+               
+                 $sth = $dbh->query("SELECT * FROM Proyecto p WHERE p.idStuff = {$id} LIMIT 1");  
+                 $sth->setFetchMode(PDO::FETCH_CLASS, 'Proyecto');  
+
+                 $proyecto = $sth->fetch();
+//                 while($obj = $STH->fetch()) {  
+//                     echo $obj->addr;  
+//                 }
+         
+               $this->cerrarConexion();
+               return $proyecto;
+             }
+             
+         }
+         
          public function selectAllProyecto(){
              
              global $dbh;
@@ -113,43 +135,43 @@
                return $res;
          }
          
-          /**
-            * @param Proyecto $newProyecto
-            */
-         public function updateProyecto($newProyecto){
-             if(!is_a($newProyecto, 'Proyecto')){
-                 die("Objeto no es de clase Proyecto");
-             }
-             else{
-                 
-                  //Actualizamos la fecha de modificacion de Stuff
-               $date1 = date('y/m/d H:i:s',time());
-               $newProyecto->setFecha($date1);
-           
-               
-               global $dbh;  
-               $this->abrirConexion();
-              
-              
-               $sth = $dbh->prepare("UPDATE Proyecto SET contexto = :contexto,
-                   tags = :tags WHERE idProyecto = :idProyecto"); 
-               
-               $data = array('contexto' => $newProyecto->getContexto(), 'tags' => $newProyecto->getTags(), 'idProyecto' => $newProyecto->getIdProyecto());
-               
-               $sth->execute($data);  
-                      
-               $this->cerrarConexion();
-               
-                //Actualizamos fecha de modificacion de Stuff
-               $stuffModel = new StuffModel();
-               $stuff = $stuffModel->selectStuffById($newProyecto->getIdStuff());
-               $stuff->setFecha($date1);
-               $stuffModel->updateStuff($stuff);
-               
-             }
-             
-         }
-         
+//          /**
+//            * @param Proyecto $newProyecto
+//            */
+//         public function updateProyecto($newProyecto){
+//             if(!is_a($newProyecto, 'Proyecto')){
+//                 die("Objeto no es de clase Proyecto");
+//             }
+//             else{
+//                 
+//                  //Actualizamos la fecha de modificacion de Stuff
+//               $date1 = date('y/m/d H:i:s',time());
+//               $newProyecto->setFecha($date1);
+//           
+//               
+//               global $dbh;  
+//               $this->abrirConexion();
+//              
+//              
+//               $sth = $dbh->prepare("UPDATE Proyecto SET contexto = :contexto,
+//                   tags = :tags WHERE idProyecto = :idProyecto"); 
+//               
+//               $data = array('contexto' => $newProyecto->getContexto(), 'tags' => $newProyecto->getTags(), 'idProyecto' => $newProyecto->getIdProyecto());
+//               
+//               $sth->execute($data);  
+//                      
+//               $this->cerrarConexion();
+//               
+//                //Actualizamos fecha de modificacion de Stuff
+//               $stuffModel = new StuffModel();
+//               $stuff = $stuffModel->selectStuffById($newProyecto->getIdStuff());
+//               $stuff->setFecha($date1);
+//               $stuffModel->updateStuff($stuff);
+//               
+//             }
+//             
+//         }
+//         
          public function deleteProyectoById($idProyecto){
               if(!is_numeric($idProyecto)){
                  die("ID Proyecto no es un entero");
@@ -162,6 +184,25 @@
               
                 $sth = $dbh->prepare("DELETE FROM Proyecto WHERE idProyecto =:idProyecto" );
                 $sth->bindParam(":idProyecto", $idProyecto);
+                $sth->execute();
+                
+                $this->cerrarConexion();
+             }
+             
+         }
+         
+                  public function deleteProyectoByStuffId($idStuff){
+              if(!is_numeric($idProyecto)){
+                 die("ID Proyecto no es un entero");
+             }
+             else{
+                 
+                global $dbh;  
+                $this->abrirConexion();
+              
+              
+                $sth = $dbh->prepare("DELETE FROM Proyecto WHERE idStuff =:idStuff" );
+                $sth->bindParam(":idStuff", $idStuff);
                 $sth->execute();
                 
                 $this->cerrarConexion();

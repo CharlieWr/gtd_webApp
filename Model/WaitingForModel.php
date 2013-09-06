@@ -48,11 +48,10 @@
               
                global $dbh;  
                $this->abrirConexion();
-               $sth = $dbh->prepare("INSERT INTO WaitingFor (contexto,tags,contactoPersona,idStuff) 
-                   value (:contexto, :tags,:contactoPersona, :idStuff)"); 
+               $sth = $dbh->prepare("INSERT INTO WaitingFor (contactoPersona,idStuff) 
+                   value (:contactoPersona, :idStuff)"); 
                
-               $data = array('contexto' => $nextWF->getContexto(), 'tags' => $nextWF->getTags()
-                       ,'contactoPersona' => $nextWF->getContactoPersona(),'idStuff' => $nextWF->getIdStuff());
+               $data = array('contactoPersona' => $nextWF->getContactoPersona(),'idStuff' => $nextWF->getIdStuff());
                
                $sth->execute($data);  
                $id = $dbh->lastInsertID();
@@ -95,7 +94,28 @@
              }
              
          }
-         
+          public function selectWaitingForByStuffId($id){
+             if(!is_numeric($id)){
+                 die("ID WaitingFor no es un entero");
+             }
+             else{
+               global $dbh;  
+               $this->abrirConexion();
+               
+               
+                 $sth = $dbh->query("SELECT * FROM WaitingFor wf WHERE wf.idStuff = {$id} LIMIT 1");  
+                 $sth->setFetchMode(PDO::FETCH_CLASS, 'WaitingFor');  
+
+                 $waitingF = $sth->fetch();
+//                 while($obj = $STH->fetch()) {  
+//                     echo $obj->addr;  
+//                 }
+             
+               $this->cerrarConexion();
+               return $waitingF;
+             }
+             
+         }
          public function selectAllWaitingFor(){
              
              global $dbh;
@@ -134,10 +154,9 @@
                $this->abrirConexion();
               
               
-               $sth = $dbh->prepare("UPDATE WaitingFor SET contexto = :contexto,
-                   tags = :tags, contactoPersona = :contactoPersona WHERE idWaitingFor = :idWaitingFor"); 
+               $sth = $dbh->prepare("UPDATE WaitingFor SET contactoPersona = :contactoPersona WHERE idWaitingFor = :idWaitingFor"); 
                
-               $data = array('contexto' => $newWF->getContexto(), 'tags' => $newWF->getTags(),'contactoPersona' => $newWF->getContactoPersona() ,'idWaitingFor' => $newWF->getIdWaitingFor());
+               $data = array('contactoPersona' => $newWF->getContactoPersona() ,'idWaitingFor' => $newWF->getIdWaitingFor());
                
                $sth->execute($data);  
                       
@@ -165,6 +184,25 @@
               
                 $sth = $dbh->prepare("DELETE FROM WaitingFor WHERE idWaitingFor =:idWaitingFor" );
                 $sth->bindParam(":idWaitingFor", $idWF);
+                $sth->execute();
+                
+                $this->cerrarConexion();
+             }
+             
+         }
+         
+                 public function deleteWaitingForByStuffId($idWF){
+              if(!is_numeric($idWF)){
+                 die("ID WaitingFor no es un entero");
+             }
+             else{
+                 
+                global $dbh;  
+                $this->abrirConexion();
+              
+              
+                $sth = $dbh->prepare("DELETE FROM WaitingFor WHERE idStuff = :idStuff" );
+                $sth->bindParam(":idStuff", $idWF);
                 $sth->execute();
                 
                 $this->cerrarConexion();

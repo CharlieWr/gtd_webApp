@@ -5,9 +5,20 @@
     $idUsuario = $_SESSION['idUsuario'];
     $usuarioControl = new UsuarioControl();
     $user = $usuarioControl->getUsuarioById($idUsuario);
+    $stuffName = "Selecciona Stuff";
+    $stuffDescription = "";
     
     $stuffControl = new StuffControl();
     $listStuff = $stuffControl->getAllStuffByUsuarioId($idUsuario);
+    //Si hay algun stuff seleccionado
+       if(isset($_GET['idSt'])){
+           //Stuff asociada a Usuario
+           $stuffAssoc = $stuffControl->getStuffById($_GET['idSt']);
+           
+           //Seleccionamos el nombre del Stuff
+           $stuffName=$stuffAssoc->getNombre();
+           $stuffDescription = $stuffAssoc->getDescripcion();
+       }
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,6 +48,7 @@
                                     foreach ($listStuff as $st){
                                         echo '<a href="ProcessView.php?idSt='.$st->getIdStuff().'">';
                                         echo '<li id="itemStuff">'.$st->getNombre()."</li>";
+                                        echo '</a>';
                                     }
                             ?>
                         </ul>
@@ -44,14 +56,33 @@
                 
                 <div id="detalleStuff">
                     <div id="detalleTitulo">
+                        <h3><?php echo $stuffName?></h3>
                         
                     </div>
-                    <?php
-                        if(isset($_GET['idSt'])){
-                            $stuffAssoc = $stuffControl->getStuffById($_GET['idSt']);
-                            var_dump($stuffAssoc);
-                        }
-                    ?>
+                    <form>
+                        <?php
+//                            if(isset($_GET['idSt'])){
+//                                $stuffAssoc = $stuffControl->getStuffById($_GET['idSt']);
+//                                var_dump($stuffAssoc);
+//                            }
+                        ?>
+                        <p>Nombre: 
+                        <input type="text" name="stuffName" required="required" maxlength="255" value="<?php echo $stuffName=="Selecciona Stuff"? "": $stuffName?>">
+                        </p>
+                        <p>Descripcion: 
+                            <textarea name="stuffDescription" rows="3" cols="25" maxlength="255" ><?php 
+                                        echo $stuffDescription;
+                                      ?></textarea>
+                        </p>
+                        <select type="select" name="stuffContext">
+                            <?php
+                                if(isset($stuffAssoc)){
+                                    
+                                }
+                            ?>
+                        </select>
+                        
+                    </form>
                 </div>
             </div>
               <footer>

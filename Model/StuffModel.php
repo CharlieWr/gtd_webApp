@@ -49,12 +49,12 @@
                
                global $dbh;  
                $this->abrirConexion();
-               $sth = $dbh->prepare("INSERT INTO Stuff (nombre,descripcion,fecha,typeStuff,idUsuario,idHistorial) 
-                   value (:nombre, :descripcion,:fecha, :typeStuff, :idUsuario, :idHistorial)"); 
+               $sth = $dbh->prepare("INSERT INTO Stuff (nombre,descripcion,fecha,typeStuff,idUsuario,idHistorial,idContexto) 
+                   value (:nombre, :descripcion,:fecha, :typeStuff, :idUsuario, :idHistorial, :idContexto)"); 
                
                $data = array('nombre' => $stuff->getNombre(), 'descripcion' => $stuff->getDescripcion()
                        , 'fecha' => $stuff->getFecha(), 'typeStuff' => $stuff->getTypeStuff(),
-                   'idUsuario' => $stuff->getIdUsuario(), 'idHistorial' => $stuff->getIdHistorial());
+                   'idUsuario' => $stuff->getIdUsuario(), 'idHistorial' => $stuff->getIdHistorial(),'idContexto'=> $stuff->getIdContexto());
                
                $sth->execute($data);  
                $id = $dbh->lastInsertID();

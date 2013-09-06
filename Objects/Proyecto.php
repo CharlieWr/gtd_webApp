@@ -3,18 +3,13 @@ require_once 'Stuff.php';
 
     class Proyecto extends Stuff{
         private $idProyecto;
-        private $contexto;
-        private $tags;
+
         private $idStuff;
         
-        function rellenaProyecto($contexto, $tags, $idStuff) {
-            $this->contexto = $contexto;
-            $this->tags = $tags;
+        function rellenaProyecto($idStuff) {
+
             $this->idStuff = $idStuff;
-        
-            
-           
-        }
+  }
 
         
         function asignaStuff($stuff){
@@ -29,21 +24,7 @@ require_once 'Stuff.php';
             $this->idProyecto = $idProyecto;
         }
 
-        public function getContexto() {
-            return $this->contexto;
-        }
-
-        public function setContexto($contexto) {
-            $this->contexto = $contexto;
-        }
-
-        public function getTags() {
-            return $this->tags;
-        }
-
-        public function setTags($tags) {
-            $this->tags = $tags;
-        }
+    
 
         public function getIdStuff() {
             return $this->idStuff;

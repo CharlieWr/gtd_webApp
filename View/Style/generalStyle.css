@@ -85,10 +85,23 @@ ul{
 }
 
 #detalleTitulo{
-    background-color: cadetblue;
+    border-bottom: grey thick solid;
     width:100%;
     height:10%;
 
 }
+#detalleTitulo h3{
+    padding-left: 20px;
+    
+}
+form input{
+    text-align: left;
+}
+/*#formNombreStuff input [type=text] {
+    width:100%;
+    height: 10%;
+    float: right;
+    
+}*/
 
 

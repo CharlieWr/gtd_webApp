@@ -8,14 +8,16 @@
         private $typeStuff;
         private $idUsuario;
         private $idHistorial;
+        private $idContexto;
 
-        function rellenaStuff($nombre, $descripcion, $fecha, $typeStuff, $idUsuario, $idHistorial) {
+        function rellenaStuff($nombre, $descripcion, $fecha, $typeStuff, $idUsuario, $idHistorial,$idContexto) {
             $this->nombre = $nombre;
             $this->descripcion = $descripcion;
             $this->fecha = $fecha;
             $this->typeStuff = $typeStuff;
             $this->idUsuario = $idUsuario;
             $this->idHistorial = $idHistorial;
+            $this->idContexto = $idContexto;
         }
 
         
@@ -28,6 +30,7 @@
             $this->typeStuff = $stuff->getTypeStuff();
             $this->idUsuario = $stuff->getIdUsuario();
             $this->idHistorial = $stuff->getIdHistorial();
+             $this->idContexto = $stuff->getIdContexto();
             }
             
         }
@@ -35,7 +38,7 @@
             return $this->idStuff;
         }
 
-        private function setIdStuff($idStuff) {
+        public function setIdStuff($idStuff) {
             $this->idStuff = $idStuff;
         }
 
@@ -85,6 +88,14 @@
 
         public function setIdHistorial($idHistorial) {
             $this->idHistorial = $idHistorial;
+        }
+
+        public function getIdContexto() {
+            return $this->idContexto;
+        }
+
+        public function setIdContexto($idContexto) {
+            $this->idContexto = $idContexto;
         }
 
 

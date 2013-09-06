@@ -4,14 +4,12 @@
     class SomedayMaybe extends Stuff{
         
         private $idSomedayMaybe;
-        private $contexto;
-        private $tags;
+    
         private $plazo;
         private $idStuff;
         
-        function rellenaSomedayMaybe($contexto, $tags, $plazo, $idStuff) {
-            $this->contexto = $contexto;
-            $this->tags = $tags;
+        function rellenaSomedayMaybe( $plazo, $idStuff) {
+
             $this->plazo = $plazo;
             $this->idStuff = $idStuff;
         }
@@ -20,25 +18,11 @@
             return $this->idSomedayMaybe;
         }
 
-        private function setIdSomedayMaybe($idSomedayMaybe) {
+        public function setIdSomedayMaybe($idSomedayMaybe) {
             $this->idSomedayMaybe = $idSomedayMaybe;
         }
 
-        public function getContexto() {
-            return $this->contexto;
-        }
-
-        public function setContexto($contexto) {
-            $this->contexto = $contexto;
-        }
-
-        public function getTags() {
-            return $this->tags;
-        }
-
-        public function setTags($tags) {
-            $this->tags = $tags;
-        }
+        
 
         public function getPlazo() {
             return $this->plazo;

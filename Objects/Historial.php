@@ -17,7 +17,7 @@
             return $this->idHistorial;
         }
 
-        private function setIdHistorial($idHistorial) {
+        public function setIdHistorial($idHistorial) {
             $this->idHistorial = $idHistorial;
         }
 

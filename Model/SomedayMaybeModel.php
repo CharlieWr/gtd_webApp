@@ -48,18 +48,17 @@
               
                global $dbh;  
                $this->abrirConexion();
-               $sth = $dbh->prepare("INSERT INTO SomedayMaybe (contexto,tags,plazo,idStuff) 
-                   value (:contexto, :tags,:plazo, :idStuff)"); 
+               $sth = $dbh->prepare("INSERT INTO SomedayMaybe (plazo,idStuff) 
+                   value (:plazo, :idStuff)"); 
                
-               $data = array('contexto' => $nextSM->getContexto(), 'tags' => $nextSM->getTags()
-                       ,'plazo' => $nextSM->getPlazo(),  'idStuff' => $nextSM->getIdStuff());
+               $data = array('plazo' => $nextSM->getPlazo(),  'idStuff' => $nextSM->getIdStuff());
                
                $sth->execute($data);  
                $id = $dbh->lastInsertID();
                 $this->cerrarConexion();
                 
                 
-               //Actualizamos la base de datos del Stuff y cambiamos su TypeStuff a 'N'
+               //Actualizamos la base de datos del Stuff y cambiamos su TypeStuff a 'S'
                $stuffModel = new StuffModel();
                $stuff = $stuffModel->selectStuffById($nextSM->getIdStuff());
                $stuff->setTypeStuff("S");
@@ -83,6 +82,29 @@
                
                
                  $sth = $dbh->query("SELECT * FROM SomedayMaybe sm WHERE sm.idSomedayMaybe = {$id} LIMIT 1");  
+                 $sth->setFetchMode(PDO::FETCH_CLASS, 'SomedayMaybe');  
+
+                 $somedayM = $sth->fetch();
+//                 while($obj = $STH->fetch()) {  
+//                     echo $obj->addr;  
+//                 }
+             
+               $this->cerrarConexion();
+               return $somedayM;
+             }
+             
+         }
+         
+             public function selectSomedayMaybeByStuffId($id){
+             if(!is_numeric($id)){
+                 die("ID Stuff no es un entero");
+             }
+             else{
+               global $dbh;  
+               $this->abrirConexion();
+               
+               
+                 $sth = $dbh->query("SELECT * FROM SomedayMaybe sm WHERE sm.idStuff = {$id} LIMIT 1");  
                  $sth->setFetchMode(PDO::FETCH_CLASS, 'SomedayMaybe');  
 
                  $somedayM = $sth->fetch();
@@ -134,10 +156,9 @@
                $this->abrirConexion();
               
               
-               $sth = $dbh->prepare("UPDATE SomedayMaybe SET contexto = :contexto,
-                   tags = :tags, plazo = :plazo WHERE idSomedayMaybe = :idSomedayMaybe"); 
+               $sth = $dbh->prepare("UPDATE SomedayMaybe SET plazo = :plazo WHERE idSomedayMaybe = :idSomedayMaybe"); 
                
-               $data = array('contexto' => $newSM->getContexto(), 'tags' => $newSM->getTags(),'plazo' => $newSM->getPlazo() ,'idSomedayMaybe' => $newSM->getIdSomedayMaybe());
+               $data = array('plazo' => $newSM->getPlazo() ,'idSomedayMaybe' => $newSM->getIdSomedayMaybe());
                
                $sth->execute($data);  
                       
@@ -165,6 +186,25 @@
               
                 $sth = $dbh->prepare("DELETE FROM SomedayMaybe WHERE idSomedayMaybe =:idSomedayMaybe" );
                 $sth->bindParam(":idSomedayMaybe", $idSM);
+                $sth->execute();
+                
+                $this->cerrarConexion();
+             }
+             
+         }
+         
+              public function deleteSomedayMaybeByStuffId($idSt){
+              if(!is_numeric($idSt)){
+                 die("ID SomedayMaybe no es un entero");
+             }
+             else{
+                 
+                global $dbh;  
+                $this->abrirConexion();
+              
+              
+                $sth = $dbh->prepare("DELETE FROM SomedayMaybe WHERE idStuff =:idStuff" );
+                $sth->bindParam(":idStuff", $idSt);
                 $sth->execute();
                 
                 $this->cerrarConexion();
