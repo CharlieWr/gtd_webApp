@@ -25,6 +25,11 @@
               "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => NULL,"idHistorial" => NULL);
           $stuffControl->insertStuff($newInfo);
       }
+      
+      if(isset($_POST['deleteStuff'])){
+          $idDelete = $_POST['idStuffForm'];
+          $stuffControl->deleteStuffById($idDelete);
+      }
        
     
     $listStuff = $stuffControl->getAllStuffByUsuarioId($idUsuario);
@@ -52,6 +57,7 @@
        //Si es un nuevo Stuff
        if(isset($_GET['new'])){
            $stuffSeleccionada = true;
+           $stuffName = "Nuevo Stuff";
            $newStuff = new Stuff();
            $newStuff->setNombre("Nuevo Stuff");
            //Se inserta al inicio de Array nuevo Stuff vacio
@@ -66,7 +72,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <link rel="stylesheet" href="./Style/generalStyle.css">
-        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<!--        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script language="javascript" type="text/javascript"></script>-->
         <title>Process</title>
     </head>
     <body>
@@ -139,7 +146,7 @@
                                 </td>
                                 <td>
                                     <input type="text" name="stuffName" required="required" maxlength="255" value="<?php 
-                                    echo $stuffName=="Selecciona Stuff"? "": $stuffName;?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
+                                    echo ($stuffName=="Selecciona Stuff" || $stuffName=="Nuevo Stuff")? "": $stuffName;?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
                                 </td>
                                 <td>
                                     <p><?php echo $stuffAssoc==NULL? date("d/m/Y H:i:s", time()) : date("d/m/Y H:i:s",  strtotime($stuffAssoc->getFecha()));?></p>
@@ -166,7 +173,7 @@
                                                   echo '<option value = "" ></option>';
                                                   foreach ($contextList as $auxCont){
                                                       //Si la stuff a añadir es la que tiene asociada la stuff selecionada
-                                                      if($stuffSeleccionada && $auxCont->getIdContexto()==$stuffAssoc->getIdContexto()){
+                                                      if($stuffSeleccionada && $stuffAssoc && $auxCont->getIdContexto()==$stuffAssoc->getIdContexto()){
                                                             echo '<option value="'.$auxCont->getIdContexto().'" selected>';
                                                             echo $auxCont->getNombreContexto().'</option>';
                                                       }
@@ -206,7 +213,7 @@
                                 <?php 
                                    //Mostramos solo botones input si hay stuff seleccionada
                                 if($stuffSeleccionada){
-                                    echo ' <input type="submit"  name="deleteStuff" value="Delete" />';
+                                    echo ' <input type="submit"  name="deleteStuff" value="Delete"/>';
                                 }
                                 
                                 ?>

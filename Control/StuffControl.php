@@ -54,7 +54,7 @@
 
                 
             //Si ya existe en la base de datos se actualiza
-            if($stuffModel->existeStuff($id)){
+            if($id && $stuffModel->existeStuff($id)){
                 //Se borra entrada de Stuff en Tags
                
                 $tagModel->deleteTagByIdStuff($id);
@@ -86,6 +86,11 @@
                 //
                 ////Crea array de tags segun delimitador
                 $tagList = explode(";",$infoStuff['tag']);
+                //Insertar en Stuff
+                $newStuff->setIdHistorial($infoStuff['idHistorial']);
+                $newStuff->setIdUsuario($infoStuff['idUsuario']);
+                $newStuff->setTypeStuff($infoStuff['typeStuff']);
+                $id = $stuffModel->insertarStuff($newStuff);
                 
                 foreach($tagList as $singleTag){
                     //Removemos posibles espacios en blanco al principio y final de nombre tag
@@ -99,12 +104,7 @@
 
                     }
                 }
-                //Insertar en Stuff
-                $newStuff->setIdHistorial($infoStuff['idHistorial']);
-                $newStuff->setIdUsuario($infoStuff['idUsuario']);
-                $newStuff->setTypeStuff($infoStuff['typeStuff']);
-                $stuffModel->insertarStuff($newStuff);
-                
+           
             }
             
             
@@ -131,6 +131,18 @@
             else{
                 $stuffModel = new StuffModel();
                 $id = $stuff->getIdStuff();
+                $stuffModel->deleteStuffById($id);
+                
+            }
+        }
+        
+        public function deleteStuffById($id){
+             if(!is_numeric($id)){
+                die("Id Stuff no es de tipo entero valido.");
+            }
+            else{
+                $stuffModel = new StuffModel();
+                
                 $stuffModel->deleteStuffById($id);
                 
             }
