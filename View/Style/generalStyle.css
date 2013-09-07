@@ -5,7 +5,9 @@ root {
 }
 
 body {
-    background-color:  white;
+/*    background-color:  whitesmoke;*/
+    background-color:  white    ;
+
     font-family: sans-serif;
 }
 #content{
@@ -32,7 +34,7 @@ footer{
 }
 
 #stuffBox{
-    border: 3px  #cccccc solid;
+    border: 3px  #CFD8E3 solid;
     -webkit-border-radius: 10px;
 -webkit-border-top-left-radius: 2px;
 -webkit-border-bottom-left-radius: 2px;
@@ -42,7 +44,10 @@ footer{
 border-radius: 10px;
 border-top-left-radius: 2px;
 border-bottom-left-radius: 2px;
-    height: 500px;
+
+/*    border: 0px lavender solid; 
+    border-radius: 10px;*/
+    height: 550px;
     width: auto;
     position: relative;
     margin: 0 70px 0 70px;
@@ -51,8 +56,9 @@ border-bottom-left-radius: 2px;
 }
 
 #listaStuff{
-    background-color: #C1C1D4;
-    width: 30%;
+    border-right: 3px #CFD8E3 solid;
+    background-color: lavender;
+    width: 29.7%;
     height: 100%;
     float: left;
     overflow: auto;
@@ -71,31 +77,74 @@ ul{
 
 ul li{
     padding-left: 20px;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 a {
     text-decoration: none;
 }
+
+a:visited {
+    color: inherit;
+}
 #itemStuff{
-    background-color: #E9E9F2;
+    background-color: lightsteelblue;
     margin: 15px 40px 15px 0px;
     height: 40px;
     padding-top: 10px;
-    
+    color: darkslateblue;
     
 }
 
 #itemStuff:hover {
-     background-color: darkslategray;
+     background-color: steelblue;
      color: aliceblue;
     
 }
+
+/*******************************************/
+/*Cabecera de lista de Stuff*/
+/*******************************************/
+
 #listaTitulo{
-    background-color: black;
+    background-color: whitesmoke;
     width:100%;
     height: 10%;
     
 }
+
+
+h2 {
+    margin-top: 0px;
+    padding: 7px 0 7px 20px;
+    display: inline-block;
+        /*border: 2px black solid;*/
+
+}
+
+#listaTitulo p{
+    display: inline-block;
+    /*font-size: 30px;*/
+        border: 2px steelblue solid;
+        border-radius: 3px;
+        margin-top: 2px;
+        font-size: 2.1em;
+        margin-left: 6em;
+
+    
+}
+
+#listaTitulo > div{
+    border: 2px black solid;
+    display: inline-block;
+    margin-top: 0px;
+    padding: 0 3px 0 3px;
+    /*float: right;*/
+    margin-left: 50px;
+   
+}
+
+/*******************************************/
+/*******************************************/
 
 #detalleStuff{
     background-color:  whitesmoke;
@@ -110,7 +159,7 @@ a {
 }
 
 #detalleTitulo{
-    border-bottom:  #cccccc 3px solid;
+    border-bottom:  #CFD8E3 3px solid;
     width:100%;
     height:10%;
 
@@ -133,8 +182,20 @@ form * {
     
 }
 
+input[type=submit] {
+    width: 80px;
+    text-align: center;
+}
+
 input[type=text]{
-    border-radius: 4px;
+    /*border-radius: 4px;*/
+    border: 3px solid #cccccc;
+	padding: 5px;
+        resize: none;
+	font-family: Tahoma, sans-serif;
+/*	background-image: url(bg.gif);*/
+	background-position: bottom right;
+	background-repeat: no-repeat;
 }
 
 textarea {
@@ -149,20 +210,22 @@ textarea {
 	background-repeat: no-repeat;}
 /*
    Selecciona nombre de Stuff
-*/
+
 form p:nth-child(2){
     display: inline-block;
 }
 
-/*Selecciona Fecha Stuff*/
+Selecciona Fecha Stuff
 form p:first-child {
     width: auto;
     float: right;
     display: inline-block;
     padding-right: 20px;
     
+}*/
+td {
+    padding-right: 15px;
 }
-
 form textarea{
     vertical-align: middle;
 }

@@ -39,6 +39,78 @@
             return $stuff;
         }
         
+        
+        public function insertStuff($infoStuff){
+            $stuffModel = new StuffModel();
+            $id = $infoStuff['idStuff'];
+            $tagModel = new TagModel();
+             
+             
+            $newStuff = new Stuff();
+            $newStuff->setDescripcion($infoStuff['descripcion']);
+            $newStuff->setNombre($infoStuff['nombre']);
+            $newStuff->setIdContexto($infoStuff['idContexto']);
+            $newStuff->setIdStuff($infoStuff['idStuff']);
+
+                
+            //Si ya existe en la base de datos se actualiza
+            if($stuffModel->existeStuff($id)){
+                //Se borra entrada de Stuff en Tags
+               
+                $tagModel->deleteTagByIdStuff($id);
+                
+                //Crea array de tags segun delimitador
+                $tagList = explode(";",$infoStuff['tag']);
+                
+                foreach($tagList as $singleTag){
+                    //Removemos posibles espacios en blanco al principio y final de nombre tag
+                    $nombreTag = trim($singleTag);
+                    //Se añade cada tag  a la tabla tag
+                  if($nombreTag != "" || $nombreTag != NULL){
+                    $tag = new Tag();
+                    $tag->setIdStuff($id);
+                    $tag->setNombreTag($nombreTag);
+                    $tagModel->insertarTag($tag);
+
+                    }
+                }
+              
+                
+                //Se hace update en Stuff
+
+                $stuffModel->updateStuff($newStuff);
+            }
+            //Si es un nuevo Stuff
+            else{
+                //Crear nueva entrada en tabla tags por cada tag
+                //
+                ////Crea array de tags segun delimitador
+                $tagList = explode(";",$infoStuff['tag']);
+                
+                foreach($tagList as $singleTag){
+                    //Removemos posibles espacios en blanco al principio y final de nombre tag
+                    $nombreTag = trim($singleTag);
+                      //Se añade cada tag  a la tabla tag
+                    if($nombreTag != "" || $nombreTag != NULL){
+                        $tag = new Tag();
+                        $tag->setIdStuff($id);
+                        $tag->setNombreTag($nombreTag);
+                        $tagModel->insertarTag($tag);
+
+                    }
+                }
+                //Insertar en Stuff
+                $newStuff->setIdHistorial($infoStuff['idHistorial']);
+                $newStuff->setIdUsuario($infoStuff['idUsuario']);
+                $newStuff->setTypeStuff($infoStuff['typeStuff']);
+                $stuffModel->insertarStuff($newStuff);
+                
+            }
+            
+            
+        }
+        
+        
         public function updateStuff($stuff){
             if(!is_a($stuff,'Stuff')){
                 die("Objeto Stuff no es de clase Stuff valida");

@@ -89,6 +89,36 @@
              
          }
          
+         public function existeStuff($id){
+             
+            if(!is_numeric($id)){
+                 die("ID Stuff no es un entero");
+             }
+             else{
+               global $dbh;  
+               $this->abrirConexion();
+               
+               
+                 $sth = $dbh->query("SELECT * FROM Stuff s WHERE s.idStuff = {$id} LIMIT 1");  
+                 $sth->setFetchMode(PDO::FETCH_ASSOC);  
+
+                 $stuff = $sth->fetch();
+//                 while($obj = $STH->fetch()) {  
+//                     echo $obj->addr;  
+//                 }
+                $this->cerrarConexion();
+                 if($stuff){
+                     return $stuff;
+                 }
+                 else{
+                     return false;
+                 }
+            
+               
+             }
+             
+         }
+         
          //Devuelve los Stuff asociados a un usuario determinado
          public function selectStuffByUduarioId($usuarioId){
              if(!is_numeric($usuarioId)){
@@ -157,10 +187,11 @@
               
               
                $sth = $dbh->prepare("UPDATE Stuff SET nombre = :nombre,
-                   descripcion = :descripcion, fecha = :fecha, typeStuff = :typeStuff WHERE idStuff = :idStuff"); 
+                   descripcion = :descripcion, fecha = :fecha, typeStuff = :typeStuff, idHistorial = :idHistorial, idContexto = :idContexto WHERE idStuff = :idStuff"); 
                
                $data = array('nombre' => $newStuff->getNombre(), 'descripcion' => $newStuff->getDescripcion()
-                       , 'fecha' => $newStuff->getFecha(), 'typeStuff' => $newStuff->getTypeStuff(), 'idStuff' => $newStuff->getIdStuff());
+                       , 'fecha' => $newStuff->getFecha(), 'typeStuff' => $newStuff->getTypeStuff(),
+                   'idHistorial' => $newStuff->getIdHistorial(), 'idContexto' => $newStuff->getIdContexto(), 'idStuff' => $newStuff->getIdStuff());
                
                $sth->execute($data);  
                

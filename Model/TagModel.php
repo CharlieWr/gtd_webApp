@@ -176,6 +176,24 @@
              
          }
          
+         public function deleteTagByIdStuff($idStuff){
+             if(!is_numeric($idStuff)){
+                 die("ID Stuff no es un entero");
+             }
+             else{
+                 
+                global $dbh;  
+                $this->abrirConexion();
+              
+              
+                $sth = $dbh->prepare("DELETE FROM Tag WHERE idStuff =:idStuff" );
+                $sth->bindParam(":idStuff", $idStuff);
+                $sth->execute();
+                
+                $this->cerrarConexion();
+             }
+         }
+         
          
          
     }
