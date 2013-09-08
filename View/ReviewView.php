@@ -14,7 +14,7 @@
     $user = $usuarioControl->getUsuarioById($idUsuario);
     $stuffName = "Selecciona Stuff";
     $stuffDescription = "";
-    
+     $vista = "";
         //Si se ha hecho click en Aceptar (Guardar Stuff)
       if(isset($_POST['saveStuff'])){
           $newNombre = $_POST['stuffName'];
@@ -23,8 +23,11 @@
           $newTags = $_POST['stuffTag'];
           $newIdStuff = $_POST['idStuffForm'];
            $typeStuff = $_POST['sendTo'];
+           $vista=$typeStuff;
+            $newPlazo = isset($_POST['plazo'])? $_POST['plazo'] : NULL;
+            $newContacto = isset($_POST['contacto'])? $_POST['contacto'] : NULL;
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
-              "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
+              "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"contacto" => $newContacto,"plazo"=>$newPlazo,"idHistorial" => NULL);
           $stuffControl->insertStuff($newInfo);
           
           
@@ -37,13 +40,14 @@
           $newTags = $_POST['stuffTag'];
           $newIdStuff = $_POST['idStuffForm'];
           $typeStuff = $_POST['sendTo'];
+          $vista=$typeStuff;
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
               "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
 //          $idDelete = $_POST['idStuffForm'];
           $stuffControl->sendStuffHistorial($newInfo);
       }
       
-      $vista = "";
+     
       //Selecciona la vista de las actividades
       if(isset($_GET['dropDownView'])){
           $vista = $_GET['dropDownView'];
@@ -300,11 +304,11 @@
                                </td>
                                <td>
                                    <select type="select" name="sendTo" >
-                                       <option value=""></option>
-                                       <option value="N">Next Action</option>
-                                       <option value="P">Project</option>
-                                       <option value="S">Someday/Maybe</option>
-                                       <option value="W">Waiting For</option>
+                                       <option value="" <?php echo ""==$vista? "selected" : "";?>></option>
+                                       <option value="N" <?php echo "N"==$vista? "selected" : "";?>>Next Action</option>
+                                       <option value="P" <?php echo "P"==$vista? "selected" : "";?>>Project</option>
+                                       <option value="S" <?php echo "S"==$vista? "selected" : "";?>>Someday/Maybe</option>
+                                       <option value="W" <?php echo "W"==$vista? "selected" : "";?>>Waiting For</option>
                                    </select>
                                </td>
                             
