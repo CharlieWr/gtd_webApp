@@ -11,7 +11,7 @@
      $tagControl = new TagControl();
      
     $user = $usuarioControl->getUsuarioById($idUsuario);
-    $stuffName = "Selecciona Proyecto";
+    $stuffName = "Selecciona Someday/Maybe";
     $stuffDescription = "";
     
         //Si se ha hecho click en Aceptar (Guardar Stuff)
@@ -144,9 +144,9 @@
 
                         <ul>
                             <?php 
-                                echo '<li><a href="ProyectoView.php">ALL</a></li>';
+                                echo '<li><a href="SomedayMaybeView.php">ALL</a></li>';
                                 foreach($contextList as $ct){
-                                    echo '<li><a href="ProyectoView.php?context='.$ct->getIdContexto().'">'.$ct->getNombreContexto().'</a></li>';
+                                    echo '<li><a href="SomedayMaybeView.php?context='.$ct->getIdContexto().'">'.$ct->getNombreContexto().'</a></li>';
                                 }
                             ?>
                    
@@ -181,15 +181,15 @@
         <div id="content">
             
            
-            <h1>Proyecto</h1>
+            <h1>Someday/Maybe</h1>
        
          
             <div id="stuffBox">
                 <div id="listaStuff">
                     <div id="listaTitulo">
-                        <h2>Proyectos</h2>
-                        <a href="ProyectoView.php?new=1">
-                            <p style=" margin-left: 4.6em;"><strong>+</strong></p>
+                        <h2>Someday/Maybes</h2>
+                        <a href="SomedayMaybeView.php?new=1">
+                            <p style=" margin-left: 2em;"><strong>+</strong></p>
                         </a>
                         
                     </div>
@@ -199,7 +199,7 @@
                                     foreach ($listStuff as $st){
                                       
                                         //Solo procesar las de tipo P o nuevos proyectos
-                                         if($st->getTypeStuff()=="P" || $st->getNombre()=="Nuevo Stuff"){
+                                         if($st->getTypeStuff()=="S" || $st->getNombre()=="Nuevo Stuff"){
                                             //Solo se muestran Stuff que no hayan sido eliminadas (enviadas el historial)
                                             //Y se muestran todos si contexto es Null (Seleccionado ALL) o se muestran solo las del contexto seleccionado
                                             if($st->getIdHistorial() == NULL && (!$contextIdSelected || $st->getIdContexto() == $contextIdSelected)){
@@ -213,7 +213,7 @@
 
                                                  }
                                                  else{
-                                                       echo '<a href="ProyectoView.php?idSt='.$st->getIdStuff().'">';
+                                                       echo '<a href="SomedayMaybeView.php?idSt='.$st->getIdStuff().'">';
                                                        echo '<li id="itemStuff">'.$st->getNombre()."</li>";
                                                         echo '</a>';
                                                  }
@@ -232,7 +232,7 @@
                         
                     </div>
                    
-                    <form id='modifyStuff' action='ProyectoView.php' method='post' accept-charset='UTF-8'>
+                    <form id='modifyStuff' action='SomedayMaybeView.php' method='post' accept-charset='UTF-8'>
                         <table>
                             <tr>
                                 <td>
@@ -240,7 +240,7 @@
                                 </td>
                                 <td colspan="3">
                                     <input type="text" name="stuffName" required="required" maxlength="255" value="<?php 
-                                    echo ($stuffName=="Selecciona Proyecto" || $stuffName=="Nuevo Stuff")? "": $stuffName;?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
+                                    echo ($stuffName=="Selecciona Someday/Maybe" || $stuffName=="Nuevo Stuff")? "": $stuffName;?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
                                 </td>
                                 <td>
                                     <p><?php echo $stuffAssoc==NULL? date("d/m/Y H:i:s", time()) : date("d/m/Y H:i:s",  strtotime($stuffAssoc->getFecha()));?></p>
@@ -286,9 +286,9 @@
                                <td>
                                    <select type="select" name="sendTo" >
                                        <option value=""></option>
-                                       <option value="N">Next Action</option>
-                                       <option value="P" selected>Project</option>
-                                       <option value="S">Someday/Maybe</option>
+                                       <option value="N" >Next Action</option>
+                                       <option value="P" >Project</option>
+                                       <option value="S" selected>Someday/Maybe</option>
                                        <option value="W">Waiting For</option>
                                    </select>
                                </td>
