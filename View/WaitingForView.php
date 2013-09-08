@@ -3,12 +3,14 @@
     require_once '../Control/UsuarioControl.php';
     require_once '../Control/ContextoControl.php';
     require_once '../Control/TagControl.php';
+    require_once '../Control/WaitingForControl.php';
     
     session_start();
     $idUsuario = $_SESSION['idUsuario'];
     $usuarioControl = new UsuarioControl();
     $stuffControl = new StuffControl();
      $tagControl = new TagControl();
+     $wfControl = new WaitingForControl();
      
     $user = $usuarioControl->getUsuarioById($idUsuario);
     $stuffName = "Selecciona Waiting For";
@@ -22,8 +24,9 @@
           $newTags = $_POST['stuffTag'];
           $newIdStuff = $_POST['idStuffForm'];
            $typeStuff = $_POST['sendTo'];
+           $newContacto = $_POST['contacto'];
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
-              "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
+              "tag" => $newTags, "idStuff" => $newIdStuff,"contacto" => $newContacto, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
           $stuffControl->insertStuff($newInfo);
           
           
@@ -50,7 +53,7 @@
     
    
     $tagList = NULL;
-    
+    $contacto = NULL;
     $stuffAssoc = NULL;
     
     $stuffSeleccionada = false;
@@ -63,6 +66,9 @@
            $stuffName=$stuffAssoc->getNombre();
            $stuffDescription = $stuffAssoc->getDescripcion();
            $tagList = $tagControl->getTagByStuffId($_GET['idSt']);
+           
+           $wf = $wfControl->getWFByStuffId($_GET['idSt']);
+           $contacto = $wf->getContactoPersona();
        }
        
        //Si es un nuevo Stuff
@@ -232,15 +238,16 @@
                     </div>
                    
                     <form id='modifyStuff' action='WaitingForView.php' method='post' accept-charset='UTF-8'>
-                        <table>
+                        <table >
                             <tr>
                                 <td>
                                     <p>Nombre:</p>
                                 </td>
-                                <td colspan="3">
+                                <td>
                                     <input type="text" name="stuffName" required="required" maxlength="255" value="<?php 
                                     echo ($stuffName=="Selecciona Waiting For" || $stuffName=="Nuevo Stuff")? "": $stuffName;?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
                                 </td>
+                                <td colspan="2"></td>
                                 <td>
                                     <p><?php echo $stuffAssoc==NULL? date("d/m/Y H:i:s", time()) : date("d/m/Y H:i:s",  strtotime($stuffAssoc->getFecha()));?></p>
                                 </td>
@@ -297,7 +304,7 @@
                                 <td>
                                     <p>Tags:</p>
                                 </td>
-                                <td colspan="3">
+                                <td >
                                     
                                     <?php
                                     echo '<input type="text" name="stuffTag" title="Separa Tags con Punto y Coma ( ; )" value="';
@@ -311,6 +318,11 @@
                                     //Si no hay stuff seleccionada nada es editable
                                     echo $stuffSeleccionada? '">' : '" readonly>'
                                 ?>
+                                </td>
+                                <td>Contacto:</td>
+                                <td>
+                                     <input type="text" name="contacto" maxlength="255" value="<?php 
+                                    echo ($stuffSeleccionada && $contacto)? $contacto : "";?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
                                 </td>
                         </tr>
                         <tr >
