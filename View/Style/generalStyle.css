@@ -193,7 +193,6 @@ input[type=text]{
 	padding: 5px;
         resize: none;
 	font-family: Tahoma, sans-serif;
-/*	background-image: url(bg.gif);*/
 	background-position: bottom right;
 	background-repeat: no-repeat;
 }
@@ -206,26 +205,11 @@ textarea {
         resize: none;
 	/*font-family: Tahoma, sans-serif;*/
 	font-family: sans-serif;
-/*	background-image: url(bg.gif);*/
 	background-position: bottom right;
 	background-repeat: no-repeat;
 
 }
-/*
-   Selecciona nombre de Stuff
 
-form p:nth-child(2){
-    display: inline-block;
-}
-
-Selecciona Fecha Stuff
-form p:first-child {
-    width: auto;
-    float: right;
-    display: inline-block;
-    padding-right: 20px;
-    
-}*/
 td {
     padding-right: 15px;
 }

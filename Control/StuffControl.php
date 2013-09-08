@@ -153,7 +153,7 @@
                 $newStuff->setIdUsuario($infoStuff['idUsuario']);
                 
                 $id = $stuffModel->insertarStuff($newStuff);
-                
+                $newStuff->setIdStuff($id);
                 foreach($tagList as $singleTag){
                     //Removemos posibles espacios en blanco al principio y final de nombre tag
                     $nombreTag = trim($singleTag);
