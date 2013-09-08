@@ -51,7 +51,8 @@
             $newStuff->setNombre($infoStuff['nombre']);
             $newStuff->setIdContexto($infoStuff['idContexto']);
             $newStuff->setIdStuff($infoStuff['idStuff']);
-
+            $typeStuff = ($infoStuff['typeStuff']=="")? NULL : $infoStuff['typeStuff'];
+            $newStuff->setTypeStuff($typeStuff);
                 
             //Si ya existe en la base de datos se actualiza
             if($id && $stuffModel->existeStuff($id)){
@@ -75,10 +76,43 @@
                     }
                 }
               
-                
+                //Luego de insertar en Stuff hay que revisar si ese id pertenecia a otro 'hijo', borrarlo de alli y agregarlo a la tabla que pertenece
+                //Obtengo el tipo del Stuff anterior
+                $oldStuff = $stuffModel->selectStuffById($id);
+                $oldType = $oldStuff->getTypeStuff();
+                switch($oldType){
+                    case "N":
+                        //Borro de Next Action ese stuff
+                        break;
+                    case "P":
+                        //Borro de Proyecto ese stuff
+                        break;
+                    case "S":
+                        //Borro de SomedayMaybe ese stuff
+                        break;
+                    case "W":
+                        //Borro de Waiting For ese stuff
+                        break;
+                }
                 //Se hace update en Stuff
 
                 $stuffModel->updateStuff($newStuff);
+                
+                //Se añade en cada tabla 'hijo' de Stuff el nuevo tipo
+                      switch($typeStuff){
+                    case "N":
+                        //se agrega nuevo Next Action
+                        break;
+                    case "P":
+                        //se agrega nuevo Proyecto
+                        break;
+                    case "S":
+                        //Bse agrega nuevo SomedayMaybe
+                        break;
+                    case "W":
+                        //se agrega nuevo Waiting For
+                        break;
+                }
             }
             //Si es un nuevo Stuff
             else{
@@ -157,7 +191,8 @@
                 $newStuff->setNombre($infoStuff['nombre']);
                 $newStuff->setIdContexto($infoStuff['idContexto']);
                 $newStuff->setIdStuff($infoStuff['idStuff']);
-                
+                $typeStuff = ($infoStuff['typeStuff']=="")? NULL : $infoStuff['typeStuff'];
+                $newStuff->setTypeStuff($typeStuff);
                 
                 //Creamos nueva entrada en historial y le asignamos el id al Stuff
                 $historialModel = new HistorialModel();

@@ -204,10 +204,13 @@ textarea {
 	border: 3px solid #cccccc;
 	padding: 5px;
         resize: none;
-	font-family: Tahoma, sans-serif;
+	/*font-family: Tahoma, sans-serif;*/
+	font-family: sans-serif;
 /*	background-image: url(bg.gif);*/
 	background-position: bottom right;
-	background-repeat: no-repeat;}
+	background-repeat: no-repeat;
+
+}
 /*
    Selecciona nombre de Stuff
 

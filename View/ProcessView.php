@@ -21,9 +21,12 @@
           $newIdContexto = $_POST['stuffContext']==""? NULL : $_POST['stuffContext'];
           $newTags = $_POST['stuffTag'];
           $newIdStuff = $_POST['idStuffForm'];
+           $typeStuff = $_POST['sendTo'];
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
-              "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => NULL,"idHistorial" => NULL);
+              "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
           $stuffControl->insertStuff($newInfo);
+          
+          
       }
       
       if(isset($_POST['deleteStuff'])){
@@ -32,8 +35,9 @@
           $newIdContexto = $_POST['stuffContext']==""? NULL : $_POST['stuffContext'];
           $newTags = $_POST['stuffTag'];
           $newIdStuff = $_POST['idStuffForm'];
+          $typeStuff = $_POST['sendTo'];
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
-              "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => NULL,"idHistorial" => NULL);
+              "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
 //          $idDelete = $_POST['idStuffForm'];
           $stuffControl->sendStuffHistorial($newInfo);
       }
@@ -231,7 +235,7 @@
                                 <td>
                                     <p>Nombre:</p>
                                 </td>
-                                <td>
+                                <td colspan="3">
                                     <input type="text" name="stuffName" required="required" maxlength="255" value="<?php 
                                     echo ($stuffName=="Selecciona Stuff" || $stuffName=="Nuevo Stuff")? "": $stuffName;?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
                                 </td>
@@ -243,7 +247,7 @@
                                 <td>
                                     <p>Descripcion:</p>
                                 </td>
-                                <td>
+                                <td colspan="3">
                                     <textarea name="stuffDescription" rows="3" cols="25" maxlength="255" <?php echo $stuffSeleccionada? "" : 'readonly'?> ><?php 
                                                 echo $stuffDescription;
                                               ?></textarea>
@@ -273,13 +277,25 @@
                                         ?>
                                     </select>
                                </td>
+                               <td>
+                                   Send To:
+                               </td>
+                               <td>
+                                   <select type="select" name="sendTo" >
+                                       <option value=""></option>
+                                       <option value="N">Next Action</option>
+                                       <option value="P">Project</option>
+                                       <option value="S">Someday/Maybe</option>
+                                       <option value="W">Waiting For</option>
+                                   </select>
+                               </td>
                             
                             </tr>
                             <tr>
                                 <td>
                                     <p>Tags:</p>
                                 </td>
-                                <td>
+                                <td colspan="3">
                                     
                                     <?php
                                     echo '<input type="text" name="stuffTag" title="Separa Tags con Punto y Coma ( ; )" value="';
@@ -298,24 +314,25 @@
                         <tr >
                             <td>
                                 <?php 
-                                   //Mostramos solo botones input si hay stuff seleccionada
-                                if($stuffSeleccionada){
-                                    echo ' <input type="submit"  name="deleteStuff" value="Delete"/>';
-                                }
-                                
+//                                   //Mostramos solo botones input si hay stuff seleccionada
+//                                if($stuffSeleccionada){
+//                                    echo ' <input type="submit"  name="deleteStuff" onclick="return confirm(\'Really delete?\'); value="Delete"/>';
+//                                }
+//                                
                                 ?>
-                               
+                               <input type="submit"  name="deleteStuff" onclick='return confirm("Really delete?");' value="Delete" <?php echo $stuffSeleccionada? "" : "disabled"?>/>
                             </td>
-                            <td>
+                            <td colspan="3">
                                 <input type="hidden" name="idStuffForm" value="<?php echo isset($stuffAssoc)? $stuffAssoc->getIdStuff() : NULL;?>">
                             </td>
                             <td>
                                 <?php 
                                        //Mostramos solo botones input si hay stuff seleccionada
-                                    if($stuffSeleccionada){
-                                     echo '<input type="submit"  name="saveStuff" value="Save" />';
-                                    }  
+//                                    if($stuffSeleccionada){
+//                                     echo '<input type="submit"  name="saveStuff" value="Save" />';
+//                                    }  
                                 ?>
+                               <input type="submit"  name="saveStuff" value="Save" <?php echo $stuffSeleccionada? "" : "disabled"?>/>
                             </td>
                         </tr>
                         
