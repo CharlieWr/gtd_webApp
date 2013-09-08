@@ -6,6 +6,7 @@
     
     session_start();
     $idUsuario = $_SESSION['idUsuario'];
+    $formatoFecha = $_SESSION['fecha'];
     $usuarioControl = new UsuarioControl();
     $stuffControl = new StuffControl();
      $tagControl = new TagControl();
@@ -194,25 +195,29 @@
                             <?php 
                             
                                     foreach ($listStuff as $st){
-                                      //Solo se muestran Stuff que no hayan sido eliminadas (enviadas el historial)
-                                        //Y se muestran todos si contexto es Null (Seleccionado ALL) o se muestran solo las del contexto seleccionado
-                                        if($st->getIdHistorial() == NULL && (!$contextIdSelected || $st->getIdContexto() == $contextIdSelected)){
-                                            //Si hay stuff seleccionada cambiamos el estilo
-                                            if($stuffAssoc && $st->getIdStuff() == $stuffAssoc->getIdStuff()){
-                                                echo '<li id="itemStuff" style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;">'.$st->getNombre()."</li>";
-                                            }
-                                            //Si se esta creando un nuevo Stuff y esta ese seleccionado
-                                            elseif (isset($newStuff) && $st->getNombre()=="Nuevo Stuff") {
-                                                 echo '<li id="itemStuff" style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;">'.$st->getNombre()."</li>";
+                                        
+                                        if($st->getTypeStuff()== "" || !$st->getTypeStuff()){
+                                            //Solo se muestran Stuff que no hayan sido eliminadas (enviadas el historial)
+                                              //Y se muestran todos si contexto es Null (Seleccionado ALL) o se muestran solo las del contexto seleccionado
+                                              if($st->getIdHistorial() == NULL && (!$contextIdSelected || $st->getIdContexto() == $contextIdSelected)){
+                                                  //Si hay stuff seleccionada cambiamos el estilo
+                                                  if($stuffAssoc && $st->getIdStuff() == $stuffAssoc->getIdStuff()){
+                                                      echo '<li id="itemStuff" style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;">'.$st->getNombre()."</li>";
+                                                  }
+                                                  //Si se esta creando un nuevo Stuff y esta ese seleccionado
+                                                  elseif (isset($newStuff) && $st->getNombre()=="Nuevo Stuff") {
+                                                       echo '<li id="itemStuff" style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;">'.$st->getNombre()."</li>";
 
-                                             }
-                                             else{
-                                                   echo '<a href="ProcessView.php?idSt='.$st->getIdStuff().'">';
-                                                   echo '<li id="itemStuff">'.$st->getNombre()."</li>";
-                                                    echo '</a>';
-                                             }
+                                                   }
+                                                   else{
+                                                         echo '<a href="ProcessView.php?idSt='.$st->getIdStuff().'">';
+                                                         echo '<li id="itemStuff">'.$st->getNombre()."</li>";
+                                                          echo '</a>';
+                                                   }
 
-                                        }
+                                              }
+                                        
+                                             }
                                     
                                  }
                             ?>
@@ -237,7 +242,8 @@
                                     echo ($stuffName=="Selecciona Stuff" || $stuffName=="Nuevo Stuff")? "": $stuffName;?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
                                 </td>
                                 <td>
-                                    <p><?php echo $stuffAssoc==NULL? date("d/m/Y H:i:s", time()) : date("d/m/Y H:i:s",  strtotime($stuffAssoc->getFecha()));?></p>
+                                    <p><?php echo $stuffAssoc==NULL? date($formatoFecha, time()) : date($formatoFecha,  strtotime($stuffAssoc->getFecha()));?></p>
+                                    <p><?php // echo $stuffAssoc==NULL? date("d/m/Y H:i:s", time()) : date("d/m/Y H:i:s",  strtotime($stuffAssoc->getFecha()));?></p>
                                 </td>
                             </tr>
                             <tr>

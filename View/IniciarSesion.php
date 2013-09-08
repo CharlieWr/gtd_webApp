@@ -16,7 +16,8 @@
                     
                         session_start();
                         $_SESSION['idUsuario'] = $idUsuario;
-			redirect_to("Home.php");
+                        $_SESSION['fecha'] = "d/m/Y H:i:s";
+			redirect_to("ProcessView.php");
 		} else {
 			$message = "Hay errores.";
 		}

@@ -130,7 +130,8 @@
                         //Bse agrega nuevo SomedayMaybe
                         $smModel = new SomedayMaybeModel();
                         $newSm = new SomedayMaybe();
-                        $newSm->setPlazo($infoStuff['plazo']);
+                        $plnewsm = isset($infoStuff['plazo'])? $infoStuff['plazo'] : NULL;
+                        $newSm->setPlazo($plnewsm);
                         $newSm->asignaStuff($newStuff);
                         $smModel->insertarSomedayMaybe($newSm);
                         break;
@@ -138,7 +139,8 @@
                         //se agrega nuevo Waiting For
                         $wfModel = new WaitingForModel();
                         $newWf = new WaitingFor();
-                        $newWf->setContactoPersona($infoStuff['contacto']);
+                        $cpnewwf = isset($infoStuff['contacto'])? $infoStuff['contacto'] : NULL;
+                        $newWf->setContactoPersona($cpnewwf);
                         $newWf->asignaStuff($newStuff);
                         $wfModel->insertarWaitingFor($newWf);
                         break;

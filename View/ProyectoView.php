@@ -6,6 +6,7 @@
     
     session_start();
     $idUsuario = $_SESSION['idUsuario'];
+    $formatoFecha = $_SESSION['fecha'];
     $usuarioControl = new UsuarioControl();
     $stuffControl = new StuffControl();
      $tagControl = new TagControl();
@@ -240,7 +241,7 @@
                                     echo ($stuffName=="Selecciona Proyecto" || $stuffName=="Nuevo Stuff")? "": $stuffName;?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
                                 </td>
                                 <td>
-                                    <p><?php echo $stuffAssoc==NULL? date("d/m/Y H:i:s", time()) : date("d/m/Y H:i:s",  strtotime($stuffAssoc->getFecha()));?></p>
+                                    <p><?php echo $stuffAssoc==NULL? date($formatoFecha, time()) : date($formatoFecha,  strtotime($stuffAssoc->getFecha()));?></p>
                                 </td>
                             </tr>
                             <tr>
