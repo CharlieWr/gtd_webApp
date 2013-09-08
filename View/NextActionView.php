@@ -180,10 +180,8 @@
 
         <div id="content">
             
-           
-            <h1>Next Action</h1>
-       
-         
+           <img src="images/todolist.png " />
+            <h1 id="logo">Getting Things Done!</h1>
             <div id="stuffBox">
                 <div id="listaStuff">
                     <div id="listaTitulo">
@@ -344,9 +342,7 @@
                     </form>
                 </div>
             </div>
-              <footer>
-                Footer
-             </footer>
+             
         </div>
       
     </body>

@@ -33,6 +33,23 @@ footer{
     
 }
 
+/**************************************/
+/*Titulo y logo*/
+/**************************************/
+#content img {
+    margin: 10px 0px 10px 70px; 
+    display: inline-block; 
+    vertical-align: middle;
+}
+
+#logo {
+    display: inline-block;
+    color: steelblue;
+    
+}
+
+/**************************************/
+/**************************************/
 #stuffBox{
     border: 3px  #CFD8E3 solid;
     -webkit-border-radius: 10px;
