@@ -148,6 +148,35 @@
             }
         }
         
+        public function sendStuffHistorial($infoStuff){
+          
+                //Creamos un stuff nueva con todos los campos
+                $stuffModel = new StuffModel();       
+                $newStuff = new Stuff();
+                $newStuff->setDescripcion($infoStuff['descripcion']);
+                $newStuff->setNombre($infoStuff['nombre']);
+                $newStuff->setIdContexto($infoStuff['idContexto']);
+                $newStuff->setIdStuff($infoStuff['idStuff']);
+                
+                
+                //Creamos nueva entrada en historial y le asignamos el id al Stuff
+                $historialModel = new HistorialModel();
+                
+                $historial = new Historial();
+                $historial->setCompletado(false);
+                
+                $idHistorial = $historialModel->insertarHistorial($historial);
+                
+                $newStuff->setIdHistorial($idHistorial);
+                
+                //Actualizamos el Stuff
+                $stuffModel->updateStuff($newStuff);
+                
+                
+                
+            
+        }
+        
         
         //al completar o eliminar un stuff hay que añadir su entrada al historial
         public function  addAHistorial($stuff, $completado){
