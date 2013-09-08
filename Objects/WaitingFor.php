@@ -18,7 +18,11 @@
             $this->idWaitingFor = $idWaitingFor;
         }
 
-     
+         public function asignaStuff($stuff){
+            
+            parent::asignaStuff($stuff);
+            $this->idStuff = $stuff->getIdStuff();
+        }
 
         public function getContactoPersona() {
             return $this->contactoPersona;

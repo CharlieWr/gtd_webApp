@@ -13,7 +13,12 @@
             $this->plazo = $plazo;
             $this->idStuff = $idStuff;
         }
+        public function asignaStuff($stuff){
+            
+            parent::asignaStuff($stuff);
+                        $this->idStuff = $stuff->getIdStuff();
 
+        }
                 public function getIdSomedayMaybe() {
             return $this->idSomedayMaybe;
         }

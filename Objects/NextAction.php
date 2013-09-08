@@ -11,7 +11,12 @@ class NextAction extends Stuff {
         $this->idStuff = $idStuff;
     }
 
-    
+    public  function asignaStuff($stuff){
+            
+            parent::asignaStuff($stuff);
+                        $this->idStuff = $stuff->getIdStuff();
+
+        }
     public function getIdNextAction() {
         return $this->idNextAction;
     }

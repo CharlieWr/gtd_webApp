@@ -192,7 +192,7 @@
          }
          
                   public function deleteProyectoByStuffId($idStuff){
-              if(!is_numeric($idProyecto)){
+              if(!is_numeric($idStuff)){
                  die("ID Proyecto no es un entero");
              }
              else{

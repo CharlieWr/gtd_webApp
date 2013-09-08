@@ -12,9 +12,11 @@ require_once 'Stuff.php';
   }
 
         
-        function asignaStuff($stuff){
+        public function asignaStuff($stuff){
             
             parent::asignaStuff($stuff);
+                        $this->idStuff = $stuff->getIdStuff();
+
         }
         public function getIdProyecto() {
             return $this->idProyecto;

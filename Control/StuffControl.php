@@ -1,6 +1,10 @@
 <?php
     require_once '../Model/StuffModel.php';
     require_once '../Model/HistorialModel.php';
+    require_once '../Model/NextActionModel.php';
+    require_once '../Model/ProyectoModel.php';
+    require_once '../Model/SomedayMaybeModel.php';
+    require_once '../Model/WaitingForModel.php';
 
     class StuffControl {
         
@@ -83,15 +87,23 @@
                 switch($oldType){
                     case "N":
                         //Borro de Next Action ese stuff
+                        $nextActionModel = new NextActionModel();
+                        $nextActionModel->deleteNextActionByStuffId($id);
                         break;
                     case "P":
                         //Borro de Proyecto ese stuff
+                        $proyectoModel = new ProyectoModel();
+                        $proyectoModel->deleteProyectoByStuffId($id);
                         break;
                     case "S":
                         //Borro de SomedayMaybe ese stuff
+                        $smModel = new SomedayMaybeModel();
+                        $smModel->deleteSomedayMaybeByStuffId($id);
                         break;
                     case "W":
                         //Borro de Waiting For ese stuff
+                        $wfModel = new WaitingForModel();
+                        $wfModel->deleteWaitingForByStuffId($id);
                         break;
                 }
                 //Se hace update en Stuff
@@ -99,18 +111,34 @@
                 $stuffModel->updateStuff($newStuff);
                 
                 //Se añade en cada tabla 'hijo' de Stuff el nuevo tipo
-                      switch($typeStuff){
+                switch($typeStuff){
                     case "N":
                         //se agrega nuevo Next Action
+                        $nextActionModel = new NextActionModel();
+                        $newNA = new NextAction();
+                        $newNA->asignaStuff($newStuff);
+                        $nextActionModel->insertarNextAction($newNA);
                         break;
                     case "P":
                         //se agrega nuevo Proyecto
+                        $proyectoModel = new ProyectoModel();
+                        $newProy = new Proyecto();
+                        $newProy->asignaStuff($newStuff);
+                        $proyectoModel->insertarProyecto($newProy);
                         break;
                     case "S":
                         //Bse agrega nuevo SomedayMaybe
+                        $smModel = new SomedayMaybeModel();
+                        $newSm = new SomedayMaybe();
+                        $newSm->asignaStuff($newStuff);
+                        $smModel->insertarSomedayMaybe($newSm);
                         break;
                     case "W":
                         //se agrega nuevo Waiting For
+                        $wfModel = new WaitingForModel();
+                        $newWf = new WaitingFor();
+                        $newWf->asignaStuff($newStuff);
+                        $wfModel->insertarWaitingFor($newWf);
                         break;
                 }
             }
@@ -123,7 +151,7 @@
                 //Insertar en Stuff
                 $newStuff->setIdHistorial($infoStuff['idHistorial']);
                 $newStuff->setIdUsuario($infoStuff['idUsuario']);
-                $newStuff->setTypeStuff($infoStuff['typeStuff']);
+                
                 $id = $stuffModel->insertarStuff($newStuff);
                 
                 foreach($tagList as $singleTag){
@@ -138,7 +166,39 @@
 
                     }
                 }
-           
+                
+                
+                //Se añade en cada tabla 'hijo' de Stuff el nuevo tipo
+                switch($typeStuff){
+                    case "N":
+                        //se agrega nuevo Next Action
+                        $nextActionModel = new NextActionModel();
+                        $newNA = new NextAction();
+                        $newNA->asignaStuff($newStuff);
+                        $nextActionModel->insertarNextAction($newNA);
+                        break;
+                    case "P":
+                        //se agrega nuevo Proyecto
+                        $proyectoModel = new ProyectoModel();
+                        $newProy = new Proyecto();
+                        $newProy->asignaStuff($newStuff);
+                        $proyectoModel->insertarProyecto($newProy);
+                        break;
+                    case "S":
+                        //Bse agrega nuevo SomedayMaybe
+                        $smModel = new SomedayMaybeModel();
+                        $newSm = new SomedayMaybe();
+                        $newSm->asignaStuff($newStuff);
+                        $smModel->insertarSomedayMaybe($newSm);
+                        break;
+                    case "W":
+                        //se agrega nuevo Waiting For
+                        $wfModel = new WaitingForModel();
+                        $newWf = new WaitingFor();
+                        $newWf->asignaStuff($newStuff);
+                        $wfModel->insertarWaitingFor($newWf);
+                        break;
+                }
             }
             
             
