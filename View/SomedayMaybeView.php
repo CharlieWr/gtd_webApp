@@ -171,6 +171,7 @@
                         <li><a href="NextActionView.php">Next Actions</a></li>
                         <li><a href="SomedayMaybeView.php">Someday/Maybe</a></li>
                         <li><a href="WaitingForView.php">Waiting For</a></li>
+                        <li><a href="HistorialView.php">Historial</a></li>
                         </ul></li>
 
                 <li><a class="qmparent" href="SettingsView.php">Settings</a>

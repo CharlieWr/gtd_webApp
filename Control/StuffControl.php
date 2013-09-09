@@ -248,6 +248,20 @@
             }
         }
         
+        
+        public function restoreStuff($idStuff){
+               //Creamos un stuff nueva con todos los campos
+                $stuffModel = new StuffModel();       
+                $stuff = $stuffModel->selectStuffById($idStuff);
+                
+                $idHistorial = $stuff->getIdHistorial();
+                
+                $historialModel = new HistorialModel();
+                $historialModel->deleteHistorialById($idHistorial);
+            
+        }
+        
+        
         public function sendStuffHistorial($infoStuff){
           
                 //Creamos un stuff nueva con todos los campos

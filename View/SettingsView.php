@@ -111,6 +111,7 @@
                         <li><a href="SomedayMaybeView.php">Someday/Maybe</a></li>
                         <li><a href="WaitingForView.php">Waiting For</a></li>
                         <li><a href="HistorialView.php">Historial</a></li>
+<!--                        <li><a href="HistorialView.php">Historial</a></li>-->
                         </ul></li>
 
                 <li><a class="qmparent" href="SettingsView.php">Settings</a>
@@ -139,8 +140,8 @@
                         
                     </div>
                     <ul>
-                        <a href="SettingsView.php?sel=1"><li id="itemStuff">Contexto</li></a>
-                        <a href="SettingsView.php?sel=2"><li id="itemStuff">Fecha</li></a>
+                        <a href="SettingsView.php?sel=1"><li id="itemStuff" <?php echo $opcion==1? 'style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;"':"" ;?>>Contexto</li></a>
+                        <a href="SettingsView.php?sel=2"><li id="itemStuff" <?php echo $opcion==2? 'style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;"':"" ;?>>Fecha</li></a>
                     </ul>
                 </div>
                 

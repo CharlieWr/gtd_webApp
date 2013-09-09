@@ -19,7 +19,7 @@
                         $_SESSION['fecha'] = "d/m/Y H:i:s";
 			redirect_to("ProcessView.php");
 		} else {
-			$message = "Hay errores.";
+			$message = "Hay errores";
 		}
 	} else {
 		$username = "";
@@ -31,29 +31,35 @@
     <head>
         <title>Iniciar Sesion</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+          <link rel="stylesheet" href="./Style/generalStyle.css">
         
     </head>
     <body>
-        <div>
-            <h1>Iniciar Sesion</h1>
+        <div id="content">
+             <img src="images/todolist.png " />
+            <h1 id="logo">Getting Things Done!</h1><br/>
 
             
-            <?php echo $message; ?><br />
+            <h3 style="margin-left: 20px;"><?php echo $message; ?></h3>
             <!--Se redirige a la misma pagina para comprobar los datos introducidos-->
             <form id='login' action='IniciarSesion.php' method='post' accept-charset='UTF-8'>
                 <fieldset >
                 <legend>Login</legend>
           
-
-                <label for='username' >Nombre de Usuario:</label>
-                <!--Se codifica lo que el usuario introduce por caracteres especiales html-->
-                <input type='text' name='username'  maxlength="50" required="required" value="<?php echo htmlspecialchars($username); ?>"/><br/>
-
-                <label for='password' >Password:</label>
-                <input type='password' name='password' required="required" maxlength="50" /><br/>
-
-                <input type='submit' name='submit' value='Submit' />
-
+                <table>
+                    <tr>
+                        <td><label for='username' >Nombre de Usuario:</label></td>
+                    <!--Se codifica lo que el usuario introduce por caracteres especiales html-->
+                    <td> <input type='text' name='username'  maxlength="50" required="required" value="<?php echo htmlspecialchars($username); ?>"/></td>
+                    </tr>   
+                    <tr>
+                        <td> <label for='password' >Password:</label></td>
+                        <td> <input type='password' name='password' required="required" maxlength="50" /></td>
+                    </tr>
+                    <tr>
+                        <td> <input type='submit' name='submit' value='Submit' /></td> 
+                    </tr>
+                </table>
                 </fieldset>
             </form>
         </div>
