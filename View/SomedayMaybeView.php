@@ -85,9 +85,13 @@
        }
        
        $contextIdSelected = NULL;
+              $contextName = "";
+
        //Si hay contexto seleccionado
        if(isset($_GET['context'])){
            $contextIdSelected = $_GET['context'];
+           $contextSelected = $contextControl->getContextoById($contextIdSelected);
+           $contextName = $contextSelected->getNombreContexto();
        }
        
        
@@ -195,10 +199,10 @@
             <div id="stuffBox">
                 <div id="listaStuff">
                     <div id="listaTitulo">
-                        <h2>Someday/Maybes</h2>
-                        <a href="SomedayMaybeView.php?new=1">
+                        <h2>Someday/Maybes <?php echo $contextName==""? "" : " : ".$contextName; ?></h2>
+<!--                        <a href="SomedayMaybeView.php?new=1">
                             <p style=" margin-left: 2em;"><strong>+</strong></p>
-                        </a>
+                        </a>-->
                         
                     </div>
                        <ul>
@@ -290,7 +294,7 @@
                                     </select>
                                </td>
                                <td>
-                                   Send To:
+                                   Modify:
                                </td>
                                <td>
                                    <select type="select" name="sendTo" >

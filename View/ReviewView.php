@@ -89,14 +89,14 @@
            array_unshift($listStuff,$newStuff);
            
        }
-       
-       $contextIdSelected = NULL;
+      $contextIdSelected = NULL;
+       $contextName = "";
        //Si hay contexto seleccionado
        if(isset($_GET['context'])){
            $contextIdSelected = $_GET['context'];
-       }
-       
-       
+           $contextSelected = $contextControl->getContextoById($contextIdSelected);
+           $contextName = $contextSelected->getNombreContexto();
+       }       
   
 ?> 
 <!DOCTYPE html>
@@ -302,7 +302,7 @@
                                     </select>
                                </td>
                                <td>
-                                   Send To:
+                                   Modify:
                                </td>
                                <td>
                                    <select type="select" name="sendTo" >

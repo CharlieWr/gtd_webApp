@@ -9,6 +9,18 @@
             
             return $contextList;
         }
+        
+        public function getContextoById($id){
+            if(!is_numeric($id)){
+                die("Id contexto no es valor entero valido.");
+            }
+            else{
+                $contextoModel = new ContextoModel();
+                $cont = $contextoModel->selectContextoById($id);
+                return $cont;
+
+            }
+        }
 
     }
 ?>

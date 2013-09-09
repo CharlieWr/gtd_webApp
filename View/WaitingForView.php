@@ -83,12 +83,14 @@
            
        }
        
-       $contextIdSelected = NULL;
+      $contextIdSelected = NULL;
+       $contextName = "";
        //Si hay contexto seleccionado
        if(isset($_GET['context'])){
            $contextIdSelected = $_GET['context'];
+           $contextSelected = $contextControl->getContextoById($contextIdSelected);
+           $contextName = $contextSelected->getNombreContexto();
        }
-       
        
   
 ?> 
@@ -194,10 +196,10 @@
             <div id="stuffBox">
                 <div id="listaStuff">
                     <div id="listaTitulo">
-                        <h2>Waiting For</h2>
-                        <a href="WaitingForView.php?new=1">
+                        <h2>Waiting For <?php echo $contextName==""? "" : " : ".$contextName; ?></h2>
+<!--                        <a href="WaitingForView.php?new=1">
                             <p style=" margin-left: 4em;"><strong>+</strong></p>
-                        </a>
+                        </a>-->
                         
                     </div>
                        <ul>
@@ -289,7 +291,7 @@
                                     </select>
                                </td>
                                <td>
-                                   Send To:
+                                   Modify:
                                </td>
                                <td>
                                    <select type="select" name="sendTo" >

@@ -78,9 +78,12 @@
        }
        
        $contextIdSelected = NULL;
+       $contextName = "";
        //Si hay contexto seleccionado
        if(isset($_GET['context'])){
            $contextIdSelected = $_GET['context'];
+           $contextSelected = $contextControl->getContextoById($contextIdSelected);
+           $contextName = $contextSelected->getNombreContexto();
        }
        
        
@@ -186,9 +189,9 @@
             <div id="stuffBox">
                 <div id="listaStuff">
                     <div id="listaTitulo">
-                        <h2>Inbox</h2>
+                        <h2>Inbox <?php echo $contextName==""? "" : " : ".$contextName; ?></h2>
                         <a href="ProcessView.php?new=1">
-                            <p><strong>+</strong></p>
+                            <p <?php echo $contextName==""? "" : 'style="margin-left:4em;"'?>><strong>+</strong></p>
                         </a>
                         
                     </div>

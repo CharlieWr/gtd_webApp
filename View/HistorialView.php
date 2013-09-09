@@ -81,9 +81,12 @@
        }
        
        $contextIdSelected = NULL;
+       $contextName = "";
        //Si hay contexto seleccionado
        if(isset($_GET['context'])){
            $contextIdSelected = $_GET['context'];
+           $contextSelected = $contextControl->getContextoById($contextIdSelected);
+           $contextName = $contextSelected->getNombreContexto();
        }
        
        
@@ -189,7 +192,7 @@
             <div id="stuffBox">
                 <div id="listaStuff">
                     <div id="listaTitulo">
-                        <h2>Historial</h2>
+                        <h2>Historial <?php echo $contextName==""? "" : " : ".$contextName; ?></h2>
 <!--                        <a href="HistorialView.php?new=1">
                             <p style=" margin-left: 4.6em;"><strong>+</strong></p>
                         </a>-->
@@ -261,7 +264,7 @@
                                     <p>Contexto:</p>
                                 </td>
                                 <td>
-                                    <select type="select" name="stuffContext" disabled>
+                                    <select type="select" name="stuffContext" >
                                         <?php
                                                   echo '<option value = "" ></option>';
                                                   foreach ($contextList as $auxCont){
@@ -283,7 +286,7 @@
                                    Send To:
                                </td>
                                <td>
-                                   <select type="select" name="sendTo" disabled >
+                                   <select type="select" name="sendTo"  >
                                        <option value=""></option>
                                        <option value="N">Next Action</option>
                                        <option value="P" selected>Project</option>
