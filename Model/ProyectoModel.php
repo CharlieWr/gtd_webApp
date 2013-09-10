@@ -266,16 +266,18 @@
                  $this->abrirConexion();
                
                
-                 $sth = $dbh->query("SELECT * FROM Proyecto_had_Next_Action pna WHERE pna.idProyecto = {$idProy} LIMIT 1");  
-                 $sth->setFetchMode(PDO::FETCH_ASSOC); 
+                 $sth = $dbh->query("SELECT * FROM NextAction na WHERE na.idProyecto = {$idProy}");  
+                 $sth->setFetchMode(PDO::FETCH_CLASS, 'NextAction'); 
 
                 $actividades =  array();
                 while($row = $sth->fetch()) {  
-                    $actividades[]=$row['idNextAction']; 
+                    $actividades[]=$row; 
                 }  
          
                $this->cerrarConexion();
                return $actividades;
+               
+           
              }
          }
          

@@ -4,7 +4,8 @@ class NextAction extends Stuff {
 
     private $idNextAction;
     private $idStuff;
-    
+    private $idProyecto;
+    private $activa;
     
     function rellenaNextAction($idStuff   ) {
 
@@ -32,6 +33,22 @@ class NextAction extends Stuff {
 
     public function setIdStuff($idStuff) {
         $this->idStuff = $idStuff;
+    }
+
+    public function getIdProyecto() {
+        return $this->idProyecto;
+    }
+
+    public function setIdProyecto($idProyecto) {
+        $this->idProyecto = $idProyecto;
+    }
+
+    public function getActiva() {
+        return $this->activa;
+    }
+
+    public function setActiva($activa) {
+        $this->activa = $activa;
     }
 
 

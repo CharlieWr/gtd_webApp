@@ -136,42 +136,42 @@
                return $res;
          }
          
-//          /**
-//            * @param NextAction $newNextA
-//            */
-//         public function updateNextAction($newNextA){
-//             if(!is_a($newNextA, 'NextAction')){
-//                 die("Objeto no es de clase Next Action");
-//             }
-//             else{
-//                 
-//                  //Actualizamos la fecha de modificacion de Stuff
-//               $date1 = date('y/m/d H:i:s',time());
-//               $newNextA->setFecha($date1);
-//           
-//               
-//               global $dbh;  
-//               $this->abrirConexion();
-//              
-//              
-//               $sth = $dbh->prepare("UPDATE NextAction SET contexto = :contexto,
-//                   tags = :tags WHERE idNextAction = :idNextAction"); 
-//               
-//               $data = array('contexto' => $newNextA->getContexto(), 'tags' => $newNextA->getTags(), 'idNextAction' => $newNextA->getIdNextAction());
-//               
-//               $sth->execute($data);  
-//                      
-//               $this->cerrarConexion();
-//               
-//                //Actualizamos fecha de modificacion de Stuff
-//               $stuffModel = new StuffModel();
-//               $stuff = $stuffModel->selectStuffById($newNextA->getIdStuff());
-//               $stuff->setFecha($date1);
-//               $stuffModel->updateStuff($stuff);
-//               
-//             }
-//             
-//         }
+          /**
+            * @param NextAction $newNextA
+            */
+         public function updateNextAction($newNextA){
+             if(!is_a($newNextA, 'NextAction')){
+                 die("Objeto no es de clase Next Action");
+             }
+             else{
+                 
+                  //Actualizamos la fecha de modificacion de Stuff
+               $date1 = date('y/m/d H:i:s',time());
+               $newNextA->setFecha($date1);
+           
+               
+               global $dbh;  
+               $this->abrirConexion();
+              
+              
+               $sth = $dbh->prepare("UPDATE NextAction SET idProyecto = :idProyecto,
+                   activa = :activa WHERE idNextAction = :idNextAction"); 
+               
+               $data = array('idProyecto' => $newNextA->getIdProyecto(), 'activa' => $newNextA->getActiva(), 'idNextAction' => $newNextA->getIdNextAction());
+               
+               $sth->execute($data);  
+                      
+               $this->cerrarConexion();
+               
+                //Actualizamos fecha de modificacion de Stuff
+               $stuffModel = new StuffModel();
+               $stuff = $stuffModel->selectStuffById($newNextA->getIdStuff());
+               $stuff->setFecha($date1);
+               $stuffModel->updateStuff($stuff);
+               
+             }
+             
+         }
          
          public function deleteNextActionById($idNextA){
               if(!is_numeric($idNextA)){

@@ -117,6 +117,10 @@
                         $nextActionModel = new NextActionModel();
                         $newNA = new NextAction();
                         $newNA->asignaStuff($newStuff);
+                       //Si esta asociada o no a un proyecto (habra null si no)
+                        $pr = $infoStuff['idProyecto'];
+                        $newNA->setIdProyecto($pr);
+                        $newNA->setActiva(true);
                         $nextActionModel->insertarNextAction($newNA);
                         break;
                     case "P":
@@ -143,6 +147,19 @@
                         $newWf->setContactoPersona($cpnewwf);
                         $newWf->asignaStuff($newStuff);
                         $wfModel->insertarWaitingFor($newWf);
+                        break;
+                            //Accion no activa
+                    case NULL:
+                         //se agrega nuevo Next Action
+                        $nextActionModel = new NextActionModel();
+                        $newNA = new NextAction();
+                        $newNA->asignaStuff($newStuff);
+                        //Si esta asociada o no a un proyecto
+                        $pr = ($infoStuff['idProyecto'] == "")? NULL : $infoStuff['idProyecto'];
+                        $newNA->setIdProyecto($pr);
+                        $newNA->setActiva(false);
+                        
+                        $nextActionModel->insertarNextAction($newNA);
                         break;
                 }
             }
@@ -179,6 +196,11 @@
                         $nextActionModel = new NextActionModel();
                         $newNA = new NextAction();
                         $newNA->asignaStuff($newStuff);
+                        //Si esta asociada o no a un proyecto
+                        $pr =  $infoStuff['idProyecto'];
+                        $newNA->setIdProyecto($pr);
+                        $newNA->setActiva(true);
+                        
                         $nextActionModel->insertarNextAction($newNA);
                         break;
                     case "P":
@@ -203,6 +225,19 @@
                         $newWf->setContactoPersona($infoStuff['contacto']);
                         $newWf->asignaStuff($newStuff);
                         $wfModel->insertarWaitingFor($newWf);
+                        break;
+                    //Accion no activa
+                    case NULL:
+                         //se agrega nuevo Next Action
+                        $nextActionModel = new NextActionModel();
+                        $newNA = new NextAction();
+                        $newNA->asignaStuff($newStuff);
+                        //Si esta asociada o no a un proyecto
+                        $pr = ($infoStuff['idProyecto'] == "")? NULL : $infoStuff['idProyecto'];
+                        $newNA->setIdProyecto($pr);
+                        $newNA->setActiva(false);
+                        
+                        $nextActionModel->insertarNextAction($newNA);
                         break;
                 }
             }

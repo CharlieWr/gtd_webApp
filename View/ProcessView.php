@@ -3,12 +3,14 @@
     require_once '../Control/UsuarioControl.php';
     require_once '../Control/ContextoControl.php';
     require_once '../Control/TagControl.php';
+    require_once '../Control/ProyectoControl.php';
     
     session_start();
     $idUsuario = $_SESSION['idUsuario'];
     $formatoFecha = $_SESSION['fecha'];
     $usuarioControl = new UsuarioControl();
     $stuffControl = new StuffControl();
+    $projectControl = new ProyectoControl();
      $tagControl = new TagControl();
      
     $user = $usuarioControl->getUsuarioById($idUsuario);
@@ -22,9 +24,10 @@
           $newIdContexto = $_POST['stuffContext']==""? NULL : $_POST['stuffContext'];
           $newTags = $_POST['stuffTag'];
           $newIdStuff = $_POST['idStuffForm'];
-           $typeStuff = $_POST['sendTo'];
+          $typeStuff = $_POST['sendTo'];
+          $idProyecto = isset($_POST['projectSelected'])? $_POST['projectSelected'] : NULL;
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
-              "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
+              "tag" => $newTags, "idStuff" => $newIdStuff,"idProyecto" => $idProyecto,'plazo'=>NULL,'contacto'=>NULL, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
           $stuffControl->insertStuff($newInfo);
           
           
@@ -50,10 +53,11 @@
     $contextList = $contextControl->getAllContexto();
     
    
+   
     $tagList = NULL;
     
     $stuffAssoc = NULL;
-    
+
     $stuffSeleccionada = false;
     //Si hay algun stuff seleccionado
        if(isset($_GET['idSt'])){
@@ -236,7 +240,7 @@
                     </div>
                    
                     <form id='modifyStuff' action='ProcessView.php' method='post' accept-charset='UTF-8'>
-                        <table>
+                        <table border="1">
                             <tr>
                                 <td>
                                     <p>Nombre:</p>
@@ -285,24 +289,9 @@
                                     </select>
                                </td>
                                <td>
-                                   Send To:
-                               </td>
-                               <td>
-                                   <select type="select" name="sendTo" >
-                                       <option value=""></option>
-                                       <option value="N">Next Action</option>
-                                       <option value="P">Project</option>
-                                       <option value="S">Someday/Maybe</option>
-                                       <option value="W">Waiting For</option>
-                                   </select>
-                               </td>
-                            
-                            </tr>
-                            <tr>
-                                <td>
                                     <p>Tags:</p>
                                 </td>
-                                <td colspan="3">
+                                <td >
                                     
                                     <?php
                                     echo '<input type="text" name="stuffTag" title="Separa Tags con Punto y Coma ( ; )" value="';
@@ -317,6 +306,40 @@
                                     echo $stuffSeleccionada? '">' : '" readonly>'
                                 ?>
                                 </td>
+                                                           </tr>
+                            <tr>
+                      
+                               <td>
+                                   Send To:
+                               </td>
+                      
+                               <td>
+                                   <select type="select" name="sendTo" id='sendTo' onchange ='   if (this.value == "P" || this.value =="S" || this.value == "W") {
+                                        document.getElementById("projectSelected").disabled = true;
+                                    } else {
+                                        document.getElementById("projectSelected").disabled = false;
+                                    }'>
+                                       <option value="" ></option>
+                                       <option value="N">Next Action</option>
+                                       <option value="P">Project</option>
+                                       <option value="S">Someday/Maybe</option>
+                                       <option value="W">Waiting For</option>
+                                   </select>
+                               </td>
+                               <td>Project:</td>
+                               <td>
+                                   <select type="select" id="projectSelected">
+                                       <option value=""></option>
+                                       <?php foreach($listStuff as $stAux){
+                                           if($stAux->getTypeStuff()=="P"){
+                                                echo '<option value="'.$stAux->getIdStuff().'">'.$stAux->getNombre().'</option>';
+                                           
+                                           }
+                                       }?>
+                                   </select>
+                               </td>
+                         
+
                         </tr>
                         <tr >
                             <td>
