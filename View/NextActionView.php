@@ -1,6 +1,8 @@
 <?php 
+    require_once("../Control/funciones.php");
     require_once '../Control/StuffControl.php';
     require_once '../Control/UsuarioControl.php';
+    require_once '../Control/NextActionControl.php';
     require_once '../Control/ContextoControl.php';
     require_once '../Control/TagControl.php';
     
@@ -85,7 +87,15 @@
             $contextSelected = $contextControl->getContextoById($contextIdSelected);
            $contextName = $contextSelected->getNombreContexto();
        }
-       
+       $filterActiva = true;
+       if(isset($_GET['active'])){
+           if($_GET['active'] == 1){
+               $filterActiva = true;
+           }
+           if($_GET['active'] == 0){
+               $filterActiva = false;
+           }
+       }
        
   
 ?> 
@@ -189,23 +199,36 @@
             <h1 id="logo">Getting Things Done!</h1>
             <div id="stuffBox">
                 <div id="listaStuff">
-                    <div id="listaTitulo">
-                        <h2>Next Actions <?php echo $contextName==""? "" : " : ".$contextName; ?></h2>
-<!--                        <a href="NextActionView.php?new=1">
-                            <p style=" margin-left: 3.7em;"><strong>+</strong></p>
-                        </a>-->
+                    <div id="listaTitulo" style="height: 15.5%">
+                        <h2>Next Actions <?php echo $contextName==""? "" : " : ".$contextName; ?></h2><br/>
                         
+                        
+                        <input type="checkbox" name="activaFilter" id="activaFilter" value="true"  style="margin-left: 20px;" onclick="cambiaFiltro();" <?php echo $filterActiva? "checked" : ""?>> Activas
+                        
+                        <script>
+                            function cambiaFiltro(){
+                                if(document.getElementById('activaFilter').checked){
+                                    window.location.replace("NextActionView.php?active=1");
+                     
+                                }
+                                else{
+                                    window.location.replace("NextActionView.php?active=0");
+                                }
+                            }
+                        </script>
                     </div>
                        <ul>
                             <?php 
-                            
+                                    $naControl = new NextActionControl();
                                     foreach ($listStuff as $st){
                                       
                                         //Solo procesar las de tipo P o nuevos proyectos
                                          if($st->getTypeStuff()=="N" || $st->getNombre()=="Nuevo Stuff"){
                                             //Solo se muestran Stuff que no hayan sido eliminadas (enviadas el historial)
                                             //Y se muestran todos si contexto es Null (Seleccionado ALL) o se muestran solo las del contexto seleccionado
-                                            if($st->getIdHistorial() == NULL && (!$contextIdSelected || $st->getIdContexto() == $contextIdSelected)){
+                                            
+                                             $na = $naControl->getNextActionByStuffId($st->getIdStuff());
+                                             if($na->getActiva()==$filterActiva  && $st->getIdHistorial() == NULL && (!$contextIdSelected || $st->getIdContexto() == $contextIdSelected)){
                                                 //Si hay stuff seleccionada cambiamos el estilo
                                                 if($stuffAssoc && $st->getIdStuff() == $stuffAssoc->getIdStuff()){
                                                     echo '<li id="itemStuff" style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;">'.$st->getNombre()."</li>";
@@ -216,7 +239,8 @@
 
                                                  }
                                                  else{
-                                                       echo '<a href="NextActionView.php?idSt='.$st->getIdStuff().'">';
+                                                     $activoChoice = $filterActiva? 1 : 0;
+                                                       echo '<a href="NextActionView.php?idSt='.$st->getIdStuff().'&active='.$activoChoice.'">';
                                                        echo '<li id="itemStuff">'.$st->getNombre()."</li>";
                                                         echo '</a>';
                                                  }
@@ -301,7 +325,7 @@
                                 <td>
                                     <p>Tags:</p>
                                 </td>
-                                <td colspan="3">
+                                <td>
                                     
                                     <?php
                                     echo '<input type="text" name="stuffTag" title="Separa Tags con Punto y Coma ( ; )" value="';
@@ -315,6 +339,28 @@
                                     //Si no hay stuff seleccionada nada es editable
                                     echo $stuffSeleccionada? '">' : '" readonly>'
                                 ?>
+                                </td>
+                                <td>Proyecto:</td>
+                                <td>
+                                    <?php 
+                                        if($stuffAssoc){
+                                            $na = $naControl->getNextActionByStuffId($stuffAssoc->getIdStuff());
+                                            $prId = $na->getIdProyecto();
+                                            if($prId){
+                                                $prAss = $stuffControl->getStuffById($prId);
+                                                $nombrePr = $prAss->getNombre();
+                                            }
+                                            else{
+                                                $nombrePr = "-";
+                                            }
+                                            echo $nombrePr;
+                                            
+                                            
+                                        }
+                                        else{
+                                            echo "-";
+                                        }
+                                    ?>
                                 </td>
                         </tr>
                         <tr >
