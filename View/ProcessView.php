@@ -315,7 +315,7 @@
                                </td>
                       
                                <td>
-                                   <select type="select" name="sendTo" id='sendTo' onchange ='   if (this.value == "P" || this.value =="S" || this.value == "W") {
+                                   <select type="select" name="sendTo" id='sendTo' onchange ='   if (this.value == "P" || this.value =="S" || this.value == "W" || this.value == "") {
                                         document.getElementById("projectSelected").disabled = true;
                                         document.getElementById("activa").disabled = true;
                                     } else {
@@ -332,7 +332,7 @@
                                </td>
                                <td>Project:</td>
                                <td>
-                                   <select type="select" name="projectSelected" id="projectSelected">
+                                   <select type="select" name="projectSelected" id="projectSelected" disabled>
                                        <option value=""></option>
                                        <?php foreach($listStuff as $stAux){
                                            if($stAux->getTypeStuff()=="P"){
@@ -343,7 +343,7 @@
                                    </select>
                                </td>
                                <td>
-                                   <input type="checkbox" name="activa" id="activa" value="activa">Activa<br>
+                                   <input type="checkbox" name="activa" id="activa" value="activa" disabled>Activa<br>
                                </td>
 
                         </tr>
