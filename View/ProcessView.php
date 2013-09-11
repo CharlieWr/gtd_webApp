@@ -317,8 +317,11 @@
                                <td>
                                    <select type="select" name="sendTo" id='sendTo' onchange ='   if (this.value == "P" || this.value =="S" || this.value == "W") {
                                         document.getElementById("projectSelected").disabled = true;
+                                        document.getElementById("activa").disabled = true;
                                     } else {
                                         document.getElementById("projectSelected").disabled = false;
+                                        document.getElementById("activa").disabled = false;
+
                                     }'>
                                        <option value="" ></option>
                                        <option value="N">Next Action</option>
@@ -340,7 +343,7 @@
                                    </select>
                                </td>
                                <td>
-                                   <input type="checkbox" name="activa" value="activa">Activa<br>
+                                   <input type="checkbox" name="activa" id="activa" value="activa">Activa<br>
                                </td>
 
                         </tr>
