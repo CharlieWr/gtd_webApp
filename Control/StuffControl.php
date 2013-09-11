@@ -120,7 +120,7 @@
                        //Si esta asociada o no a un proyecto (habra null si no)
                         $pr = $infoStuff['idProyecto'];
                         $newNA->setIdProyecto($pr);
-                        $newNA->setActiva(true);
+                        $newNA->setActiva($infoStuff['activa']);
                         $nextActionModel->insertarNextAction($newNA);
                         break;
                     case "P":
@@ -149,18 +149,18 @@
                         $wfModel->insertarWaitingFor($newWf);
                         break;
                             //Accion no activa
-                    case NULL:
-                         //se agrega nuevo Next Action
-                        $nextActionModel = new NextActionModel();
-                        $newNA = new NextAction();
-                        $newNA->asignaStuff($newStuff);
-                        //Si esta asociada o no a un proyecto
-                        $pr = ($infoStuff['idProyecto'] == "")? NULL : $infoStuff['idProyecto'];
-                        $newNA->setIdProyecto($pr);
-                        $newNA->setActiva(false);
-                        
-                        $nextActionModel->insertarNextAction($newNA);
-                        break;
+//                    case NULL:
+//                         //se agrega nuevo Next Action
+//                        $nextActionModel = new NextActionModel();
+//                        $newNA = new NextAction();
+//                        $newNA->asignaStuff($newStuff);
+//                        //Si esta asociada o no a un proyecto
+//                        $pr = ($infoStuff['idProyecto'] == "")? NULL : $infoStuff['idProyecto'];
+//                        $newNA->setIdProyecto($pr);
+//                        $newNA->setActiva(false);
+//                        
+//                        $nextActionModel->insertarNextAction($newNA);
+//                        break;
                 }
             }
             //Si es un nuevo Stuff
@@ -199,7 +199,7 @@
                         //Si esta asociada o no a un proyecto
                         $pr =  $infoStuff['idProyecto'];
                         $newNA->setIdProyecto($pr);
-                        $newNA->setActiva(true);
+                        $newNA->setActiva($infoStuff['activa']);
                         
                         $nextActionModel->insertarNextAction($newNA);
                         break;
@@ -227,18 +227,18 @@
                         $wfModel->insertarWaitingFor($newWf);
                         break;
                     //Accion no activa
-                    case NULL:
-                         //se agrega nuevo Next Action
-                        $nextActionModel = new NextActionModel();
-                        $newNA = new NextAction();
-                        $newNA->asignaStuff($newStuff);
-                        //Si esta asociada o no a un proyecto
-                        $pr = ($infoStuff['idProyecto'] == "")? NULL : $infoStuff['idProyecto'];
-                        $newNA->setIdProyecto($pr);
-                        $newNA->setActiva(false);
-                        
-                        $nextActionModel->insertarNextAction($newNA);
-                        break;
+//                    case NULL:
+//                         //se agrega nuevo Next Action
+//                        $nextActionModel = new NextActionModel();
+//                        $newNA = new NextAction();
+//                        $newNA->asignaStuff($newStuff);
+//                        //Si esta asociada o no a un proyecto
+//                        $pr = ($infoStuff['idProyecto'] == "")? NULL : $infoStuff['idProyecto'];
+//                        $newNA->setIdProyecto($pr);
+//                        $newNA->setActiva(false);
+//                        
+//                        $nextActionModel->insertarNextAction($newNA);
+//                        break;
                 }
             }
             

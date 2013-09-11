@@ -25,9 +25,10 @@
           $newTags = $_POST['stuffTag'];
           $newIdStuff = $_POST['idStuffForm'];
           $typeStuff = $_POST['sendTo'];
+          $activa = isset($_POST['activa'])? true : false;
           $idProyecto = isset($_POST['projectSelected'])? $_POST['projectSelected'] : NULL;
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
-              "tag" => $newTags, "idStuff" => $newIdStuff,"idProyecto" => $idProyecto,'plazo'=>NULL,'contacto'=>NULL, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
+              "tag" => $newTags, 'activa' => $activa, "idStuff" => $newIdStuff,"idProyecto" => $idProyecto,'plazo'=>NULL,'contacto'=>NULL, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
           $stuffControl->insertStuff($newInfo);
           
           
@@ -240,7 +241,7 @@
                     </div>
                    
                     <form id='modifyStuff' action='ProcessView.php' method='post' accept-charset='UTF-8'>
-                        <table border="1">
+                        <table >
                             <tr>
                                 <td>
                                     <p>Nombre:</p>
@@ -328,7 +329,7 @@
                                </td>
                                <td>Project:</td>
                                <td>
-                                   <select type="select" id="projectSelected">
+                                   <select type="select" name="projectSelected" id="projectSelected">
                                        <option value=""></option>
                                        <?php foreach($listStuff as $stAux){
                                            if($stAux->getTypeStuff()=="P"){
@@ -338,7 +339,9 @@
                                        }?>
                                    </select>
                                </td>
-                         
+                               <td>
+                                   <input type="checkbox" name="activa" value="activa">Activa<br>
+                               </td>
 
                         </tr>
                         <tr >

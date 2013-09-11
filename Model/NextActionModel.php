@@ -46,10 +46,10 @@
               
                global $dbh;  
                $this->abrirConexion();
-               $sth = $dbh->prepare("INSERT INTO NextAction (idStuff) 
-                   value (:idStuff)"); 
+               $sth = $dbh->prepare("INSERT INTO NextAction (idStuff,idProyecto,activa) 
+                   value (:idStuff,:idProyecto, :activa)"); 
                
-               $data = array('idStuff' => $nextA->getIdStuff());
+               $data = array('idStuff' => $nextA->getIdStuff(),'idProyecto' => $nextA->getIdProyecto(),'activa' => $nextA->getActiva());
                
                $sth->execute($data);  
                $id = $dbh->lastInsertID();
