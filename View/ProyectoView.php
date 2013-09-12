@@ -2,19 +2,23 @@
     require_once '../Control/StuffControl.php';
     require_once '../Control/UsuarioControl.php';
     require_once '../Control/ContextoControl.php';
+    require_once '../Control/ProyectoControl.php';
     require_once '../Control/TagControl.php';
+    require_once '../Control/funciones.php';
     
     session_start();
     $idUsuario = $_SESSION['idUsuario'];
     $formatoFecha = $_SESSION['fecha'];
     $usuarioControl = new UsuarioControl();
     $stuffControl = new StuffControl();
+    $prjControl = new ProyectoControl();
      $tagControl = new TagControl();
      
     $user = $usuarioControl->getUsuarioById($idUsuario);
     $stuffName = "Selecciona Proyecto";
     $stuffDescription = "";
     
+ 
         //Si se ha hecho click en Aceptar (Guardar Stuff)
       if(isset($_POST['saveStuff'])){
           $newNombre = $_POST['stuffName'];
@@ -22,7 +26,7 @@
           $newIdContexto = $_POST['stuffContext']==""? NULL : $_POST['stuffContext'];
           $newTags = $_POST['stuffTag'];
           $newIdStuff = $_POST['idStuffForm'];
-           $typeStuff = $_POST['sendTo'];
+           $typeStuff = "P";
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
               "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
           $stuffControl->insertStuff($newInfo);
@@ -36,7 +40,7 @@
           $newIdContexto = $_POST['stuffContext']==""? NULL : $_POST['stuffContext'];
           $newTags = $_POST['stuffTag'];
           $newIdStuff = $_POST['idStuffForm'];
-          $typeStuff = $_POST['sendTo'];
+                 $typeStuff = "P";
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
               "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
 //          $idDelete = $_POST['idStuffForm'];
@@ -235,7 +239,7 @@
                     </div>
                    
                     <form id='modifyStuff' action='ProyectoView.php' method='post' accept-charset='UTF-8'>
-                        <table>
+                        <table >
                             <tr>
                                 <td>
                                     <p>Nombre:</p>
@@ -263,7 +267,7 @@
                                 <td>
                                     <p>Contexto:</p>
                                 </td>
-                                <td>
+                                <td colspan="2">
                                     <select type="select" name="stuffContext">
                                         <?php
                                                   echo '<option value = "" ></option>';
@@ -282,25 +286,39 @@
                                         ?>
                                     </select>
                                </td>
-                               <td>
-                                   Modify:
-                               </td>
-                               <td>
-                                   <select type="select" name="sendTo" >
-                                       <option value=""></option>
-                                       <option value="N">Next Action</option>
-                                       <option value="P" selected>Project</option>
-                                       <option value="S">Someday/Maybe</option>
-                                       <option value="W">Waiting For</option>
-                                   </select>
-                               </td>
+                               <td colspan="1" rowspan="2" >
+                                    <div style="padding-left:20px;">
+                                        Actividades:
+                                        <ul style="width:240px; height: 80px; padding: 30px;overflow: auto; border: 3px solid #cccccc;">
+                                            <?php 
+                                                //Si hay stuff seleccionada se muestran sus actividades
+                                                if($stuffAssoc){
+                                                    $proy = $prjControl->getProyectoByStuffId($stuffAssoc->getIdStuff());
+                                                    $actProj = $prjControl->getActividadesAsociadas($proy->getIdProyecto());
+                                                    foreach($actProj as $actAux){
+                                                        $actSt = $stuffControl->getStuffById($actAux->getIdStuff());
+                                                        $nombreAct = $actSt->getNombre();
+                                                        $idActSt = $actSt->getIdStuff();
+                                                        echo '<a href="NextActionView.php?idSt='.$idActSt.'">';
+                                                        echo '<li style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;">'.$nombreAct.'</li>';
+                                                        echo '</a>';
+                                                    }
+                                                
+                                                }
+                                            
+                                            ?>
+                                          
+                                        </ul>
+                                    </div>
+                                    
+                                </td>
                             
                             </tr>
                             <tr>
                                 <td>
                                     <p>Tags:</p>
                                 </td>
-                                <td colspan="3">
+                                <td >
                                     
                                     <?php
                                     echo '<input type="text" name="stuffTag" title="Separa Tags con Punto y Coma ( ; )" value="';
@@ -315,6 +333,7 @@
                                     echo $stuffSeleccionada? '">' : '" readonly>'
                                 ?>
                                 </td>
+                               
                         </tr>
                         <tr >
                             <td>

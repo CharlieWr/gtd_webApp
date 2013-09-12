@@ -57,11 +57,17 @@
             $newStuff->setIdStuff($infoStuff['idStuff']);
             $typeStuff = ($infoStuff['typeStuff']=="")? NULL : $infoStuff['typeStuff'];
             $newStuff->setTypeStuff($typeStuff);
+            $idProyecto = NULL;
+           
                 
             //Si ya existe en la base de datos se actualiza
-            if($id && $stuffModel->existeStuff($id)){
-                //Se borra entrada de Stuff en Tags
+            if($id!="" && $stuffModel->existeStuff($id)){
                
+                if($infoStuff['idProyecto']){
+                    $projModel = new ProyectoModel();
+                    $idProyecto = $projModel->selectProyectoStuffById($infoStuff['idProyecto']);
+                }
+                 //Se borra entrada de Stuff en Tags
                 $tagModel->deleteTagByIdStuff($id);
                 
                 //Crea array de tags segun delimitador
@@ -118,7 +124,7 @@
                         $newNA = new NextAction();
                         $newNA->asignaStuff($newStuff);
                        //Si esta asociada o no a un proyecto (habra null si no)
-                        $pr = $infoStuff['idProyecto'];
+                        $pr =  $idProyecto? $idProyecto->getIdProyecto() : NULL;
                         $newNA->setIdProyecto($pr);
                         $newNA->setActiva($infoStuff['activa']);
                         $nextActionModel->insertarNextAction($newNA);
@@ -188,7 +194,10 @@
                     }
                 }
                 
-                
+                if($infoStuff['idProyecto']){
+                    $projModel = new ProyectoModel();
+                    $idProyecto = $projModel->selectProyectoStuffById($infoStuff['idProyecto']);
+                }
                 //Se añade en cada tabla 'hijo' de Stuff el nuevo tipo
                 switch($typeStuff){
                     case "N":
@@ -197,7 +206,7 @@
                         $newNA = new NextAction();
                         $newNA->asignaStuff($newStuff);
                         //Si esta asociada o no a un proyecto
-                        $pr =  $infoStuff['idProyecto'];
+                        $pr =  $idProyecto? $idProyecto->getIdProyecto() : NULL;
                         $newNA->setIdProyecto($pr);
                         $newNA->setActiva($infoStuff['activa']);
                         
@@ -322,7 +331,13 @@
                 //Actualizamos el Stuff
                 $stuffModel->updateStuff($newStuff);
                 
-                
+                //Si es un proyecto hay que enviar a historial actividades asociadas
+//                if($typeStuff == "P"){
+//                    $proyModel = new ProyectoModel();
+//                    $actList = $proyModel->obtenerActividadesDeProyecto($infoStuff['idStuff']);
+//                    
+//                    
+//                }
                 
             
         }

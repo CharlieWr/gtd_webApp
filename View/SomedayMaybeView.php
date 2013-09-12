@@ -23,7 +23,7 @@
           $newIdContexto = $_POST['stuffContext']==""? NULL : $_POST['stuffContext'];
           $newTags = $_POST['stuffTag'];
           $newIdStuff = $_POST['idStuffForm'];
-           $typeStuff = $_POST['sendTo'];
+           $typeStuff = "S";
            $newPlazo = $_POST['plazo'];
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
               "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"plazo"=>$newPlazo,"idHistorial" => NULL);
@@ -38,7 +38,7 @@
           $newIdContexto = $_POST['stuffContext']==""? NULL : $_POST['stuffContext'];
           $newTags = $_POST['stuffTag'];
           $newIdStuff = $_POST['idStuffForm'];
-          $typeStuff = $_POST['sendTo'];
+         $typeStuff = "S";
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
               "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
 //          $idDelete = $_POST['idStuffForm'];
@@ -274,7 +274,7 @@
                                 <td>
                                     <p>Contexto:</p>
                                 </td>
-                                <td>
+                                <td colspan="3">
                                     <select type="select" name="stuffContext">
                                         <?php
                                                   echo '<option value = "" ></option>';
@@ -293,18 +293,7 @@
                                         ?>
                                     </select>
                                </td>
-                               <td>
-                                   Modify:
-                               </td>
-                               <td>
-                                   <select type="select" name="sendTo" >
-                                       <option value=""></option>
-                                       <option value="N" >Next Action</option>
-                                       <option value="P" >Project</option>
-                                       <option value="S" selected>Someday/Maybe</option>
-                                       <option value="W">Waiting For</option>
-                                   </select>
-                               </td>
+                              
                             
                             </tr>
                             <tr>

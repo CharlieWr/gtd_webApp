@@ -3,6 +3,7 @@
     require_once '../Control/StuffControl.php';
     require_once '../Control/UsuarioControl.php';
     require_once '../Control/NextActionControl.php';
+    require_once '../Control/ProyectoControl.php';
     require_once '../Control/ContextoControl.php';
     require_once '../Control/TagControl.php';
     
@@ -11,6 +12,7 @@
     $formatoFecha = $_SESSION['fecha'];
     $usuarioControl = new UsuarioControl();
     $stuffControl = new StuffControl();
+      $naControl = new NextActionControl();
      $tagControl = new TagControl();
      
     $user = $usuarioControl->getUsuarioById($idUsuario);
@@ -19,15 +21,17 @@
     
         //Si se ha hecho click en Aceptar (Guardar Stuff)
       if(isset($_POST['saveStuff'])){
-          $newNombre = $_POST['stuffName'];
-          $newDescripcion = $_POST['stuffDescription'];
-          $newIdContexto = $_POST['stuffContext']==""? NULL : $_POST['stuffContext'];
-          $newTags = $_POST['stuffTag'];
-          $newIdStuff = $_POST['idStuffForm'];
-           $typeStuff = $_POST['sendTo'];
-          $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
-              "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
-          $stuffControl->insertStuff($newInfo);
+            $newNombre = $_POST['stuffName'];
+            $newDescripcion = $_POST['stuffDescription'];
+            $newIdContexto = $_POST['stuffContext']==""? NULL : $_POST['stuffContext'];
+            $newTags = $_POST['stuffTag'];
+            $newIdStuff = $_POST['idStuffForm'];
+            $typeStuff = "N";
+            $activa = isset($_POST['activa'])? true : false;
+            $idProyecto = (isset($_POST['projectSelected']) && $_POST['projectSelected']!= "")? $_POST['projectSelected'] : NULL;
+            $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
+                  "tag" => $newTags, 'activa' => $activa, "idStuff" => $newIdStuff,"idProyecto" => $idProyecto,'plazo'=>NULL,'contacto'=>NULL, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
+            $stuffControl->insertStuff($newInfo);
           
           
       }
@@ -38,7 +42,7 @@
           $newIdContexto = $_POST['stuffContext']==""? NULL : $_POST['stuffContext'];
           $newTags = $_POST['stuffTag'];
           $newIdStuff = $_POST['idStuffForm'];
-          $typeStuff = $_POST['sendTo'];
+          $typeStuff = "N";
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
               "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
 //          $idDelete = $_POST['idStuffForm'];
@@ -57,11 +61,14 @@
     $stuffAssoc = NULL;
     
     $stuffSeleccionada = false;
+    $stuffActiva = false;
     //Si hay algun stuff seleccionado
        if(isset($_GET['idSt'])){
            //Stuff asociada a Usuario
            $stuffAssoc = $stuffControl->getStuffById($_GET['idSt']);
            $stuffSeleccionada = true;
+           $naAssoc = $naControl->getNextActionByStuffId($_GET['idSt']);
+           $stuffActiva = $naAssoc->getActiva();
            //Seleccionamos el nombre del Stuff
            $stuffName=$stuffAssoc->getNombre();
            $stuffDescription = $stuffAssoc->getDescripcion();
@@ -219,7 +226,7 @@
                     </div>
                        <ul>
                             <?php 
-                                    $naControl = new NextActionControl();
+                                  
                                     foreach ($listStuff as $st){
                                       
                                         //Solo procesar las de tipo P o nuevos proyectos
@@ -288,7 +295,7 @@
                                 <td>
                                     <p>Contexto:</p>
                                 </td>
-                                <td>
+                                <td colspan="3">
                                     <select type="select" name="stuffContext">
                                         <?php
                                                   echo '<option value = "" ></option>';
@@ -307,18 +314,7 @@
                                         ?>
                                     </select>
                                </td>
-                               <td>
-                                   Modify:
-                               </td>
-                               <td>
-                                   <select type="select" name="sendTo" >
-                                       <option value=""></option>
-                                       <option value="N" selected>Next Action</option>
-                                       <option value="P" >Project</option>
-                                       <option value="S">Someday/Maybe</option>
-                                       <option value="W">Waiting For</option>
-                                   </select>
-                               </td>
+                               
                             
                             </tr>
                             <tr>
@@ -342,26 +338,30 @@
                                 </td>
                                 <td>Proyecto:</td>
                                 <td>
-                                    <?php 
-                                        if($stuffAssoc){
-                                            $na = $naControl->getNextActionByStuffId($stuffAssoc->getIdStuff());
-                                            $prId = $na->getIdProyecto();
-                                            if($prId){
-                                                $prAss = $stuffControl->getStuffById($prId);
-                                                $nombrePr = $prAss->getNombre();
-                                            }
-                                            else{
-                                                $nombrePr = "-";
-                                            }
-                                            echo $nombrePr;
-                                            
-                                            
-                                        }
-                                        else{
-                                            echo "-";
-                                        }
-                                    ?>
-                                </td>
+                                   <select type="select" name="projectSelected" id="projectSelected" >
+                                       <option value=""></option>
+                                       <?php 
+                                        $prControl = new ProyectoControl();
+                                       
+                                        foreach($listStuff as $stAux){
+                                           if($stAux->getTypeStuff()=="P" && !$stAux->getIdHistorial()){
+                                                echo '<option value="'.$stAux->getIdStuff().'"';
+                                                 
+                                                $prAux = $prControl->getProyectoByStuffId($stAux->getIdStuff());
+                                                if(isset($naAssoc) && $prAux->getIdProyecto()==$naAssoc->getIdProyecto()){
+                                                    echo "selected";
+                                                }
+                                                
+                                                
+                                                echo '>'.$stAux->getNombre().'</option>';
+                                           
+                                           }
+                                       }?>
+                                   </select>
+                               </td>
+                                 <td>
+                                   <input type="checkbox" name="activa" id="activa" value="activa" <?php echo $stuffActiva? "checked" : ""; ?>>Activa<br>
+                               </td>
                         </tr>
                         <tr >
                             <td>

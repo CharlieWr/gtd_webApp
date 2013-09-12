@@ -56,13 +56,14 @@
     $tagList = NULL;
     
     $stuffAssoc = NULL;
-    
+    $tipoStuff = NULL;
     $stuffSeleccionada = false;
     //Si hay algun stuff seleccionado
        if(isset($_GET['idSt'])){
            //Stuff asociada a Usuario
            $stuffAssoc = $stuffControl->getStuffById($_GET['idSt']);
            $stuffSeleccionada = true;
+           $tipoStuff = $stuffAssoc->getTypeStuff();
            //Seleccionamos el nombre del Stuff
            $stuffName=$stuffAssoc->getNombre();
            $stuffDescription = $stuffAssoc->getDescripcion();
@@ -283,16 +284,21 @@
                                     </select>
                                </td>
                                <td>
-                                   Send To:
+                                   Tipo:
                                </td>
                                <td>
-                                   <select type="select" name="sendTo"  >
-                                       <option value=""></option>
-                                       <option value="N">Next Action</option>
-                                       <option value="P" selected>Project</option>
-                                       <option value="S">Someday/Maybe</option>
-                                       <option value="W">Waiting For</option>
-                                   </select>
+                                   <?php switch($tipoStuff){
+                                            case "N":
+                                                echo "Next Action"; break;
+                                            case "P":
+                                                echo "Proyecto"; break;
+                                            case "S":
+                                                echo "Someday/Maybe"; break;
+                                            case "W":
+                                                echo "Waiting For"; break;
+                                            default: 
+                                                echo "-";
+                                   }?>
                                </td>
                             
                             </tr>

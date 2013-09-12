@@ -335,7 +335,7 @@
                                    <select type="select" name="projectSelected" id="projectSelected" disabled>
                                        <option value=""></option>
                                        <?php foreach($listStuff as $stAux){
-                                           if($stAux->getTypeStuff()=="P"){
+                                           if($stAux->getTypeStuff()=="P" && !$stAux->getIdHistorial()){
                                                 echo '<option value="'.$stAux->getIdStuff().'">'.$stAux->getNombre().'</option>';
                                            
                                            }
