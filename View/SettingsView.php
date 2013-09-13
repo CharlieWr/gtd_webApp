@@ -53,7 +53,8 @@
          
      }
      if(isset($_POST['deleteContexto']))  {
-         
+         $IdContext = $_POST['idContextForm'];
+         $contextoControl->deleteContextoById($IdContext);
      }
   
 ?> 
