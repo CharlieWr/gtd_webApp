@@ -25,8 +25,10 @@
           $newIdStuff = $_POST['idStuffForm'];
            $typeStuff = "S";
            $newPlazo = $_POST['plazo'];
-          $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
-              "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"plazo"=>$newPlazo,"idHistorial" => NULL);
+         $activa = isset($_POST['activa'])? true : false;
+            $idProyecto = (isset($_POST['projectSelected']) && $_POST['projectSelected']!= "")? $_POST['projectSelected'] : NULL;
+            $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
+                  "tag" => $newTags, 'activa' => $activa, "idStuff" => $newIdStuff,"idProyecto" => $idProyecto,'plazo'=>$newPlazo,'contacto'=>NULL, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
           $stuffControl->insertStuff($newInfo);
           
           

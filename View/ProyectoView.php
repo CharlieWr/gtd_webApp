@@ -21,15 +21,17 @@
  
         //Si se ha hecho click en Aceptar (Guardar Stuff)
       if(isset($_POST['saveStuff'])){
-          $newNombre = $_POST['stuffName'];
-          $newDescripcion = $_POST['stuffDescription'];
-          $newIdContexto = $_POST['stuffContext']==""? NULL : $_POST['stuffContext'];
-          $newTags = $_POST['stuffTag'];
-          $newIdStuff = $_POST['idStuffForm'];
-           $typeStuff = "P";
-          $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
-              "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
-          $stuffControl->insertStuff($newInfo);
+            $newNombre = $_POST['stuffName'];
+            $newDescripcion = $_POST['stuffDescription'];
+            $newIdContexto = $_POST['stuffContext']==""? NULL : $_POST['stuffContext'];
+            $newTags = $_POST['stuffTag'];
+            $newIdStuff = $_POST['idStuffForm'];
+            $typeStuff = "P";
+            $activa = isset($_POST['activa'])? true : false;
+            $idProyecto =  NULL;
+            $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
+                   "tag" => $newTags, 'activa' => $activa, "idStuff" => $newIdStuff,"idProyecto" => $idProyecto,'plazo'=>NULL,'contacto'=>NULL, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
+           $stuffControl->insertStuff($newInfo);
           
           
       }

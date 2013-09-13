@@ -151,6 +151,32 @@
                      
                         
                     </div>
+                    <?php 
+                        //Contexto
+                        if($opcion == 1){
+                    
+                            echo '<div style="background-color: lavender; display: inline-block; width:30%; height: 100%; border-right: 3px #CFD8E3 solid; " >';
+                            echo '<ul style="padding:10px 10px 0 10px;">';
+                        
+                            foreach($contextList as $singleContext){
+                       
+                                    echo '<a href="Settings.php">';
+                                    echo  '<li class="listContext" style=" background-color: lightsteelblue; margin-bottom: 10px;">'.$singleContext->getNombreContexto().'</li>';
+                                    echo '</a>';
+                          } 
+                                
+                        
+                        
+                       
+                        echo '</ul> ';
+                        echo '</div>';
+                        echo '<div style="background-color: whitesmoke; display: inline-block; width: 69%; height: 100%;">';
+                        
+                            echo '</div>';
+                    
+                            } 
+                        ?>
+                    
                       <?php
                         //Formato Fecha
                         if($opcion == 2){
@@ -166,10 +192,10 @@
                             <input type="radio" name="radioFecha" value="m/d/Y" style="margin-bottom: 20px;" <?php echo ($formatoFecha== "m/d/Y")?  "checked" : ""; ?>>mm/dd/yyyy (05/23/2013)<br/>
                             <input type="submit" name="submit" value="save">
                         </form>
-                        
+                     </div>   
                         <?php }?>
-                    </div>
                     
+                        
                 </div>
             </div>
              

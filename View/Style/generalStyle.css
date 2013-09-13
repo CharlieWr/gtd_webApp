@@ -118,6 +118,12 @@ a:visited {
     
 }
 
+
+.listContext:hover {
+    background-color: steelblue;
+     color: aliceblue;
+    
+}
 /*******************************************/
 /*Cabecera de lista de Stuff*/
 /*******************************************/
