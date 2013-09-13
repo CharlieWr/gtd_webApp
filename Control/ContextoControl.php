@@ -23,4 +23,8 @@
         }
 
     }
+    
+    public function insertContexto($contexto){
+        
+    }
 ?>
