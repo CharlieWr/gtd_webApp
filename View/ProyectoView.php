@@ -346,7 +346,7 @@
 //                                }
 //                                
                                 ?>
-                               <input type="submit"  name="deleteStuff" onclick='return confirm("Are you sure you want to delete the selected item?");' value="Delete" <?php echo $stuffSeleccionada? "" : "disabled"?>/>
+                               <input type="submit"  name="deleteStuff" onclick='return confirm("Seguro quiere eliminar el proyecto y sus actividades asociadas?");' value="Delete" <?php echo $stuffSeleccionada? "" : "disabled"?>/>
                             </td>
                             <td colspan="3">
                                 <input type="hidden" name="idStuffForm" value="<?php echo isset($stuffAssoc)? $stuffAssoc->getIdStuff() : NULL;?>">

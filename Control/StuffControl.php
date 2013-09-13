@@ -331,13 +331,21 @@
                 //Actualizamos el Stuff
                 $stuffModel->updateStuff($newStuff);
                 
-                //Si es un proyecto hay que enviar a historial actividades asociadas
-//                if($typeStuff == "P"){
-//                    $proyModel = new ProyectoModel();
-//                    $actList = $proyModel->obtenerActividadesDeProyecto($infoStuff['idStuff']);
-//                    
-//                    
-//                }
+//                Si es un proyecto hay que enviar a historial actividades asociadas
+                if($typeStuff == "P"){
+                    $proyModel = new ProyectoModel();
+                    $pr = $proyModel->selectProyectoStuffById($infoStuff['idStuff']);
+                    $actList = $proyModel->obtenerActividadesDeProyecto($pr->getIdProyecto());
+                    
+                    foreach($actList as $act){
+                        $stf = $stuffModel->selectStuffById($act->getIdStuff());
+                        //Ponemos a todas las actividades el mismo Id Historial
+                        $stf->setIdHistorial($idHistorial);
+                        $stuffModel->updateStuff($stf);
+                        }
+                    
+                    
+                }
                 
             
         }

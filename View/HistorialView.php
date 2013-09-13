@@ -4,6 +4,7 @@
     require_once '../Control/ContextoControl.php';
     require_once '../Control/TagControl.php';
     require_once '../Control/HistorialControl.php';
+    require_once '../Control/ProyectoControl.php';
     
     session_start();
     $idUsuario = $_SESSION['idUsuario'];
@@ -201,12 +202,26 @@
                     </div>
                        <ul>
                             <?php 
-                            
+                                    //Array con todas las actividades con proyectos asociados
+                                    $actConProj = array();
+                                      foreach ($listStuff as $st){
+                                            if($st->getTypeStuff()=="P"){
+                                               $proyectoControl = new ProyectoControl(); 
+                                               $prAux = $proyectoControl->getProyectoByStuffId($st->getIdStuff());
+                                               $actPrAux = $proyectoControl->getActividadesAsociadas($prAux->getIdProyecto());
+                                               $auxIdAct = array();
+                                               foreach($actPrAux as $act){
+                                                   $auxIdAct[] = $act->getIdStuff();
+                                               }
+                                               $actConProj = array_merge($actConProj,$auxIdAct);
+                                            }
+                                      }
                                     foreach ($listStuff as $st){
-                                      
+                                            
                                             //Solo se muestran Stuff que no hayan sido eliminadas (enviadas el historial)
+                                            //Si no existe el elemento en array (no tiene proyecto asociado
                                             //Y se muestran todos si contexto es Null (Seleccionado ALL) o se muestran solo las del contexto seleccionado
-                                            if($st->getIdHistorial() != NULL && (!$contextIdSelected || $st->getIdContexto() == $contextIdSelected)){
+                                            if(!in_array($st->getIdStuff(),$actConProj) && $st->getIdHistorial() != NULL && (!$contextIdSelected || $st->getIdContexto() == $contextIdSelected)){
                                                 //Si hay stuff seleccionada cambiamos el estilo
                                                 if($stuffAssoc && $st->getIdStuff() == $stuffAssoc->getIdStuff()){
                                                     echo '<li id="itemStuff" style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;">'.$st->getNombre()."</li>";
@@ -306,7 +321,7 @@
                                 <td>
                                     <p>Tags:</p>
                                 </td>
-                                <td colspan="3">
+                                <td colspan="1">
                                     
                                     <?php
                                     echo '<input type="text" name="stuffTag" title="Separa Tags con Punto y Coma ( ; )" value="';
@@ -321,7 +336,35 @@
                                     echo '" readonly>'
                                 ?>
                                 </td>
+                                 <td colspan="1" rowspan="2" >
+                                    <div style="padding-left:20px;">
+                                        Actividades:
+                                        <ul style="width:240px; height: 80px; padding: 30px;overflow: auto; border: 3px solid #cccccc;">
+                                            <?php 
+                                                //Si hay stuff seleccionada se muestran sus actividades
+                                                if($stuffAssoc){
+                                                   $prjControl  =  new ProyectoControl();
+                                                    $proy = $prjControl->getProyectoByStuffId($stuffAssoc->getIdStuff());
+                                                    $actProj = $prjControl->getActividadesAsociadas($proy->getIdProyecto());
+                                                    foreach($actProj as $actAux){
+                                                        $actSt = $stuffControl->getStuffById($actAux->getIdStuff());
+                                                        $nombreAct = $actSt->getNombre();
+                                                        $idActSt = $actSt->getIdStuff();
+//                                                        echo '<a href="NextActionView.php?idSt='.$idActSt.'">';
+                                                        echo '<li style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;">'.$nombreAct.'</li>';
+//                                                        echo '</a>';
+                                                    }
+                                                
+                                                }
+                                            
+                                            ?>
+                                          
+                                        </ul>
+                                    </div>
+                                    
+                                </td>
                         </tr>
+                        <tr></tr>
                         <tr >
                             <td>
                                 <?php 
