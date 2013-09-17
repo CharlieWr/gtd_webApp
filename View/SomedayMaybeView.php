@@ -181,6 +181,7 @@
                         </ul></li>
 
                 <li><a class="qmparent" href="SettingsView.php">Settings</a>
+                    <li><a class="qmparent" href="IniciarSesion.php">Cerrar Sesion</a></li>
     
                 </li>
 
@@ -195,7 +196,7 @@
 
         <div id="content">
             
-          <img src="images/todolist.png " />
+          <a href="Home.php"><img src="images/todolist.png " /></a>
             <h1 id="logo">Getting Things Done!</h1>
          
             <div id="stuffBox">

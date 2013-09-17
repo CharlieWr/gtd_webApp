@@ -1,6 +1,9 @@
 <?php
 	require_once("../Control/funciones.php");
 	require_once("../Control/UsuarioControl.php");
+        
+        session_start();
+        session_destroy();
 	
 	if (isset($_POST['submit'])) {
 		// form was submitted
@@ -17,7 +20,7 @@
                         session_start();
                         $_SESSION['idUsuario'] = $idUsuario;
                         $_SESSION['fecha'] = "d/m/Y H:i:s";
-			redirect_to("ProcessView.php");
+			redirect_to("Home.php");
 		} else {
 			$message = "Hay errores";
 		}
@@ -36,7 +39,7 @@
     </head>
     <body>
         <div id="content">
-             <img src="images/todolist.png " />
+            <a href="Home.php"><img src="images/todolist.png " /></a>
             <h1 id="logo">Getting Things Done!</h1><br/>
 
             
@@ -57,7 +60,7 @@
                         <td> <input type='password' name='password' required="required" maxlength="50" /></td>
                     </tr>
                     <tr>
-                        <td> <input type='submit' name='submit' value='Submit' /></td> 
+                        <td> <input type='submit' name='submit' value='Iniciar Sesion' style="width: auto;" /></td> 
                     </tr>
                 </table>
                 </fieldset>
