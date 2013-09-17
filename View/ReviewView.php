@@ -3,6 +3,7 @@
     require_once '../Control/UsuarioControl.php';
     require_once '../Control/ContextoControl.php';
     require_once '../Control/TagControl.php';
+    require_once '../Control/funciones.php';
     //Save y Delete tienen que llevvar la informacion de tipo de stuff y filtrar
     //Campo Send To debe tener el campo de TypeStuff seleccionado
     session_start();
@@ -30,6 +31,8 @@
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
               "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"contacto" => $newContacto,"plazo"=>$newPlazo,"idHistorial" => NULL);
           $stuffControl->insertStuff($newInfo);
+          redirect_to("ReviewView.php");
+
           
           
       }
@@ -46,6 +49,8 @@
               "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
 //          $idDelete = $_POST['idStuffForm'];
           $stuffControl->sendStuffHistorial($newInfo);
+          redirect_to("ReviewView.php");
+
       }
       
      
@@ -181,7 +186,7 @@
                         </ul></li>
 
                 <li><a class="qmparent" href="SettingsView.php">Settings</a>
-                    <li><a class="qmparent" href="IniciarSesion.php">Cerrar Sesion</a></li>
+                    <li><a class="qmparent" href="IniciarSesion.php">Sign Out</a></li>
     
                 </li>
 

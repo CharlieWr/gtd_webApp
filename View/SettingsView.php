@@ -3,6 +3,7 @@
     require_once '../Control/UsuarioControl.php';
     require_once '../Control/ContextoControl.php';
     require_once '../Control/TagControl.php';
+    require_once '../Control/funciones.php';
     
     session_start();
     $idUsuario = $_SESSION['idUsuario'];
@@ -50,11 +51,15 @@
          $newContexto->setIdContexto($newIdContext);
          $newContexto->setNombreContexto($newNombreContext);
          $contextoControl->insertContexto($newContexto);
+        redirect_to("SettingsView.php");
+
          
      }
      if(isset($_POST['deleteContexto']))  {
          $IdContext = $_POST['idContextForm'];
          $contextoControl->deleteContextoById($IdContext);
+                 redirect_to("SettingsView.php");
+
      }
   
 ?> 
@@ -141,7 +146,7 @@
                         </ul></li>
 
                 <li><a class="qmparent" href="SettingsView.php">Settings</a>
-                    <li><a class="qmparent" href="IniciarSesion.php">Cerrar Sesion</a></li>
+                    <li><a class="qmparent" href="IniciarSesion.php">Sign Out</a></li>
     
                 </li>
 

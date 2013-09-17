@@ -22,17 +22,17 @@
                         $_SESSION['fecha'] = "d/m/Y H:i:s";
 			redirect_to("Home.php");
 		} else {
-			$message = "Hay errores";
+			$message = "Errors";
 		}
 	} else {
 		$username = "";
-		$message = "Inicia Sesion";
+		$message = "Sign in";
 	}
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Iniciar Sesion</title>
+        <title>Sign in</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
           <link rel="stylesheet" href="./Style/generalStyle.css">
         
@@ -47,11 +47,11 @@
             <!--Se redirige a la misma pagina para comprobar los datos introducidos-->
             <form id='login' action='IniciarSesion.php' method='post' accept-charset='UTF-8'>
                 <fieldset >
-                <legend>Login</legend>
+                <legend>Sign in</legend>
           
                 <table>
                     <tr>
-                        <td><label for='username' >Nombre de Usuario:</label></td>
+                        <td><label for='username' >User Name:</label></td>
                     <!--Se codifica lo que el usuario introduce por caracteres especiales html-->
                     <td> <input type='text' name='username'  maxlength="50" required="required" value="<?php echo htmlspecialchars($username); ?>"/></td>
                     </tr>   
@@ -60,7 +60,7 @@
                         <td> <input type='password' name='password' required="required" maxlength="50" /></td>
                     </tr>
                     <tr>
-                        <td> <input type='submit' name='submit' value='Iniciar Sesion' style="width: auto;" /></td> 
+                        <td> <input type='submit' name='submit' value='Sign in'  /></td> 
                     </tr>
                 </table>
                 </fieldset>

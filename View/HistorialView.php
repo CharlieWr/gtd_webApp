@@ -5,6 +5,7 @@
     require_once '../Control/TagControl.php';
     require_once '../Control/HistorialControl.php';
     require_once '../Control/ProyectoControl.php';
+    require_once '../Control/funciones.php';
     
     session_start();
     $idUsuario = $_SESSION['idUsuario'];
@@ -30,6 +31,7 @@
 //          $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
 //              "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
           $stuffControl->restoreStuff($newIdStuff);
+           redirect_to("HistorialView.php");
           
           
       }
@@ -45,6 +47,7 @@
               "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
 //          $idDelete = $_POST['idStuffForm'];
           $historialControl->deleteHistorialByIdStuff($newIdStuff);
+          redirect_to("HistorialView.php");
       }
        
     
@@ -176,7 +179,7 @@
                         </ul></li>
 
                 <li><a class="qmparent" href="SettingsView.php">Settings</a>
-                    <li><a class="qmparent" href="IniciarSesion.php">Cerrar Sesion</a></li>
+                    <li><a class="qmparent" href="IniciarSesion.php">Sign Out</a></li>
     
                 </li>
 
@@ -337,6 +340,9 @@
                                     echo '" readonly>'
                                 ?>
                                 </td>
+                                <?php 
+                                    if($stuffAssoc && $stuffAssoc->getTypeStuff() == "P"){
+                                ?>
                                  <td colspan="1" rowspan="2" >
                                     <div style="padding-left:20px;">
                                         Actividades:
@@ -364,6 +370,7 @@
                                     </div>
                                     
                                 </td>
+                                    <?php } ?>
                         </tr>
                         <tr></tr>
                         <tr >

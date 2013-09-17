@@ -6,6 +6,7 @@
     require_once '../Control/ProyectoControl.php';
     require_once '../Control/ContextoControl.php';
     require_once '../Control/TagControl.php';
+    require_once '../Control/funciones.php';
     
     session_start();
     $idUsuario = $_SESSION['idUsuario'];
@@ -32,6 +33,8 @@
             $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
                   "tag" => $newTags, 'activa' => $activa, "idStuff" => $newIdStuff,"idProyecto" => $idProyecto,'plazo'=>NULL,'contacto'=>NULL, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
             $stuffControl->insertStuff($newInfo);
+            redirect_to("NextActionView.php");
+
           
           
       }
@@ -47,6 +50,8 @@
               "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
 //          $idDelete = $_POST['idStuffForm'];
           $stuffControl->sendStuffHistorial($newInfo);
+                      redirect_to("NextActionView.php");
+
       }
        
     
@@ -188,7 +193,7 @@
                         </ul></li>
 
                 <li><a class="qmparent" href="SettingsView.php">Settings</a>
-                    <li><a class="qmparent" href="IniciarSesion.php">Cerrar Sesion</a></li>
+                    <li><a class="qmparent" href="IniciarSesion.php">Sign Out</a></li>
     
                 </li>
 

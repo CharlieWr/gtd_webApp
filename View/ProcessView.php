@@ -4,6 +4,7 @@
     require_once '../Control/ContextoControl.php';
     require_once '../Control/TagControl.php';
     require_once '../Control/ProyectoControl.php';
+    require_once "../Control/funciones.php";
     
     session_start();
     $idUsuario = $_SESSION['idUsuario'];
@@ -14,11 +15,11 @@
      $tagControl = new TagControl();
      
     $user = $usuarioControl->getUsuarioById($idUsuario);
-    $stuffName = "Selecciona Stuff";
+    $stuffName = "Select Stuff";
     $stuffDescription = "";
     
         //Si se ha hecho click en Aceptar (Guardar Stuff)
-      if(isset($_POST['saveStuff'])){
+      if(isset($_POST['saveStuff'])) {
           $newNombre = $_POST['stuffName'];
           $newDescripcion = $_POST['stuffDescription'];
           $newIdContexto = $_POST['stuffContext']==""? NULL : $_POST['stuffContext'];
@@ -30,6 +31,7 @@
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
               "tag" => $newTags, 'activa' => $activa, "idStuff" => $newIdStuff,"idProyecto" => $idProyecto,'plazo'=>NULL,'contacto'=>NULL, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
           $stuffControl->insertStuff($newInfo);
+          redirect_to("ProcessView.php");
           
           
       }
@@ -45,6 +47,7 @@
               "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"idHistorial" => NULL);
 //          $idDelete = $_POST['idStuffForm'];
           $stuffControl->sendStuffHistorial($newInfo);
+           redirect_to("ProcessView.php");
       }
        
     
@@ -74,9 +77,9 @@
        //Si es un nuevo Stuff
        if(isset($_GET['new'])){
            $stuffSeleccionada = true;
-           $stuffName = "Nuevo Stuff";
+           $stuffName = "New Stuff";
            $newStuff = new Stuff();
-           $newStuff->setNombre("Nuevo Stuff");
+           $newStuff->setNombre("New Stuff");
            //Se inserta al inicio de Array nuevo Stuff vacio
            array_unshift($listStuff,$newStuff);
            
@@ -176,7 +179,7 @@
                         </ul></li>
 
                 <li><a class="qmparent" href="SettingsView.php">Settings</a>
-                    <li><a class="qmparent" href="IniciarSesion.php">Cerrar Sesion</a></li>
+                    <li><a class="qmparent" href="IniciarSesion.php">Sign Out</a></li>
     
                 </li>
 
@@ -215,7 +218,7 @@
                                                       echo '<li id="itemStuff" style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;">'.$st->getNombre()."</li>";
                                                   }
                                                   //Si se esta creando un nuevo Stuff y esta ese seleccionado
-                                                  elseif (isset($newStuff) && $st->getNombre()=="Nuevo Stuff") {
+                                                  elseif (isset($newStuff) && $st->getNombre()=="New Stuff") {
                                                        echo '<li id="itemStuff" style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;">'.$st->getNombre()."</li>";
 
                                                    }
@@ -245,11 +248,11 @@
                         <table >
                             <tr>
                                 <td>
-                                    <p>Nombre:</p>
+                                    <p>Name:</p>
                                 </td>
                                 <td colspan="3">
                                     <input type="text" name="stuffName" required="required" maxlength="255" value="<?php 
-                                    echo ($stuffName=="Selecciona Stuff" || $stuffName=="Nuevo Stuff")? "": $stuffName;?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
+                                    echo ($stuffName=="Select Stuff" || isset($_GET['new']))? "": $stuffName;?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
                                 </td>
                                 <td>
                                     <p><?php echo $stuffAssoc==NULL? date($formatoFecha, time()) : date($formatoFecha,  strtotime($stuffAssoc->getFecha()));?></p>
@@ -258,7 +261,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p>Descripcion:</p>
+                                    <p>Description:</p>
                                 </td>
                                 <td colspan="3">
                                     <textarea name="stuffDescription" rows="3" cols="25" maxlength="255" <?php echo $stuffSeleccionada? "" : 'readonly'?> ><?php 
@@ -269,7 +272,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p>Contexto:</p>
+                                    <p>Context:</p>
                                 </td>
                                 <td>
                                     <select type="select" name="stuffContext">
@@ -296,7 +299,7 @@
                                 <td >
                                     
                                     <?php
-                                    echo '<input type="text" name="stuffTag" title="Separa Tags con Punto y Coma ( ; )" value="';
+                                    echo '<input type="text" name="stuffTag" title="Use semicolon as separation ( ; )" value="';
                                     if($tagList){
                                         foreach($tagList as $singleTag){
                                             echo $singleTag->getNombreTag().'; ';
@@ -344,7 +347,7 @@
                                    </select>
                                </td>
                                <td>
-                                   <input type="checkbox" name="activa" id="activa" value="activa" disabled>Activa<br>
+                                   <input type="checkbox" name="activa" id="activa" value="activa" disabled>Active<br>
                                </td>
 
                         </tr>
@@ -357,7 +360,7 @@
 //                                }
 //                                
                                 ?>
-                               <input type="submit"  name="deleteStuff" onclick='return confirm("Really delete?");' value="Delete" <?php echo $stuffSeleccionada? "" : "disabled"?>/>
+                               <input type="submit"  name="deleteStuff" onclick='return confirm("Are you sure you want to delete the selected Stuff?");' value="Delete" <?php echo $stuffSeleccionada? "" : "disabled"?>/>
                             </td>
                             <td colspan="3">
                                 <input type="hidden" name="idStuffForm" value="<?php echo isset($stuffAssoc)? $stuffAssoc->getIdStuff() : NULL;?>">

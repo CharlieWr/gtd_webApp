@@ -136,7 +136,7 @@
                 <li><a class="qmparent" href="SettingsView.php">Settings</a>
     
                 </li>
-                <li><a class="qmparent" href="IniciarSesion.php">Cerrar Sesion</a></li>
+                <li><a class="qmparent" href="IniciarSesion.php">Sign Out</a></li>
 
         <li class="qmclear">&nbsp;</li></ul>
 
