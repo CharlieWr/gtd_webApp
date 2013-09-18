@@ -345,7 +345,7 @@
                                 ?>
                                  <td colspan="1" rowspan="2" >
                                     <div style="padding-left:20px;">
-                                        Actividades:
+                                        Activities:
                                         <ul style="width:240px; height: 80px; padding: 30px;overflow: auto; border: 3px solid #cccccc;">
                                             <?php 
                                                 //Si hay stuff seleccionada se muestran sus actividades

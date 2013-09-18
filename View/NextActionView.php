@@ -172,7 +172,8 @@
                             <?php 
                                 echo '<li><a href="NextActionView.php">ALL</a></li>';
                                 foreach($contextList as $ct){
-                                    echo '<li><a href="NextActionView.php?context='.$ct->getIdContexto().'">'.$ct->getNombreContexto().'</a></li>';
+                                    $linkActive = isset($_GET['active'])? ("&active=".$_GET['active']) : "";
+                                    echo '<li><a href="NextActionView.php?context='.$ct->getIdContexto().$linkActive.'">'.$ct->getNombreContexto().'</a></li>';
                                 }
                             ?>
                    
