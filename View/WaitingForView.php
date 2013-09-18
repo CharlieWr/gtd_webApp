@@ -15,7 +15,7 @@
      $wfControl = new WaitingForControl();
      
     $user = $usuarioControl->getUsuarioById($idUsuario);
-    $stuffName = "Selecciona Waiting For";
+    $stuffName = "Select a Waiting For";
     $stuffDescription = "";
     
         //Si se ha hecho click en Aceptar (Guardar Stuff)
@@ -178,7 +178,7 @@
                         <li><a href="NextActionView.php">Next Actions</a></li>
                         <li><a href="SomedayMaybeView.php">Someday/Maybe</a></li>
                         <li><a href="WaitingForView.php">Waiting For</a></li>
-                        <li><a href="HistorialView.php">Historial</a></li>
+                        <li><a href="HistorialView.php">History</a></li>
                         </ul></li>
 
                 <li><a class="qmparent" href="SettingsView.php">Settings</a>
@@ -252,11 +252,11 @@
                         <table >
                             <tr>
                                 <td>
-                                    <p>Nombre:</p>
+                                    <p>Name:</p>
                                 </td>
                                 <td>
                                     <input type="text" name="stuffName" required="required" maxlength="255" value="<?php 
-                                    echo ($stuffName=="Selecciona Waiting For" || $stuffName=="Nuevo Stuff")? "": $stuffName;?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
+                                    echo ($stuffName=="Select a Waiting For" || $stuffName=="Nuevo Stuff")? "": $stuffName;?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
                                 </td>
                                 <td colspan="2"></td>
                                 <td>
@@ -265,7 +265,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p>Descripcion:</p>
+                                    <p>Description:</p>
                                 </td>
                                 <td colspan="3">
                                     <textarea name="stuffDescription" rows="3" cols="25" maxlength="255" <?php echo $stuffSeleccionada? "" : 'readonly'?> ><?php 
@@ -276,7 +276,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p>Contexto:</p>
+                                    <p>Context:</p>
                                 </td>
                                 <td colspan="3">
                                     <select type="select" name="stuffContext">
@@ -319,7 +319,7 @@
                                     echo $stuffSeleccionada? '">' : '" readonly>'
                                 ?>
                                 </td>
-                                <td>Contacto:</td>
+                                <td>Contact:</td>
                                 <td>
                                      <input type="text" name="contacto" maxlength="255" value="<?php 
                                     echo ($stuffSeleccionada && $contacto)? $contacto : "";?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
@@ -334,7 +334,7 @@
 //                                }
 //                                
                                 ?>
-                               <input type="submit"  name="deleteStuff" onclick='return confirm("Are you sure you want to delete the selected item?");' value="Delete" <?php echo $stuffSeleccionada? "" : "disabled"?>/>
+                               <input type="submit"  name="deleteStuff" onclick='return confirm("Are you sure you want to delete the selected Waiting For item?");' value="Delete" <?php echo $stuffSeleccionada? "" : "disabled"?>/>
                             </td>
                             <td colspan="3">
                                 <input type="hidden" name="idStuffForm" value="<?php echo isset($stuffAssoc)? $stuffAssoc->getIdStuff() : NULL;?>">
