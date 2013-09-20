@@ -3,6 +3,7 @@
     require_once '../Control/UsuarioControl.php';
     require_once '../Control/ContextoControl.php';
     require_once '../Control/TagControl.php';
+    require_once '../Control/NextActionControl.php';
     require_once '../Control/HistorialControl.php';
     require_once '../Control/ProyectoControl.php';
     require_once '../Control/funciones.php';
@@ -14,7 +15,8 @@
     $stuffControl = new StuffControl();
     $historialControl = new HistorialControl();
      $tagControl = new TagControl();
-     
+    $naControl = new NextActionControl();
+
     $user = $usuarioControl->getUsuarioById($idUsuario);
     $stuffName = "Selecciona Stuff";
     $stuffDescription = "";
@@ -151,6 +153,7 @@
                 <!-- QuickMenu Structure [Menu 0] -->
 
         <ul id="qm0" class="qmmc">
+                <li><a class="qmparent" href="Home.php">Home</a></li>
 
                 <li><a class="qmparent" href="javascript:void(0)">Context</a>
 
@@ -357,8 +360,12 @@
                                                         $actSt = $stuffControl->getStuffById($actAux->getIdStuff());
                                                         $nombreAct = $actSt->getNombre();
                                                         $idActSt = $actSt->getIdStuff();
+                                                        $naSt = $naControl->getNextActionByStuffId($idActSt);
+                                                        $color = $naSt->getActiva()? 'steelblue' : 'darkgrey';
 //                                                        echo '<a href="NextActionView.php?idSt='.$idActSt.'">';
-                                                        echo '<li style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;">'.$nombreAct.'</li>';
+                                                        echo '<li style="background-color: '.$color.';color: aliceblue; border: 3px aliceblue solid;">'.$nombreAct.'</li>';
+//                                                        echo '<a href="NextActionView.php?idSt='.$idActSt.'">';
+//                                                        echo '<li style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;">'.$nombreAct.'</li>';
 //                                                        echo '</a>';
                                                     }
                                                 

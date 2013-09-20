@@ -99,6 +99,9 @@
                     case "P":
                         //Borro de Proyecto ese stuff
                         $proyectoModel = new ProyectoModel();
+                        //Obtener Actividades Asociadas
+                        //Cambiar Base de Datos para OnCascade NULL de Next Actions
+                        //Restaurar al crear idActividades con nuevo id Proyecto
                         $proyectoModel->deleteProyectoByStuffId($id);
                         break;
                     case "S":

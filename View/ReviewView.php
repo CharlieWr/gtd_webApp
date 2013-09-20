@@ -3,6 +3,10 @@
     require_once '../Control/UsuarioControl.php';
     require_once '../Control/ProyectoControl.php';
     require_once '../Control/ContextoControl.php';
+        require_once '../Control/NextActionControl.php';
+        require_once '../Control/SomedayMaybeControl.php';
+        require_once '../Control/WaitingForControl.php';
+
     require_once '../Control/TagControl.php';
     require_once '../Control/funciones.php';
     //Save y Delete tienen que llevvar la informacion de tipo de stuff y filtrar
@@ -11,6 +15,8 @@
     $idUsuario = $_SESSION['idUsuario'];
     $formatoFecha = $_SESSION['fecha'];
     $usuarioControl = new UsuarioControl();
+        $naControl = new NextActionControl();
+
     $stuffControl = new StuffControl();
      $tagControl = new TagControl();
      
@@ -27,10 +33,14 @@
           $newIdStuff = $_POST['idStuffForm'];
            $typeStuff = $_POST['sendTo'];
            $vista=$typeStuff;
-            $newPlazo = isset($_POST['plazo'])? $_POST['plazo'] : NULL;
+        $activa = isset($_POST['activa'])? true : false;
+        $idProyecto = (isset($_POST['projectSelected']) && $_POST['projectSelected']!= "")? $_POST['projectSelected'] : NULL;
+        $newPlazo = isset($_POST['plazo'])? $_POST['plazo'] : NULL;
             $newContacto = isset($_POST['contacto'])? $_POST['contacto'] : NULL;
           $newInfo = array("nombre" => $newNombre, "descripcion" => $newDescripcion, "idContexto" => $newIdContexto,
-              "tag" => $newTags, "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"contacto" => $newContacto,"plazo"=>$newPlazo,"idHistorial" => NULL);
+              "tag" => $newTags, 'activa' => $activa,"idProyecto" => $idProyecto,
+              "idStuff" => $newIdStuff, "idUsuario"=>$idUsuario,"typeStuff" => $typeStuff,"contacto" => $newContacto,
+              "plazo"=>$newPlazo,"idHistorial" => NULL);
           $stuffControl->insertStuff($newInfo);
           redirect_to("ReviewView.php");
 
@@ -159,6 +169,7 @@
                 <!-- QuickMenu Structure [Menu 0] -->
 
         <ul id="qm0" class="qmmc">
+                <li><a class="qmparent" href="Home.php">Home</a></li>
 
                 <li><a class="qmparent" href="javascript:void(0)">Context</a>
 
@@ -362,8 +373,12 @@
                                                         $actSt = $stuffControl->getStuffById($actAux->getIdStuff());
                                                         $nombreAct = $actSt->getNombre();
                                                         $idActSt = $actSt->getIdStuff();
+                                                         $naSt = $naControl->getNextActionByStuffId($idActSt);
+                                                        $color = $naSt->getActiva()? 'steelblue' : 'darkgrey';
                                                         echo '<a href="NextActionView.php?idSt='.$idActSt.'">';
-                                                        echo '<li style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;">'.$nombreAct.'</li>';
+                                                        echo '<li style="background-color: '.$color.';color: aliceblue; border: 3px aliceblue solid;">'.$nombreAct.'</li>';
+//                                                        echo '<a href="NextActionView.php?idSt='.$idActSt.'">';
+//                                                        echo '<li style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;">'.$nombreAct.'</li>';
                                                         echo '</a>';
                                                     }
                                                 
@@ -374,8 +389,67 @@
                                         </ul>
                                     </div>
                                     
-                                </td>
+                                 </td><tr></tr>
                                     <?php } ?>
+                                   <?php 
+                                    if($stuffAssoc && $stuffAssoc->getTypeStuff() == "S"){
+                                        $smControl = new SomedayMaybeControl();
+                                        $sm =  $smControl->getSMByStuffId($stuffAssoc->getIdStuff());
+                                        $plazo = $sm->getPlazo();
+                                ?>
+                                 <td>Term: </td>
+                                <td>
+                                    <input type="text" name="plazo" maxlength="255" value="<?php 
+                                    echo ($stuffSeleccionada)? $plazo : "";?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
+                                </td>
+                                <?php } ?>
+                                   <?php 
+                                    if($stuffAssoc && $stuffAssoc->getTypeStuff() == "W"){
+                                        $wfControl = new WaitingForControl();
+                                        $wf =  $wfControl->getWFByStuffId($stuffAssoc->getIdStuff());
+                                        $contacto  = $wf->getContactoPersona();
+                                ?>
+                            <td>Contact:</td>
+                                <td>
+                                     <input type="text" name="contacto" maxlength="255" value="<?php 
+                                    echo ($stuffSeleccionada && $contacto)? $contacto : "";?>" <?php echo $stuffSeleccionada? "" : 'readonly'?>>
+                                </td>
+                                <?php } ?>
+                                   
+                                <?php 
+                                    if($stuffAssoc && $stuffAssoc->getTypeStuff() == "N"){
+                                       
+                                        $naAssoc =  $naControl->getNextActionByStuffId($stuffAssoc->getIdStuff());
+                                        $stuffActiva = $naAssoc->getActiva();
+//                                        $contacto  = $wf->getContactoPersona();
+                                ?>
+                                     <td>Project:</td>
+                                <td>
+                                   <select type="select" name="projectSelected" id="projectSelected" >
+                                       <option value=""></option>
+                                       <?php 
+                                        $prControl = new ProyectoControl();
+                                       
+                                        foreach($listStuff as $stAux){
+                                           if($stAux->getTypeStuff()=="P" && !$stAux->getIdHistorial()){
+                                                echo '<option value="'.$stAux->getIdStuff().'"';
+                                                 
+                                                $prAux = $prControl->getProyectoByStuffId($stAux->getIdStuff());
+                                                if(isset($naAssoc) && $prAux->getIdProyecto()==$naAssoc->getIdProyecto()){
+                                                    echo "selected";
+                                                }
+                                                
+                                                
+                                                echo '>'.$stAux->getNombre().'</option>';
+                                           
+                                           }
+                                       }?>
+                                   </select>
+                               </td>
+                                <td>
+                                   <input type="checkbox" name="activa" id="activa" value="activa" <?php echo $stuffActiva? "checked" : ""; ?>>Active<br>
+                               </td>
+                                <?php } ?>
                         </tr>
                         <tr >
                             <td>

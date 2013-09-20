@@ -100,7 +100,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <!--<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">-->
         <link rel="stylesheet" href="./Style/generalStyle.css">
         <link rel="stylesheet" href="./Style/navigationBarStyle.css">
 
@@ -151,6 +152,7 @@
                 <!-- QuickMenu Structure [Menu 0] -->
 
         <ul id="qm0" class="qmmc">
+                <li><a class="qmparent" href="Home.php">Home</a></li>
 
                 <li><a class="qmparent" href="javascript:void(0)">Context</a>
 

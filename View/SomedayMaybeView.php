@@ -158,6 +158,7 @@
                 <!-- QuickMenu Structure [Menu 0] -->
 
         <ul id="qm0" class="qmmc">
+                <li><a class="qmparent" href="Home.php">Home</a></li>
 
                 <li><a class="qmparent" href="javascript:void(0)">Context</a>
 

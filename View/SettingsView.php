@@ -10,18 +10,18 @@
     $contextoControl = new ContextoControl();
     $formatoFecha = $_SESSION['fecha'];
     $contextList = $contextoControl->getAllContexto();
-    $stuffName = "Selecciona una opcion";
+    $stuffName = "Select an option";
     $opcion=NULL;
    if(isset($_GET['sel'])){
        $aux = $_GET['sel'];
        //Opcion Contexto
        if($aux == 1){
            $opcion = 1;
-           $stuffName = "Elige contexto";
+           $stuffName = "Choose a context";
        }
        elseif ($aux == 2) {
          $opcion=2;
-         $stuffName = "Formato Fecha";
+         $stuffName = "Date Format";
     }
    }
    $new = false;
@@ -117,18 +117,20 @@
                 <!-- QuickMenu Structure [Menu 0] -->
 
         <ul id="qm0" class="qmmc">
+                <li><a class="qmparent" href="Home.php">Home</a></li>
 
                 <li><a class="qmparent" href="javascript:void(0)">Context</a>
 
-                        <ul>
+                        <!--<ul>-->
                             <?php 
-                                echo '<li><a href="ProcessView.php">ALL</a></li>';
-                                foreach($contextList as $ct){
-                                    echo '<li><a href="ProcessView.php?context='.$ct->getIdContexto().'">'.$ct->getNombreContexto().'</a></li>';
-                                }
+//                                echo '<li><a href="ProcessView.php">ALL</a></li>';
+//                                foreach($contextList as $ct){
+//                                    echo '<li><a href="ProcessView.php?context='.$ct->getIdContexto().'">'.$ct->getNombreContexto().'</a></li>';
+//                                }
                             ?>
                    
-                        </ul></li>
+                        <!--</ul>-->
+                </li>
 
                 <li><a class="qmparent" href="ReviewView.php">Review</a>
 
@@ -172,8 +174,8 @@
                         
                     </div>
                     <ul>
-                        <a href="SettingsView.php?sel=1"><li id="itemStuff" <?php echo $opcion==1? 'style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;"':"" ;?>>Contexto</li></a>
-                        <a href="SettingsView.php?sel=2"><li id="itemStuff" <?php echo $opcion==2? 'style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;"':"" ;?>>Fecha</li></a>
+                        <a href="SettingsView.php?sel=1"><li id="itemStuff" <?php echo $opcion==1? 'style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;"':"" ;?>>Context</li></a>
+                        <a href="SettingsView.php?sel=2"><li id="itemStuff" <?php echo $opcion==2? 'style="background-color: steelblue;color: aliceblue; border: 3px aliceblue solid;"':"" ;?>>Date</li></a>
                     </ul>
                 </div>
                 
@@ -239,14 +241,14 @@
                         ?>
                     
                       <?php
-                        //Formato Fecha
+                        //Date Format
                         if($opcion == 2){
                             
                         
                     ?>
                     <div style="margin: 40px 0 0 50px;">
                         <form action='SettingsView.php' method='post'>
-                            <p>Formato de Fecha</p>
+                            <p>Date Format</p>
                             <input type="radio" name="radioFecha" value="d/m/Y H:i:s" style="margin-bottom: 20px;" <?php echo ($formatoFecha== "d/m/Y H:i:s")?  "checked" : ""; ?>>dd/mm/yyyy hh:mm:ss (23/05/2013 18:09:32)<br/>
                             <input type="radio" name="radioFecha" value="m/d/Y H:i:s" style="margin-bottom: 20px;" <?php echo ($formatoFecha== "m/d/Y H:i:s")?  "checked" : ""; ?>>mm/dd/yyyy hh:mm:ss (05/23/2013 18:09:32)<br/>
                             <input type="radio" name="radioFecha" value="d/m/Y" style="margin-bottom: 20px;" <?php echo ($formatoFecha== "d/m/Y")?  "checked" : ""; ?>>dd/mm/yyyy (23/05/2013)<br/>
