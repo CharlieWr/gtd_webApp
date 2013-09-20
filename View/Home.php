@@ -32,19 +32,25 @@
    $listPrj = array();
    $listSm = array();
    $listWf = array();
+   $listHistory = array();
    
    foreach($listStuff as $st){
-       switch($st->getTypeStuff()){
-          case "N":
-              $listNa[] = $st; break;
-          case "P":
-              $listPrj[] = $st; break;
-          case "S":
-              $listSm[] = $st;break;
-          case "W":
-              $listWf[] = $st; break;
-          default:
-              $lStuff[] = $st;
+       if(!$st->getIdHistorial()){
+            switch($st->getTypeStuff()){
+               case "N":
+                   $listNa[] = $st; break;
+               case "P":
+                   $listPrj[] = $st; break;
+               case "S":
+                   $listSm[] = $st;break;
+               case "W":
+                   $listWf[] = $st; break;
+               default:
+                   $lStuff[] = $st;
+            }
+       }
+       else{
+           $listHistory[] = $st;
        }
    }
 ?>
@@ -566,22 +572,204 @@
         <h3>Waiting For</h3>
           <div>
             <p>
-         Número de Waiting For: <?php echo count($listWf);?>
+        
+                <table>
+                    <tr>
+                        <td>
+                            <strong>Number of Waiting For:</strong>
+                        </td>
+                        <td> 
+                            <?php echo count($listWf).'<br/>';?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             <strong>Last inserted Waiting For:</strong> 
+                         </td>
+                         <td> 
+                       <?php 
+                            if(count($listWf) > 0){
+                              $lastWaitingFor = end($listWf);
+                                reset($listWf);
+                            echo $lastWaitingFor->getNombre();}
+                            else{
+                                echo "-";
+                            }
+                            echo '<br/>';
+                            ?>
+                        </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong> Date of Last Waiting For Inserted:</strong> 
+                    </td>
+                    <td>
+                        <?php 
+                       if(count($listWf) > 0){
+                           $lastWaitingFor = end($listWf);
+                           reset($listWf);
+                           echo date($formatoFecha,strtotime($lastWaitingFor->getFecha()));
+
+                       }
+                       else{
+                           echo "-";
+                       }
+                       echo '<br/>';
+                       ?>
+                     </td>
+               </tr>
+               <tr>
+                   <td>
+                        <strong>Context of Last Waiting For Inserted:</strong> 
+                    </td>
+                    <td>
+                        <?php 
+                        if(count($listWf) > 0){
+                        $lastWaitingFor = end($listWf);
+                        reset($listWf);
+                        $idContexto =  $lastWaitingFor->getIdContexto();
+                        foreach($contextList as $cnt){
+                            if($idContexto == $cnt->getIdContexto()){
+                                echo $cnt->getNombreContexto();
+                            }
+                        }
+
+                    }
+                    else{
+                        echo "-";
+                    }
+                    echo '<br/>';
+                    ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Contact Person of last Waiting For inserted:</strong>
+                    </td>
+                    <td>
+                        <?php 
+                            if(count($listWf)){
+                                $lastWaitingFor = end($listWf);
+                                reset($listWf);
+                                $idStuffSm = $lastWaitingFor->getIdStuff();
+                                $wf = $wfControl->getWFByStuffId($idStuffSm);
+                                echo $wf->getContactoPersona()? $wf->getContactoPersona() : "";
+                            }
+                            else{
+                                echo '-';
+                            }
+                            echo '<br/>';
+                        ?>
+                    </td>
+                </tr>
+                </table>
             </p>
 
           </div>
-        <h3>Historial</h3>
+        <h3>History</h3>
           <div>
             <p>
-            Cras dictum. Pellentesque habitant morbi tristique senectus et netus
-            et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
-            faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
-            mauris vel est.
-            </p>
-            <p>
-            Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
-            Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-            inceptos himenaeos.
+                   <table>
+                    <tr>
+                        <td>
+                            <strong>Number of History Items:</strong>
+                        </td>
+                        <td> 
+                            <?php echo count($listHistory).'<br/>';?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             <strong>Last inserted History Item:</strong> 
+                         </td>
+                         <td> 
+                       <?php 
+                            if(count($listHistory) > 0){
+                              $lastHistory = end($listHistory);
+                                reset($listHistory);
+                            echo $lastHistory->getNombre();}
+                            else{
+                                echo "-";
+                            }
+                            echo '<br/>';
+                            ?>
+                        </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong> Date of Last Item sent to History:</strong> 
+                    </td>
+                    <td>
+                        <?php 
+                       if(count($listHistory) > 0){
+                           $lastHistory = end($listHistory);
+                           reset($listHistory);
+                           $hst = $historialControl->deleteHistorialByIdStuff($lastHistory->getIdStuff());
+                           echo date($formatoFecha,strtotime($hst->getFechaHistorial()));
+
+                       }
+                       else{
+                           echo "-";
+                       }
+                       echo '<br/>';
+                       ?>
+                     </td>
+               </tr>
+               <tr>
+                   <td>
+                        <strong>Context of Last History Item Inserted:</strong> 
+                    </td>
+                    <td>
+                        <?php 
+                        if(count($listHistory) > 0){
+                        $lastHistory = end($listHistory);
+                        reset($listHistory);
+                        $idContexto =  $lastHistory->getIdContexto();
+                        foreach($contextList as $cnt){
+                            if($idContexto == $cnt->getIdContexto()){
+                                echo $cnt->getNombreContexto();
+                            }
+                        }
+
+                    }
+                    else{
+                        echo "-";
+                    }
+                    echo '<br/>';
+                    ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Type of last History Item:</strong>
+                    </td>
+                    <td>
+                        <?php 
+                            if(count($listHistory)){
+                                $lastHistory = end($listHistory);
+                                reset($listHistory);
+                               $hstType = $lastHistory->getTypeStuff();
+                                switch($hstType){
+                                   case "P":
+                                       echo "Project"; break;
+                                   case "N":
+                                       echo "Next Action"; break;
+                                   case "W":
+                                       echo "Waiting For"; break;
+                                   case "S":
+                                       echo "Someday Maybe"; break;
+                                   default:
+                                       echo "Stuff"; break;
+                                }
+                            }
+                            else{
+                                echo '-';
+                            }
+                            echo '<br/>';
+                        ?>
+                    </td>
+                </tr>
+                </table>
             </p>
 
           </div>

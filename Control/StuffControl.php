@@ -331,6 +331,13 @@
                 //Actualizamos el Stuff
                 $stuffModel->updateStuff($newStuff);
                 
+                //Si es de tipo Next Action se elimina proyecto asociados
+                 if($typeStuff == "N"){
+                     $naModel = new NextActionModel();
+                     $na = $naModel->selectNextActionByStuffId($infoStuff['idStuff']);
+                     $na->setIdProyecto(NULL);
+                     $naModel->updateNextAction($na);
+                 }
 //                Si es un proyecto hay que enviar a historial actividades asociadas
                 if($typeStuff == "P"){
                     $proyModel = new ProyectoModel();
