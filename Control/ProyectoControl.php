@@ -44,6 +44,18 @@
         }
     }
     
+    
+    public function getStuffByProyectoId($idProj){
+         if(!is_numeric($idProj)){
+            die("Id Proyecto no es tipo entero valido.");
+        }{
+            $proyectoModel = new ProyectoModel();
+            $proj = $proyectoModel->selectProyectoById($idProj);
+            $idStuffProj = $proj->getIdStuff();
+            $stuffModel = new StuffModel();
+            return $stuffModel->selectStuffById($idStuffProj);
+        }
+    }
     public function getActividadesAsociadas($idProj){
           if(!is_numeric($idProj)){
             die("Id Proyecto no es tipo entero valido.");

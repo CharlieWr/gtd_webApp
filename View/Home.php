@@ -6,8 +6,11 @@
     require_once '../Control/SomedayMaybeControl.php';
     require_once '../Control/WaitingForControl.php';
     require_once '../Control/HistorialControl.php';
+    require_once '../Control/ContextoControl.php';
     session_start();
      $idUsuario = $_SESSION['idUsuario'];
+     $formatoFecha = $_SESSION['fecha'];
+
     $usuarioControl = new UsuarioControl();
      $stuffControl = new StuffControl();
     $prjControl = new ProyectoControl();
@@ -16,7 +19,11 @@
     $historialControl = new HistorialControl();
     $wfControl = new WaitingForControl();
     $usuario = $usuarioControl->getUsuarioById($idUsuario);
-       
+    
+    
+    $contextControl = new ContextoControl();
+    $contextList = $contextControl->getAllContexto();
+    
     $listStuff = $stuffControl->getAllStuffByUsuarioId($idUsuario);
 //    $listNextAction = $naControl->getNextActionByStuffId($stuffId)
 
@@ -155,26 +162,405 @@
             <h3>Stuff</h3>
             <div>
             <p>
-                Número de Stuff: <?php echo count($lStuff);?>
+                <table>
+                    <tr>
+                        <td>
+                            <strong>Number of Stuff:</strong>
+                        </td>
+                        <td> 
+                            <?php echo count($lStuff).'<br/>';?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             <strong>Last inserted Stuff:</strong> 
+                         </td>
+                         <td> 
+                       <?php 
+                            if(count($lStuff) > 0){
+                              $lastStuff = end($lStuff);
+                                reset($lStuff);
+                            echo $lastStuff->getNombre();}
+                            else{
+                                echo "-";
+                            }
+                            echo '<br/>';
+                            ?>
+                        </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong> Date of Last Stuff Inserted:</strong> 
+                    </td>
+                    <td>
+                        <?php 
+                       if(count($lStuff) > 0){
+                           $lastStuff = end($lStuff);
+                           reset($lStuff);
+                           echo date($formatoFecha,strtotime($lastStuff->getFecha()));
+
+                       }
+                       else{
+                           echo "-";
+                       }
+                       echo '<br/>';
+                       ?>
+                     </td>
+               </tr>
+               <tr>
+                   <td>
+                        <strong>Context of Last Stuff Inserted:</strong> 
+                    </td>
+                    <td>
+                        <?php 
+                        if(count($lStuff) > 0){
+                        $lastStuff = end($lStuff);
+                        reset($lStuff);
+                        $idContexto =  $lastStuff->getIdContexto();
+                        foreach($contextList as $cnt){
+                            if($idContexto == $cnt->getIdContexto()){
+                                echo $cnt->getNombreContexto();
+                            }
+                        }
+
+                    }
+                    else{
+                        echo "-";
+                    }
+                    echo '<br/>';
+                    ?>
+                    </td>
+                </tr>
+                </table>
             </p>
           </div>
           <h3>Next Action</h3>
           <div>
-            <p>
-            Número de Next Action: <?php echo count($listNa);?>
-            </p>
+               <table>
+                    <tr>
+                        <td>
+                            <strong>Number of Next Actions:</strong>
+                        </td>
+                        <td> 
+                            <?php echo count($listNa).'<br/>';?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Number of active Next Actions</strong>
+                        </td>
+                        <td>
+                            <?php 
+                                if(count($listNa) > 0){
+                                    $actives = 0;
+                                    foreach($listNa as $naSt){
+                                        $na = $naControl->getNextActionByStuffId($naSt->getIdStuff());
+                                        if($na->getActiva()){
+                                           $actives++;  
+                                        }
+                                    }
+                                    echo $actives;
+                                }
+                                else{
+                                    echo '-';
+                                }
+                                echo '<br/>';
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             <strong>Last inserted Next Action:</strong> 
+                         </td>
+                         <td> 
+                       <?php 
+                            if(count($listNa) > 0){
+                              $lastNextAction = end($listNa);
+                                reset($listNa);
+                            echo $lastNextAction->getNombre();}
+                            else{
+                                echo "-";
+                            }
+                            echo '<br/>';
+                            ?>
+                        </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong> Date of Last Next Action Inserted:</strong> 
+                    </td>
+                    <td>
+                        <?php 
+                       if(count($listNa) > 0){
+                           $lastNextAction = end($listNa);
+                           reset($listNa);
+                           echo date($formatoFecha,strtotime($lastNextAction->getFecha()));
+
+                       }
+                       else{
+                           echo "-";
+                       }
+                       echo '<br/>';
+                       ?>
+                     </td>
+               </tr>
+               <tr>
+                   <td>
+                        <strong>Context of Last Next Action Inserted:</strong> 
+                    </td>
+                    <td>
+                        <?php 
+                        if(count($listNa) > 0){
+                        $lastNextAction = end($listNa);
+                        reset($listNa);
+                        $idContexto =  $lastNextAction->getIdContexto();
+                        foreach($contextList as $cnt){
+                            if($idContexto == $cnt->getIdContexto()){
+                                echo $cnt->getNombreContexto();
+                            }
+                        }
+
+                    }
+                    else{
+                        echo "-";
+                    }
+                    echo '<br/>';
+                    ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Active:</strong>
+                    </td>
+                    <td>
+                        <?php 
+                            if(count($listNa) > 0){
+                                $lastNextAction = end($listNa);
+                                reset($listNa);
+                                $na = $naControl->getNextActionByStuffId($lastNextAction->getIdStuff());
+                                echo ($na->getActiva())? 'true' : 'false';
+                            }
+                            else{
+                                echo "-";
+                            }
+                            echo '<br/>';
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Project:</strong>
+                    </td>
+                    <td>
+                        <?php 
+                            if(count($listNa) > 0){
+                                $lastNextAction = end($listNa);
+                                reset($listNa);
+                                $na = $naControl->getNextActionByStuffId($lastNextAction->getIdStuff());
+                                $idProj = ($na->getIdProyecto())? $na->getIdProyecto() : NULL;
+                                if($idProj){
+                                    $stuffProj = $prjControl->getStuffByProyectoId($idProj);
+                                    echo $stuffProj->getNombre();
+                                
+                                }
+                                else{
+                                    echo '-';
+                                }
+                            }
+                            else{
+                                echo "-";
+                            }
+                            echo '<br/>';
+                        ?>
+                    </td>
+                </tr>
+                </table>
           </div>
           <h3>Proyectos</h3>
           <div>
-            <p>
-            Número de Proyectos: <?php echo count($listPrj);?>
-            </p>
+              <table>
+                    <tr>
+                        <td>
+                            <strong>Number of Projects:</strong>
+                        </td>
+                        <td> 
+                            <?php echo count($listPrj).'<br/>';?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             <strong>Last inserted Project:</strong> 
+                         </td>
+                         <td> 
+                       <?php 
+                            if(count($listPrj) > 0){
+                              $lastProject = end($listPrj);
+                                reset($listPrj);
+                            echo $lastProject->getNombre();}
+                            else{
+                                echo "-";
+                            }
+                            echo '<br/>';
+                            ?>
+                        </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong> Date of Last Project Inserted:</strong> 
+                    </td>
+                    <td>
+                        <?php 
+                       if(count($listPrj) > 0){
+                           $lastProject = end($listPrj);
+                           reset($listPrj);
+                           echo date($formatoFecha,strtotime($lastProject->getFecha()));
+
+                       }
+                       else{
+                           echo "-";
+                       }
+                       echo '<br/>';
+                       ?>
+                     </td>
+               </tr>
+               <tr>
+                   <td>
+                        <strong>Context of Last Project Inserted:</strong> 
+                    </td>
+                    <td>
+                        <?php 
+                        if(count($listPrj) > 0){
+                        $lastProject = end($listPrj);
+                        reset($listPrj);
+                        $idContexto =  $lastProject->getIdContexto();
+                        foreach($contextList as $cnt){
+                            if($idContexto == $cnt->getIdContexto()){
+                                echo $cnt->getNombreContexto();
+                            }
+                        }
+
+                    }
+                    else{
+                        echo "-";
+                    }
+                    echo '<br/>';
+                    ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Number of Next Actions of last project:</strong>
+                    </td>
+                    <td>
+                        <?php 
+                             if(count($listPrj) > 0){
+                                $lastProject = end($listPrj);
+                                reset($listPrj);
+                                $prj = $prjControl->getProyectoByStuffId($lastProject->getIdStuff());
+                                $actAssoc = $prjControl->getActividadesAsociadas($prj->getIdProyecto());
+                                echo count($actAssoc);
+                             }
+                             else{
+                                 echo '-';
+                             }
+                             echo '<br/>';
+                        ?>
+                    </td>
+                </tr>
+                </table>
           </div>
           <h3>Someday Maybe</h3>
           <div>
-            <p>
-            Número de Someday Maybe: <?php echo count($listSm);?>
-            </p>
+             <table>
+                    <tr>
+                        <td>
+                            <strong>Number of Someday/Maybes:</strong>
+                        </td>
+                        <td> 
+                            <?php echo count($listSm).'<br/>';?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             <strong>Last inserted Someday/Maybe:</strong> 
+                         </td>
+                         <td> 
+                       <?php 
+                            if(count($listSm) > 0){
+                              $lastSomedayMaybe = end($listSm);
+                                reset($listSm);
+                            echo $lastSomedayMaybe->getNombre();}
+                            else{
+                                echo "-";
+                            }
+                            echo '<br/>';
+                            ?>
+                        </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong> Date of Last Someday/Maybe Inserted:</strong> 
+                    </td>
+                    <td>
+                        <?php 
+                       if(count($listSm) > 0){
+                           $lastSomedayMaybe = end($listSm);
+                           reset($listSm);
+                           echo date($formatoFecha,strtotime($lastSomedayMaybe->getFecha()));
+
+                       }
+                       else{
+                           echo "-";
+                       }
+                       echo '<br/>';
+                       ?>
+                     </td>
+               </tr>
+               <tr>
+                   <td>
+                        <strong>Context of Last Someday/Maybe Inserted:</strong> 
+                    </td>
+                    <td>
+                        <?php 
+                        if(count($listSm) > 0){
+                        $lastSomedayMaybe = end($listSm);
+                        reset($listSm);
+                        $idContexto =  $lastSomedayMaybe->getIdContexto();
+                        foreach($contextList as $cnt){
+                            if($idContexto == $cnt->getIdContexto()){
+                                echo $cnt->getNombreContexto();
+                            }
+                        }
+
+                    }
+                    else{
+                        echo "-";
+                    }
+                    echo '<br/>';
+                    ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Term of last Someday/Maybe inserted:</strong>
+                    </td>
+                    <td>
+                        <?php 
+                            if(count($listSm)){
+                                $lastSomedayMaybe = end($listSm);
+                                reset($listSm);
+                                $idStuffSm = $lastSomedayMaybe->getIdStuff();
+                                $sm = $smControl->getSMByStuffId($idStuffSm);
+                                echo $sm->getPlazo()? $sm->getPlazo() : "";
+                            }
+                            else{
+                                echo '-';
+                            }
+                            echo '<br/>';
+                        ?>
+                    </td>
+                </tr>
+                </table>
             
           </div>
         <h3>Waiting For</h3>

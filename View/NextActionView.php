@@ -1,5 +1,5 @@
 <?php 
-    require_once("../Control/funciones.php");
+    require_once "../Control/funciones.php";
     require_once '../Control/StuffControl.php';
     require_once '../Control/UsuarioControl.php';
     require_once '../Control/NextActionControl.php';
