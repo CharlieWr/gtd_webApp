@@ -58,9 +58,12 @@
 <html>
     <head>
         <meta charset="utf-8" />
-       <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+       <link rel="stylesheet" href="Style/jquery-ui.css" />
+       <!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />-->
+        <script src="Script/jquery-2.0.3.js"></script>
+        <!--<script src="http://code.jquery.com/jquery-1.9.1.js"></script>-->
+        <script src="Script/jquery-ui.js"></script>
+        <!--<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
                 <link rel="stylesheet" href="./Style/generalStyle.css">
         <link rel="stylesheet" href="/resources/demos/style.css" />
         <script>
