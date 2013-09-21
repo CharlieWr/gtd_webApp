@@ -100,6 +100,8 @@
                         //Borro de Proyecto ese stuff
                         $proyectoModel = new ProyectoModel();
                         //Obtener Actividades Asociadas
+                        $proyecto = $proyectoModel->selectProyectoStuffById($id);
+                        $actProyecto = $proyectoModel->obtenerActividadesDeProyecto($proyecto->getIdProyecto());
                         //Cambiar Base de Datos para OnCascade NULL de Next Actions
                         //Restaurar al crear idActividades con nuevo id Proyecto
                         $proyectoModel->deleteProyectoByStuffId($id);
@@ -137,7 +139,13 @@
                         $proyectoModel = new ProyectoModel();
                         $newProy = new Proyecto();
                         $newProy->asignaStuff($newStuff);
-                        $proyectoModel->insertarProyecto($newProy);
+                        $idNewProj = $proyectoModel->insertarProyecto($newProy);
+                        //Asociamos nuevo id a actividades asociadaas antes de eliminar
+                        $nextActionModel = new NextActionModel();
+                        foreach($actProyecto as $act){
+                            $act->setIdProyecto($idNewProj);
+                            $nextActionModel->updateNextAction($act);
+                        }
                         break;
                     case "S":
                         //Bse agrega nuevo SomedayMaybe
