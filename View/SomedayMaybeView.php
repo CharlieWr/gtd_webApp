@@ -202,7 +202,7 @@
 
         <div id="content">
             
-          <a href="Home.php"><img src="images/todolist.png " /></a>
+          <a href="Home.php"><img src="images/todolist.png " alt="Logo"/></a>
             <h1 id="logo">Getting Things Done!</h1>
          
             <div id="stuffBox">

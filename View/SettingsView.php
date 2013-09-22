@@ -162,7 +162,7 @@
         <script type="text/javascript">if (window.name=="qm_launch_visual"){document.write('<scr'+'ipt type="text/javascript" src="http://www.opencube.com/qmv4/qm_visual.js"></scr'+'ipt>')}</script>
 
         <div id="content">
-          <a href="Home.php"><img src="images/todolist.png " /></a>
+          <a href="Home.php"><img src="images/todolist.png " alt="Logo" /></a>
             <h1 id="logo">Getting Things Done!</h1>
             <div id="stuffBox">
                 <div id="listaStuff">

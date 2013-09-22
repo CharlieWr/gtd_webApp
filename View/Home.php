@@ -166,13 +166,12 @@
         <script type="text/javascript">if (window.name=="qm_launch_visual"){document.write('<scr'+'ipt type="text/javascript" src="http://www.opencube.com/qmv4/qm_visual.js"></scr'+'ipt>')}</script>
        
             <div id="content">
-                 <img src="images/todolist.png " />
+                 <img src="images/todolist.png " alt="Logo" />
             <h1 id="logo">Getting Things Done!</h1>
        
             <div id="accordion" style="padding: 20px 60px 0 60px;">
             <h3>Stuff</h3>
             <div>
-            <p>
                 <table>
                     <tr>
                         <td>
@@ -243,7 +242,6 @@
                     </td>
                 </tr>
                 </table>
-            </p>
           </div>
           <h3>Next Action</h3>
           <div>
@@ -576,7 +574,7 @@
           </div>
         <h3>Waiting For</h3>
           <div>
-            <p>
+            
         
                 <table>
                     <tr>
@@ -668,12 +666,12 @@
                     </td>
                 </tr>
                 </table>
-            </p>
+            
 
           </div>
         <h3>History</h3>
           <div>
-            <p>
+            
                    <table>
                     <tr>
                         <td>
@@ -775,7 +773,7 @@
                     </td>
                 </tr>
                 </table>
-            </p>
+            
 
           </div>
         </div>

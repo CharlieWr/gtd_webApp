@@ -39,7 +39,7 @@
     </head>
     <body>
         <div id="content">
-            <a href="Home.php"><img src="images/todolist.png " /></a>
+            <a href="Home.php"><img src="images/todolist.png" alt="Logo" /></a>
             <h1 id="logo">Getting Things Done!</h1><br/>
 
             
@@ -51,12 +51,12 @@
           
                 <table>
                     <tr>
-                        <td><label for='username' >User Name:</label></td>
+                        <td><label form='username' >User Name:</label></td>
                     <!--Se codifica lo que el usuario introduce por caracteres especiales html-->
                     <td> <input type='text' name='username'  maxlength="50" required="required" value="<?php echo htmlspecialchars($username); ?>"/></td>
                     </tr>   
                     <tr>
-                        <td> <label for='password' >Password:</label></td>
+                        <td> <label form='password' >Password:</label></td>
                         <td> <input type='password' name='password' required="required" maxlength="50" /></td>
                     </tr>
                     <tr>

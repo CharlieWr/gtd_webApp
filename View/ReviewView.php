@@ -118,7 +118,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="stylesheet" href="./Style/generalStyle.css">
         <link rel="stylesheet" href="./Style/navigationBarStyle.css">
 
@@ -197,10 +197,10 @@
                         <li><a href="HistorialView.php">History</a></li>
                         </ul></li>
 
-                <li><a class="qmparent" href="SettingsView.php">Settings</a>
+                <li><a class="qmparent" href="SettingsView.php">Settings</a></li>
                     <li><a class="qmparent" href="IniciarSesion.php">Sign Out</a></li>
     
-                </li>
+               
 
         <li class="qmclear">&nbsp;</li></ul>
 
@@ -212,7 +212,7 @@
         <script type="text/javascript">if (window.name=="qm_launch_visual"){document.write('<scr'+'ipt type="text/javascript" src="http://www.opencube.com/qmv4/qm_visual.js"></scr'+'ipt>')}</script>
 
         <div id="content">
-          <a href="Home.php"><img src="images/todolist.png " /></a>
+          <a href="Home.php"><img src="images/todolist.png " alt="Logo"/></a>
             <h1 id="logo">Getting Things Done!</h1>
             <div id="stuffBox">
                 <div id="listaStuff">
@@ -235,7 +235,7 @@
                     </div>
                        <ul>
                             <?php 
-                            
+                                
                                     foreach ($listStuff as $st){
                                         //Mostramos solo la vista seleccionada en el dropdown menu
                                         if($st->getTypeStuff() == $vista){
